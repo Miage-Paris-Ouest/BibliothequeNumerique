@@ -3,5 +3,7 @@
     <string name="action_settings">Settings</string>
     <string name="scan">Scan</string>
     <string name="save">Enregistrer</string>
-    <string name="verifier">Vérifier</string>
+    <string name="verifier">Vérifier dans bibliothèque</string>
+    <string name="ajout_auteur">Ajouter un auteur</string>
+    <string name="ajout_livre">Ajouter un livre</string>
 </resources>

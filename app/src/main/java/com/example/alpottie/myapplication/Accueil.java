@@ -12,26 +12,31 @@ import android.widget.Toast;
 
 public class Accueil extends Activity implements OnClickListener
 {
-    private Button scanBtn, saveBtn;
+    private Button scanBtn, ajoutLivreBtn, ajoutAuteurBtn;
     private TextView formatTxt, contentTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_debut);
+        setContentView(R.layout.activity_accueil);
         scanBtn = (Button)findViewById(R.id.scan_button);
-        saveBtn = (Button)findViewById(R.id.save_button);
-        formatTxt = (TextView)findViewById(R.id.scan_format);
-        contentTxt = (TextView)findViewById(R.id.scan_content);
+        ajoutLivreBtn = (Button)findViewById(R.id.b_ajout_livre);
+        ajoutAuteurBtn = (Button)findViewById(R.id.b_ajout_auteur);
         scanBtn.setOnClickListener(this);
-        saveBtn.setOnClickListener(this);
+        ajoutAuteurBtn.setOnClickListener(this);
+        ajoutLivreBtn.setOnClickListener(this);
     }
     public void onClick(View v){
-        if(v.getId()==R.id.scan_button || v.getId()==R.id.save_button){
+        if(v.getId()==R.id.scan_button || v.getId()==R.id.b_ajout_livre){
             IntentIntegrator scanIntegrator = new IntentIntegrator(this);
             scanIntegrator.initiateScan();
         }
+        else if (v.getId() == R.id.b_ajout_auteur)
+        {
+            Intent intent = new Intent()
+        }
     }
+
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         String ean = "";

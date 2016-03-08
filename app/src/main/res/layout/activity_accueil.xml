@@ -10,30 +10,19 @@
         android:text="@string/verifier"
         android:layout_gravity="center_horizontal" />
 
-    <TextView
-        android:id="@+id/scan_format"
+    <Button android:id="@+id/b_ajout_auteur"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textIsSelectable="true"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/scan_button"
-        android:hint="Format"
-        android:layout_gravity="center_horizontal" />
-    <TextView
-        android:id="@+id/scan_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textIsSelectable="true"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/scan_format"
-        android:hint="Contenu"
+        android:text="@string/ajout_auteur"
         android:layout_gravity="center_horizontal" />
 
-    <Button android:id="@+id/save_button"
+    <Button
+        android:id="@+id/b_ajout_livre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="@string/save"
+        android:text="@string/ajout_livre"
         android:layout_gravity="center_horizontal" />
 
 </LinearLayout>
