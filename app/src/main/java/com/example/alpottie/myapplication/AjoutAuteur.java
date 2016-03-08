@@ -52,12 +52,23 @@ public class AjoutAuteur extends Activity {
                         "Erreur pendant l'ajout.", Toast.LENGTH_SHORT);
                 toast.show();
             }
+            else
+            {
+                Toast toast = Toast.makeText(getApplicationContext(), "Ajout ok !", Toast.LENGTH_SHORT);
+                toast.show();
+            }
         }
     }
 
     public void onClickRetour(View v)
     {
         Intent intent = new Intent(this, Accueil.class);
+        startActivity(intent);
+    }
+
+    public void onClickVoir(View v)
+    {
+        Intent intent = new Intent(this, ListeAuteur.class);
         startActivity(intent);
     }
 }

@@ -32,34 +32,30 @@
         android:layout_height="wrap_content"
         android:text="@string/ajouter"
         android:id="@+id/b_ajouter"
-        android:layout_below="@+id/prenom_auteur"
-        android:layout_alignRight="@+id/prenom_auteur"
-        android:layout_alignEnd="@+id/prenom_auteur"
-        android:layout_centerHorizontal="true"
         android:layout_alignWithParentIfMissing="false"
-        android:layout_alignParentRight="false"
-        android:layout_alignParentBottom="false"
-        android:layout_alignParentLeft="false"
-        android:layout_alignParentStart="false"
-        android:layout_alignParentEnd="false"
-        android:onClick="onClickAjout" />
+        android:onClick="onClickAjout"
+        android:layout_alignTop="@+id/voir_auteur"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/retour"
         android:id="@+id/b_retour"
-        android:layout_alignTop="@+id/b_ajouter"
-        android:layout_toRightOf="@+id/b_ajouter"
-        android:layout_toEndOf="@+id/b_ajouter"
-        android:layout_marginLeft="41dp"
-        android:layout_marginStart="41dp"
-        android:layout_centerHorizontal="true"
         android:layout_alignWithParentIfMissing="false"
-        android:layout_alignParentRight="false"
-        android:layout_alignParentBottom="false"
-        android:layout_alignParentLeft="false"
-        android:layout_alignParentStart="false"
-        android:layout_alignParentEnd="false"
-        android:onClick="onClickRetour" />
+        android:onClick="onClickRetour"
+        android:layout_below="@+id/prenom_auteur"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/voir_auteur"
+        android:id="@+id/voir_auteur"
+        android:layout_alignWithParentIfMissing="false"
+        android:onClick="onClickVoir"
+        android:layout_below="@+id/prenom_auteur"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

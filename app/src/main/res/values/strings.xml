@@ -10,4 +10,6 @@
     <string name="prenom_auteur">Prénom de l\'auteur</string>
     <string name="ajouter">Ajouter</string>
     <string name="retour">Retour</string>
+    <string name="title_activity_liste_auteur">ListeAuteur</string>
+    <string name="voir_auteur">Voir mes auteurs</string>
 </resources>
