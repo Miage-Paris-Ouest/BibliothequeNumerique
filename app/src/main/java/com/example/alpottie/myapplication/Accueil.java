@@ -33,7 +33,8 @@ public class Accueil extends Activity implements OnClickListener
         }
         else if (v.getId() == R.id.b_ajout_auteur)
         {
-            Intent intent = new Intent()
+            Intent intent = new Intent(this, AjoutAuteur.class);
+            startActivity(intent);
         }
     }
 
@@ -46,8 +47,6 @@ public class Accueil extends Activity implements OnClickListener
             ean = scanningResult.getContents().toLowerCase();
             type = scanningResult.getFormatName().toLowerCase();
             prefix = ean.substring(0, 3);
-            formatTxt.setText("FORMAT: " + type);
-            contentTxt.setText("CONTENT: " + ean);
         }
         else{
             Toast toast = Toast.makeText(getApplicationContext(),

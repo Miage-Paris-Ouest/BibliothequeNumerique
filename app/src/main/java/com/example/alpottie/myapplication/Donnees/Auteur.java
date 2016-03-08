@@ -40,6 +40,12 @@ public class Auteur implements Parcelable
         }
     };
 
+    public Auteur(String nom, String prenom)
+    {
+        this.nom = nom;
+        this.prenom = prenom;
+    }
+
     public long getId() {
         return id;
     }

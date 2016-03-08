@@ -19,7 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Enregistrer" />
-        <activity android:name=".Verifier"></activity>
+        <activity android:name=".Verifier" />
+        <activity android:name=".AjoutAuteur"></activity>
     </application>
 
 </manifest>

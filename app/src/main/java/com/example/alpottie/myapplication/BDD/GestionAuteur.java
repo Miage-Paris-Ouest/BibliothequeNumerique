@@ -49,8 +49,8 @@ public class GestionAuteur extends Liaison
                 WHERE_ID_EQUALS, new String[]{auteur.getId() + ""});
     }
 
-    public Map<Long, Auteur> getAuteurs() {
-        Map<Long, Auteur> auteurs = new HashMap<>();
+    public List<Auteur> getAuteurs() {
+        List<Auteur> auteurs = new ArrayList<>();
         Cursor cursor = database.query(MySqLiteHelper.TABLE_LIVRE,
                 new String[]{MySqLiteHelper.COLONNE_AUTEUR_ID,
                         MySqLiteHelper.COLONNE_AUTEUR_NOM, MySqLiteHelper.COLONNE_AUTEUR_PRENOM}, null, null, null, null,
@@ -58,7 +58,7 @@ public class GestionAuteur extends Liaison
 
         while (cursor.moveToNext()) {
             Auteur auteur = new Auteur(cursor.getLong(0), cursor.getString(1), cursor.getString(2));
-            auteurs.put(auteur.getId(), auteur);
+            auteurs.add(auteur);
         }
 
         cursor.close();

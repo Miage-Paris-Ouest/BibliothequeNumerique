@@ -6,4 +6,8 @@
     <string name="verifier">Vérifier dans bibliothèque</string>
     <string name="ajout_auteur">Ajouter un auteur</string>
     <string name="ajout_livre">Ajouter un livre</string>
+    <string name="nom_auteur">Nom de l\'auteur</string>
+    <string name="prenom_auteur">Prénom de l\'auteur</string>
+    <string name="ajouter">Ajouter</string>
+    <string name="retour">Retour</string>
 </resources>
