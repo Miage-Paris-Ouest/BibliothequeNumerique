@@ -2,4 +2,6 @@
     <string name="app_name">My Application</string>
     <string name="action_settings">Settings</string>
     <string name="scan">Scan</string>
+    <string name="save">Enregistrer</string>
+    <string name="verifier">Vérifier</string>
 </resources>
