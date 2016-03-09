@@ -17,6 +17,7 @@ public class ListeAuteur extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_liste_auteur);
+        Intent reception = getIntent();
         GestionAuteur ga = new GestionAuteur(getApplicationContext());
         List<Auteur> lauteur = ga.getAuteurs();
         AuteurAdapter adapterAuteur = new AuteurAdapter(this, lauteur);

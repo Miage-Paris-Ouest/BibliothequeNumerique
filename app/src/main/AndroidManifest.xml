@@ -21,9 +21,7 @@
         <activity android:name=".Enregistrer" />
         <activity android:name=".Verifier" />
         <activity android:name=".AjoutAuteur" />
-        <activity
-            android:name=".ListeAuteur"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".ListeAuteur" />
     </application>
 
 </manifest>

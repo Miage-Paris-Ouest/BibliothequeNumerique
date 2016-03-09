@@ -15,7 +15,6 @@ import com.example.alpottie.myapplication.Donnees.Auteur;
 
 public class AjoutAuteur extends Activity {
 
-    private Button bajout, bretour;
     private EditText etnom, etprenom;
     private GestionAuteur ga;
 
@@ -26,9 +25,6 @@ public class AjoutAuteur extends Activity {
         setContentView(R.layout.activity_ajout_auteur);
 
         ga = new GestionAuteur(getApplicationContext());
-
-        bajout = (Button) findViewById(R.id.b_ajouter);
-        bretour = (Button) findViewById(R.id.b_retour);
     }
 
     public void onClickAjout(View v)

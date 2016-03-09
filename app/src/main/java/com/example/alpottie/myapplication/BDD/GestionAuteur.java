@@ -51,7 +51,7 @@ public class GestionAuteur extends Liaison
 
     public List<Auteur> getAuteurs() {
         List<Auteur> auteurs = new ArrayList<>();
-        Cursor cursor = database.query(MySqLiteHelper.TABLE_LIVRE,
+        Cursor cursor = database.query(MySqLiteHelper.TABLE_AUTEUR,
                 new String[]{MySqLiteHelper.COLONNE_AUTEUR_ID,
                         MySqLiteHelper.COLONNE_AUTEUR_NOM, MySqLiteHelper.COLONNE_AUTEUR_PRENOM}, null, null, null, null,
                 null);
