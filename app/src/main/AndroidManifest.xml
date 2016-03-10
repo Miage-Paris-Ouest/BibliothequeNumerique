@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.alpottie.myapplication">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -22,6 +26,7 @@
         <activity android:name=".Verifier" />
         <activity android:name=".AjoutAuteur" />
         <activity android:name=".ListeAuteur" />
+        <activity android:name=".AfficherLivre" />
     </application>
 
 </manifest>

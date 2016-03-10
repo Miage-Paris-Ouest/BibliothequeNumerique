@@ -67,9 +67,13 @@ public class GestionAuteur extends Liaison
 
     public Auteur getAuteur(Long id)
     {
-        Cursor cursor = database.query(MySqLiteHelper.TABLE_AUTEUR, new String[]{MySqLiteHelper.COLONNE_AUTEUR_ID,
-                MySqLiteHelper.COLONNE_AUTEUR_NOM, MySqLiteHelper.COLONNE_AUTEUR_PRENOM}, WHERE_ID_EQUALS, new String[] {id.toString()}, null, null, null);
-        return new Auteur(cursor.getLong(0), cursor.getString(1), cursor.getString(2));
+        List<Auteur> auteurs = this.getAuteurs();
+        for (Auteur a: auteurs)
+        {
+            if(a.getId() == id)
+                return a;
+        }
+        return null;
     }
 
 

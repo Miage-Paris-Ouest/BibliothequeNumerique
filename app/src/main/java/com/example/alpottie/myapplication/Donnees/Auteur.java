@@ -106,10 +106,6 @@ public class Auteur implements Parcelable
 
     @Override
     public String toString() {
-        return "Auteur{" +
-                "id=" + id +
-                ", nom='" + nom + '\'' +
-                ", prenom='" + prenom + '\'' +
-                '}';
+        return "" + prenom + "" + nom;
     }
 }

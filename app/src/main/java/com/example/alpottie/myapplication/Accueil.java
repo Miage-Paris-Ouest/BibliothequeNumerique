@@ -1,19 +1,21 @@
 package com.example.alpottie.myapplication;
 import android.app.Activity;
 import android.os.Bundle;
+
+import com.example.alpottie.myapplication.BDD.GestionLivre;
+import com.example.alpottie.myapplication.BDD.MySqLiteHelper;
+import com.example.alpottie.myapplication.Donnees.Livre;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class Accueil extends Activity implements OnClickListener
 {
     private Button scanBtn, ajoutLivreBtn, ajoutAuteurBtn;
-    private TextView formatTxt, contentTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,8 @@ public class Accueil extends Activity implements OnClickListener
         scanBtn.setOnClickListener(this);
         ajoutAuteurBtn.setOnClickListener(this);
         ajoutLivreBtn.setOnClickListener(this);
+        MySqLiteHelper myhelper = MySqLiteHelper.getHelper(this);
+        myhelper.onUpgrade(myhelper.getWritableDatabase(), MySqLiteHelper.DATABASE_VERSION, MySqLiteHelper.DATABASE_VERSION +1);
     }
     public void onClick(View v){
         if(v.getId()==R.id.scan_button || v.getId()==R.id.b_ajout_livre){
@@ -72,6 +76,25 @@ public class Accueil extends Activity implements OnClickListener
             Toast toast = Toast.makeText(getApplicationContext(),
                     "Code Ok", Toast.LENGTH_SHORT);
             toast.show();
+
+            GestionLivre gl = new GestionLivre(this);
+            Livre trouvaille = gl.getLivre(ean);
+            if(trouvaille != null)
+            {
+                Toast toast2 = Toast.makeText(getApplicationContext(), "Ce livre est déjà dans la base", Toast.LENGTH_SHORT);
+                toast.show();
+                Intent intention1 = new Intent(this, AfficherLivre.class);
+                intention1.putExtra("livre", trouvaille);
+                startActivity(intention1);
+            }
+            else {
+                Intent intention = new Intent(this, Enregistrer.class);
+                intention.putExtra("ean", ean);
+                startActivity(intention);
+            }
         }
+
+
+
     }
 }

@@ -13,12 +13,14 @@ public class Livre implements Parcelable
     private String ean;
     private String titre;
     private Auteur auteur;
+    private String couverture; // en base64
 
-   public Livre(long id, String ean, String titre, Auteur auteur) {
+   public Livre(long id, String ean, String titre, Auteur auteur, String couverture) {
         this.id = id;
         this.ean = ean;
         this.titre = titre;
         this.auteur = auteur;
+        this.couverture = couverture;
     }
 
     protected Livre(Parcel in) {
@@ -26,6 +28,15 @@ public class Livre implements Parcelable
         ean = in.readString();
         titre = in.readString();
         auteur = in.readParcelable(Auteur.class.getClassLoader());
+        couverture = in.readString();
+    }
+
+    public Livre(String ean, String titre, Auteur auteur, String couverture)
+    {
+        this.ean = ean;
+        this.titre = titre;
+        this.auteur = auteur;
+        this.couverture = couverture;
     }
 
     public Auteur getAuteur() {
@@ -60,6 +71,14 @@ public class Livre implements Parcelable
         this.titre = titre;
     }
 
+    public String getCouverture() {
+        return couverture;
+    }
+
+    public void setCouverture(String couverture) {
+        this.couverture = couverture;
+    }
+
     public static final Creator<Livre> CREATOR = new Creator<Livre>() {
         @Override
         public Livre createFromParcel(Parcel in) {
@@ -83,6 +102,7 @@ public class Livre implements Parcelable
         dest.writeString(ean);
         dest.writeString(titre);
         dest.writeParcelable(auteur, flags);
+        dest.writeString(couverture);
     }
 
     @Override
@@ -95,7 +115,8 @@ public class Livre implements Parcelable
         if (id != livre.id) return false;
         if (!ean.equals(livre.ean)) return false;
         if (!titre.equals(livre.titre)) return false;
-        return auteur.equals(livre.auteur);
+        if (!auteur.equals(livre.auteur)) return false;
+        return !(couverture != null ? !couverture.equals(livre.couverture) : livre.couverture != null);
 
     }
 
@@ -105,6 +126,7 @@ public class Livre implements Parcelable
         result = 31 * result + ean.hashCode();
         result = 31 * result + titre.hashCode();
         result = 31 * result + auteur.hashCode();
+        result = 31 * result + (couverture != null ? couverture.hashCode() : 0);
         return result;
     }
 
@@ -112,9 +134,9 @@ public class Livre implements Parcelable
     public String toString() {
         return "Livre{" +
                 "id=" + id +
-                ", ean='" + ean + '\'' +
-                ", titre='" + titre + '\'' +
                 ", auteur=" + auteur +
+                ", titre='" + titre + '\'' +
+                ", ean='" + ean + '\'' +
                 '}';
     }
 }

@@ -12,8 +12,8 @@ public class MySqLiteHelper extends SQLiteOpenHelper
 {
     //region def database
     // database librairie
-    private static final String DATABASE_NAME = "librairie";
-    private static final int DATABASE_VERSION = 1;
+    public static final String DATABASE_NAME = "librairie";
+    public static final int DATABASE_VERSION = 1;
 
     // table contenant les auteurs
     public static final String TABLE_AUTEUR = "auteurs";
@@ -27,10 +27,11 @@ public class MySqLiteHelper extends SQLiteOpenHelper
     public static final String COLONNE_LIVRE_EAN = "ean";
     public static final String COLONNE_LIVRE_TITRE = "titre";
     public static final String COLONNE_LIVRE_IDAUTEUR = "auteur";
+    public static final String COLONNE_LIVRE_COUVERTURE = "couverture";
 
     // database
     private static final String CREATE_TABLE_AUTEUR = "CREATE TABLE "+TABLE_AUTEUR+" ( "+ COLONNE_AUTEUR_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLONNE_AUTEUR_NOM + " TEXT NOT NULL, " + COLONNE_AUTEUR_PRENOM + " TEXT NOT NULL);";
-    private static final String CREATE_TABLE_LIVRE = "CREATE TABLE "+TABLE_LIVRE+" ( "+ COLONNE_LIVRE_EAN + " TEXT PRIMARY KEY, " + COLONNE_LIVRE_TITRE+ " TEXT NOT NULL, " + COLONNE_LIVRE_IDAUTEUR+ " TEXT NOT NULL, FOREIGN KEY("+COLONNE_LIVRE_IDAUTEUR+") REFERENCES " + TABLE_AUTEUR + "("+COLONNE_AUTEUR_ID+"));";
+    private static final String CREATE_TABLE_LIVRE = "CREATE TABLE "+TABLE_LIVRE+" ( "+ COLONNE_LIVRE_EAN + " TEXT PRIMARY KEY, " + COLONNE_LIVRE_TITRE+ " TEXT NOT NULL, " + COLONNE_LIVRE_IDAUTEUR+ " TEXT NOT NULL, "+ COLONNE_LIVRE_COUVERTURE+" TEXT, FOREIGN KEY("+COLONNE_LIVRE_IDAUTEUR+") REFERENCES " + TABLE_AUTEUR + "("+COLONNE_AUTEUR_ID+"));";
     //endregion
 
     private static MySqLiteHelper instance;

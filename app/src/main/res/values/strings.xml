@@ -12,4 +12,9 @@
     <string name="retour">Retour</string>
     <string name="title_activity_liste_auteur">ListeAuteur</string>
     <string name="voir_auteur">Voir mes auteurs</string>
+    <string name="titre">Titre du livre</string>
+    <string name="couverture">couverture</string>
+    <string name="ajoutAuteur">Ajouter un Auteur</string>
+    <string name="info">Appuyez sur le livre pour prendre en photo la couverture de votre livre.</string>
+    <string name="title_activity_frag_ajout_auteur">FragAjoutAuteur</string>
 </resources>

@@ -31,6 +31,7 @@ public class GestionLivre extends Liaison {
         values.put(MySqLiteHelper.COLONNE_LIVRE_EAN, livre.getEan());
         values.put(MySqLiteHelper.COLONNE_LIVRE_TITRE, livre.getTitre());
         values.put(MySqLiteHelper.COLONNE_LIVRE_IDAUTEUR, livre.getAuteur().getId());
+        values.put(MySqLiteHelper.COLONNE_LIVRE_COUVERTURE, livre.getCouverture());
 
         return database.insert(MySqLiteHelper.TABLE_LIVRE, null, values);
     }
@@ -41,6 +42,7 @@ public class GestionLivre extends Liaison {
         values.put(MySqLiteHelper.COLONNE_LIVRE_EAN, livre.getEan());
         values.put(MySqLiteHelper.COLONNE_LIVRE_TITRE, livre.getTitre());
         values.put(MySqLiteHelper.COLONNE_LIVRE_IDAUTEUR, livre.getAuteur().getId());
+        values.put(MySqLiteHelper.COLONNE_LIVRE_COUVERTURE, livre.getCouverture());
 
         long result = database.update(MySqLiteHelper.TABLE_LIVRE, values, WHERE_ID_EQUALS, new String[] {String.valueOf(livre.getEan())});
         Log.d("Résultat de la MAJ: ", " = " + result);
@@ -58,11 +60,22 @@ public class GestionLivre extends Liaison {
         Cursor cursor = database.rawQuery(query, null);
 
         while (cursor.moveToNext()) {
-            Livre livre = new Livre(cursor.getLong(0), cursor.getString(1), cursor.getString(2), new Auteur(cursor.getLong(3), cursor.getString(4), cursor.getString(5)));
+            Livre livre = new Livre(cursor.getLong(0), cursor.getString(1), cursor.getString(2), new Auteur(cursor.getLong(3), cursor.getString(4), cursor.getString(5)), cursor.getString(6));
             livres.add(livre);
         }
 
         cursor.close();
         return livres;
+    }
+
+    public Livre getLivre(String ean)
+    {
+        String query = "SELECT * FROM "+MySqLiteHelper.TABLE_LIVRE+", "+MySqLiteHelper.TABLE_AUTEUR+
+                " WHERE " + MySqLiteHelper.COLONNE_LIVRE_IDAUTEUR+ " = "+ MySqLiteHelper.COLONNE_AUTEUR_ID+
+                " AND " + MySqLiteHelper.COLONNE_LIVRE_EAN +" = "+ ean +";";
+        Cursor cursor = database.rawQuery(query, null);
+        Livre l = new Livre(cursor.getLong(0), cursor.getString(1), cursor.getString(2), new Auteur(cursor.getLong(3), cursor.getString(4), cursor.getString(5)), cursor.getString(6));
+        cursor.close();
+        return l;
     }
 }
