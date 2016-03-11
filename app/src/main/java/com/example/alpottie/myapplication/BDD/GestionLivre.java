@@ -72,9 +72,11 @@ public class GestionLivre extends Liaison {
     {
         String query = "SELECT * FROM "+MySqLiteHelper.TABLE_LIVRE+", "+MySqLiteHelper.TABLE_AUTEUR+
                 " WHERE " + MySqLiteHelper.COLONNE_LIVRE_IDAUTEUR+ " = "+ MySqLiteHelper.COLONNE_AUTEUR_ID+
-                " AND " + MySqLiteHelper.COLONNE_LIVRE_EAN +" = "+ ean +";";
+                " AND " + MySqLiteHelper.COLONNE_LIVRE_EAN +" = '"+ ean +"';";
         Cursor cursor = database.rawQuery(query, null);
-        Livre l = new Livre(cursor.getLong(0), cursor.getString(1), cursor.getString(2), new Auteur(cursor.getLong(3), cursor.getString(4), cursor.getString(5)), cursor.getString(6));
+        Livre l = null;
+        if(cursor.getCount() > 0)
+            l = new Livre(cursor.getLong(0), cursor.getString(1), cursor.getString(2), new Auteur(cursor.getLong(3), cursor.getString(4), cursor.getString(5)), cursor.getString(6));
         cursor.close();
         return l;
     }

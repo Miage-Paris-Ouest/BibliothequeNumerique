@@ -17,4 +17,7 @@
     <string name="ajoutAuteur">Ajouter un Auteur</string>
     <string name="info">Appuyez sur le livre pour prendre en photo la couverture de votre livre.</string>
     <string name="title_activity_frag_ajout_auteur">FragAjoutAuteur</string>
+    <string name="affichagetitre">Titre</string>
+    <string name="afficheauteur">Auteur</string>
+    <string name="afficheean">EAN</string>
 </resources>

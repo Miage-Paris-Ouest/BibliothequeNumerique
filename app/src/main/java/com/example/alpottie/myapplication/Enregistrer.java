@@ -1,10 +1,8 @@
 package com.example.alpottie.myapplication;
 
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -134,6 +132,7 @@ public class Enregistrer extends AppCompatActivity {
         String titre = ettitre.getText().toString();
         String ean = getIntent().getStringExtra("ean");
 
+        //region couverture
         // On convertie la photo en base64
         String couverture;
         if(imageBitmap == null)
@@ -143,28 +142,41 @@ public class Enregistrer extends AppCompatActivity {
         imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
         byte[] byteArray = byteArrayOutputStream.toByteArray();
         couverture = Base64.encodeToString(byteArray, Base64.DEFAULT);
+        //endregion
 
         Spinner dd = (Spinner) findViewById(R.id.ddauteur);
         long auteurid = dd.getSelectedItemId()+1;
 
         Auteur a = ga.getAuteur(auteurid);
-        Livre l = new Livre(ean, titre, a , couverture);
-        Long res = gl.save(l);
+        Toast toast;
 
-        if(res == -1)
+        if(titre.isEmpty() || a == null)
         {
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    "Erreur pendant l'ajout.", Toast.LENGTH_SHORT);
+            toast = Toast.makeText(this, "Il manqe le titre ou l'auteur !", Toast.LENGTH_LONG);
             toast.show();
         }
-        else
-        {
-            Toast toast = Toast.makeText(getApplicationContext(), "Ajout ok !", Toast.LENGTH_SHORT);
-            toast.show();
-            Intent intent = new Intent(this, AfficherLivre.class);
-            intent.putExtra("livre", new Livre(ean, titre, ga.getAuteur(auteurid), couverture));
-            startActivity(intent);
+        else {
+            Livre l = new Livre(ean, titre, a, couverture);
+            Long res = gl.save(l);
+
+            if (res == -1) {
+                toast = Toast.makeText(getApplicationContext(),
+                        "Erreur pendant l'ajout.", Toast.LENGTH_SHORT);
+                toast.show();
+            } else {
+                toast = Toast.makeText(getApplicationContext(), "Ajout ok !", Toast.LENGTH_SHORT);
+                toast.show();
+                Intent intent = new Intent(this, AfficherLivre.class);
+                intent.putExtra("livre", new Livre(ean, titre, ga.getAuteur(auteurid), couverture));
+                startActivity(intent);
+            }
         }
+    }
+
+    public void onClickRetourAccueil(View v)
+    {
+        Intent retour = new Intent(this, Accueil.class);
+        startActivity(retour);
     }
 
 }

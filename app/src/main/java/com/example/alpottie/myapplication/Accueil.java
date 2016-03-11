@@ -79,22 +79,24 @@ public class Accueil extends Activity implements OnClickListener
 
             GestionLivre gl = new GestionLivre(this);
             Livre trouvaille = gl.getLivre(ean);
+            Intent intention;
+            Toast toast1;
             if(trouvaille != null)
             {
-                Toast toast2 = Toast.makeText(getApplicationContext(), "Ce livre est déjà dans la base", Toast.LENGTH_SHORT);
-                toast.show();
-                Intent intention1 = new Intent(this, AfficherLivre.class);
-                intention1.putExtra("livre", trouvaille);
-                startActivity(intention1);
+                intention = new Intent(this, AfficherLivre.class);
+                intention.putExtra("livre", trouvaille);
+                toast1 = Toast.makeText(this, "Ce livre est déjà dans votre bibliothèque.", Toast.LENGTH_LONG);
+                toast1.show();
             }
             else {
-                Intent intention = new Intent(this, Enregistrer.class);
+                intention = new Intent(this, Enregistrer.class);
                 intention.putExtra("ean", ean);
-                startActivity(intention);
+                toast1 = Toast.makeText(this, "Ce livre n'est pas dans votre bibliothèque, enregistrez le !", Toast.LENGTH_LONG);
+                toast1.show();
+
             }
+
+            startActivity(intention);
         }
-
-
-
     }
 }

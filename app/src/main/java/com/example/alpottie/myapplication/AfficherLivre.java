@@ -9,7 +9,10 @@ import android.util.Base64;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.alpottie.myapplication.BDD.GestionAuteur;
+import com.example.alpottie.myapplication.BDD.GestionLivre;
 import com.example.alpottie.myapplication.Donnees.Livre;
 
 public class AfficherLivre extends AppCompatActivity {
@@ -18,6 +21,8 @@ public class AfficherLivre extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_livre);
+
+        GestionLivre gl = new GestionLivre(this);
         Intent intent = getIntent();
         Livre livre = intent.getParcelableExtra("livre");
 

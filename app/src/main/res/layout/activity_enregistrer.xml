@@ -75,7 +75,7 @@
         android:layout_height="wrap_content"
         android:text="@string/retour"
         android:id="@+id/button2"
-        android:onClick="onClickAccueil"
+        android:onClick="onClickRetourAccueil"
         android:layout_marginLeft="47dp"
         android:layout_marginStart="47dp"
         android:layout_alignTop="@+id/bajouter"
