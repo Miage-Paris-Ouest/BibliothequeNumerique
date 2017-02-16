@@ -135,8 +135,8 @@ public class Enregistrer extends AppCompatActivity {
         //region couverture
         // On convertie la photo en base64
         String couverture;
-        if(imageBitmap == null)
-            imageBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.icone);
+        //if(imageBitmap == null)
+        //imageBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.icone);
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);

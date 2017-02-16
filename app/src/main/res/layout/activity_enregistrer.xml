@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/ivCouverture"
         android:contentDescription="@string/couverture"
-        android:src="@drawable/icone"
+
         android:clickable="true"
         android:onClick="onClickAjoutCouverture"
         android:layout_alignParentTop="true"
