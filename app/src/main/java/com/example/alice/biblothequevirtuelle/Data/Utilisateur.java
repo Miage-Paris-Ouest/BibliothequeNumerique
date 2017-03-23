@@ -11,11 +11,15 @@ public class Utilisateur extends SugarRecord {
     private String nom;
     private String prenom;
     private String motDePasse;
+    private String pseudo;
+    private String email;
 
-    public Utilisateur(String nom, String prenom, String motDePasse) {
+    public Utilisateur(String nom, String prenom, String motDePasse, String pseudo, String email) {
         this.nom = nom;
         this.prenom = prenom;
         this.motDePasse = motDePasse;
+        this.pseudo = pseudo;
+        this.email = email;
     }
 
     public String getNom() {
@@ -42,6 +46,21 @@ public class Utilisateur extends SugarRecord {
         this.motDePasse = motDePasse;
     }
 
+    public String getPseudo() {
+        return pseudo;
+    }
+
+    public void setPseudo(String pseudo) {
+        this.pseudo = pseudo;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     @Override
     public String toString() {
@@ -49,6 +68,8 @@ public class Utilisateur extends SugarRecord {
                 "nom='" + nom + '\'' +
                 ", prenom='" + prenom + '\'' +
                 ", motDePasse='" + motDePasse + '\'' +
+                ", pseudo='" + pseudo + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
 }
