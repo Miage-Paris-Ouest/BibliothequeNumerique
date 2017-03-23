@@ -15,6 +15,6 @@ public class FragScanAjout extends Fragment {
                              Bundle savedInstanceState) {
 
         super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.fragment_layout, container, false);
+        return inflater.inflate(R.layout.fragment_scan_layout, container, false);
     }
 }

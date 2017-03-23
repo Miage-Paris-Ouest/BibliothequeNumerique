@@ -1,6 +1,5 @@
 package com.example.alice.biblothequevirtuelle.Vue;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Intent;
@@ -24,7 +23,7 @@ public class Accueil extends Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_accueil);
+        setContentView(R.layout.accueil_layout);
         scan = new Scanner(this);
 
         if (findViewById(R.id.flVerif) != null) {
