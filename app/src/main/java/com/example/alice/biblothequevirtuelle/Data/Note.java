@@ -9,11 +9,13 @@ import com.orm.SugarRecord;
 public class Note extends SugarRecord {
 
     private int idLivre;
+    private int idUtilisateur;
     private String avis;
     private int note; //note qui va de 1 à 5
 
-    public Note(int idLivre, String avis, int note) {
+    public Note(int idLivre, int idUtilisateur, String avis, int note) {
         this.idLivre = idLivre;
+        this.idUtilisateur = idUtilisateur;
         this.avis = avis;
         this.note = note;
     }
@@ -24,6 +26,14 @@ public class Note extends SugarRecord {
 
     public void setIdLivre(int idLivre) {
         this.idLivre = idLivre;
+    }
+
+    public int getIdUtilisateur() {
+        return idUtilisateur;
+    }
+
+    public void setIdUtilisateur(int idUtilisateur) {
+        this.idUtilisateur = idUtilisateur;
     }
 
     public String getAvis() {
@@ -47,6 +57,7 @@ public class Note extends SugarRecord {
     public String toString() {
         return "Note{" +
                 "idLivre=" + idLivre +
+                ", idUtilisateur=" + idUtilisateur +
                 ", avis='" + avis + '\'' +
                 ", note=" + note +
                 '}';
