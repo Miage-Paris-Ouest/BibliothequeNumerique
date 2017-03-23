@@ -7,10 +7,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.alice.biblothequevirtuelle.Data.Livre;
 import com.example.alice.biblothequevirtuelle.R;
 import com.example.alice.biblothequevirtuelle.Scanner;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.orm.SugarContext;
+
+import java.util.ArrayList;
 
 public class Accueil extends Activity
 {
@@ -35,6 +39,8 @@ public class Accueil extends Activity
             transaction.hide(fragVerif);
             transaction.commit();
         }
+
+        SugarContext.init(getApplicationContext());
     }
 
     public void onClickVerif(View V)
@@ -72,7 +78,6 @@ public class Accueil extends Activity
             ean = scanningResult.getContents().toLowerCase();
             type = scanningResult.getFormatName().toLowerCase();
             prefix = ean.substring(0, 3);
-            transaction.show(fragVerif);
 
             if(!type.equals("ean_13"))
             {
@@ -86,6 +91,16 @@ public class Accueil extends Activity
             else
             {
                 Toast.makeText(getApplicationContext(), "code ok : ean = "+ean+" type= "+type+" prefix="+prefix, Toast.LENGTH_LONG).show();
+                ArrayList<Livre> resultat = (ArrayList<Livre>) Livre.find(Livre.class, "ean = '%"+ean+"'");
+                if(resultat.size() == 0)
+                {
+                    transaction.show(fragVerif);
+                    transaction.commit();
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(), "Vous avez déjà ce livre !", Toast.LENGTH_LONG).show();
+                }
             }
 
 
