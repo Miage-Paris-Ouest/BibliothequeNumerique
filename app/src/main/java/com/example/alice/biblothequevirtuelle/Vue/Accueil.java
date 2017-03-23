@@ -36,23 +36,18 @@ public class Accueil extends Activity
             prefix = ean.substring(0, 3);
         }
         else{
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    "Aucunes données scannées", Toast.LENGTH_SHORT);
-            toast.show();
+            Toast.makeText(getApplicationContext(),"Aucunes données scannées", Toast.LENGTH_SHORT).show();
         }
 
         if(!type.equals("ean_13"))
         {
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    "Mauvais format", Toast.LENGTH_SHORT);
-            toast.show();
+            Toast.makeText(getApplicationContext(), "Mauvais format", Toast.LENGTH_SHORT).show();
+
         }
 
         if(!(prefix.equals("977") || prefix.equals("978") || prefix.equals("979")))
         {
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    "C'est n'est pas un livre !", Toast.LENGTH_SHORT);
-            toast.show();
+            Toast.makeText(getApplicationContext(),"C'est n'est pas un livre !", Toast.LENGTH_SHORT).show();
         }
         else
         {
