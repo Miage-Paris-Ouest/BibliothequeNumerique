@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_accueil"
     android:layout_width="match_parent"
@@ -10,13 +11,57 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.alice.biblothequevirtuelle.Vue.Accueil">
 
-    <Button
-        android:text="Scanner"
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:srcCompat="@drawable/logo"
+        android:id="@+id/imageView2"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/bScan"
-        android:onClick="onClickScan" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/biblioAccueil"
+        android:id="@+id/ivBiblioAccueil"
+        android:adjustViewBounds="true"
+        android:cropToPadding="true"
+        android:layout_below="@+id/imageView2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="21dp" />
+
+    <Button
+        android:text="Vérification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bVerification"
+        android:layout_below="@+id/ivBiblioAccueil"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="Ajouter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bAjouter"
+        android:layout_below="@+id/ivBiblioAccueil"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="46dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/bAjouter"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+    </FrameLayout>
+
 </RelativeLayout>
