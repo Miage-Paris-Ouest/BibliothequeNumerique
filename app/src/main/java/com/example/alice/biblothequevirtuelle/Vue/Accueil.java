@@ -52,6 +52,7 @@ public class Accueil extends Activity
     public void onClickNon(View v)
     {
         Toast.makeText(getApplicationContext(), "NON", Toast.LENGTH_SHORT).show();
+        transaction = getFragmentManager().beginTransaction();
         transaction.hide(fragVerif);
         transaction.commit();
     }
@@ -66,7 +67,8 @@ public class Accueil extends Activity
     }
 
     // utilisation du résultat du scan
-    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+    public void onActivityResult(int requestCode, int resultCode, Intent intent)
+    {
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         String type;
         String prefix;
@@ -91,9 +93,10 @@ public class Accueil extends Activity
             else
             {
                 Toast.makeText(getApplicationContext(), "code ok : ean = "+ean+" type= "+type+" prefix="+prefix, Toast.LENGTH_LONG).show();
-                ArrayList<Livre> resultat = (ArrayList<Livre>) Livre.find(Livre.class, "ean = '%"+ean+"'");
+                ArrayList<Livre> resultat = (ArrayList<Livre>) Livre.find(Livre.class, "ean = '"+ean+"'");
                 if(resultat.size() == 0)
                 {
+                    transaction = getFragmentManager().beginTransaction();
                     transaction.show(fragVerif);
                     transaction.commit();
                 }

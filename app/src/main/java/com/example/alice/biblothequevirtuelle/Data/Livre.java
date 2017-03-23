@@ -22,7 +22,8 @@ public class Livre extends SugarRecord implements Parcelable
     private String langue;
     private String resume;
 
-
+    public Livre() {
+    }
 
     public Livre(String titre, String ean, int type, String auteur, String editeur, String categorie, int datePub, String langue, String resume ) {
         this.titre = titre;
