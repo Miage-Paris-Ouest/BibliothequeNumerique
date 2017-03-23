@@ -4,4 +4,16 @@
     <string name="verifier">Vérifier</string>
     <string name="image_biblio">Image Bibliothèque</string>
     <string name="logoappli">logoAppli</string>
+    <string name="auteur">Auteur</string>
+    <string name="avis">Avis</string>
+    <string name="categorie">Catégorie</string>
+    <string name="date_de_publication">Date de publication</string>
+    <string name="editeur">Editeur</string>
+    <string name="isbn">ISBN</string>
+    <string name="langue">Langue</string>
+    <string name="resume">Résumé</string>
+    <string name="scanner">Scanner</string>
+    <string name="type">Type</string>
+    <string name="titre">Titre</string>
+    <string name="couverture">Couverture</string>
 </resources>

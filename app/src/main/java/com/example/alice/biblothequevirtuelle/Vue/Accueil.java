@@ -1,9 +1,9 @@
 package com.example.alice.biblothequevirtuelle.Vue;
 
-import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
@@ -16,7 +16,7 @@ import com.orm.SugarContext;
 
 import java.util.ArrayList;
 
-public class Accueil extends Activity
+public class Accueil extends AppCompatActivity
 {
 
     private Scanner scan;
@@ -43,27 +43,31 @@ public class Accueil extends Activity
         SugarContext.init(getApplicationContext());
     }
 
-    public void onClickVerif(View V)
-    {
+    public void onClickVerif(View V) {
         scan.scanner();
     }
 
-    //ne cache pas
     public void onClickNon(View v)
     {
-        Toast.makeText(getApplicationContext(), "NON", Toast.LENGTH_SHORT).show();
         transaction = getFragmentManager().beginTransaction();
         transaction.hide(fragVerif);
         transaction.commit();
+
     }
     public void onClickOui(View v)
     {
-        Toast.makeText(getApplicationContext(), "OUI", Toast.LENGTH_SHORT).show();
-        /*
         Intent ajout = new Intent(this, Ajouter.class);
         ajout.putExtra("ean", ean);
+        transaction = getFragmentManager().beginTransaction();
+        transaction.hide(fragVerif);
+        transaction.commit();
         startActivity(ajout);
-        */
+    }
+
+    public void onClickAjouter(View v)
+    {
+        Intent ajout = new Intent(this, Ajouter.class);
+        startActivity(ajout);
     }
 
     // utilisation du résultat du scan
@@ -93,6 +97,7 @@ public class Accueil extends Activity
             else
             {
                 Toast.makeText(getApplicationContext(), "code ok : ean = "+ean+" type= "+type+" prefix="+prefix, Toast.LENGTH_LONG).show();
+
                 ArrayList<Livre> resultat = (ArrayList<Livre>) Livre.find(Livre.class, "ean = '"+ean+"'");
                 if(resultat.size() == 0)
                 {
@@ -105,8 +110,6 @@ public class Accueil extends Activity
                     Toast.makeText(getApplicationContext(), "Vous avez déjà ce livre !", Toast.LENGTH_LONG).show();
                 }
             }
-
-
         }
     }
 }
