@@ -1,27 +1,30 @@
 package com.example.alice.biblothequevirtuelle.Vue;
 
-import com.example.alice.biblothequevirtuelle.R;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.alice.biblothequevirtuelle.R;
+import com.example.alice.biblothequevirtuelle.Scanner;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
 public class Accueil extends Activity
 {
+
+    Scanner scan;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accueil);
+        scan = new Scanner(this);
     }
 
-    public void onClickScan(View V)
+    public void onClickVerif(View V)
     {
-        IntentIntegrator scanIntegrator = new IntentIntegrator(this);
-        scanIntegrator.initiateScan();
+        scan.scanner();
     }
 
     // utilisation du résultat du scan
@@ -30,7 +33,8 @@ public class Accueil extends Activity
         String ean = "";
         String type = "";
         String prefix ="";
-        if (scanningResult != null) {
+
+        if (resultCode != 0) {
             ean = scanningResult.getContents().toLowerCase();
             type = scanningResult.getFormatName().toLowerCase();
             prefix = ean.substring(0, 3);

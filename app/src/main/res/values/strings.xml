@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">BiblothequeVirtuelle</string>
+    <string name="ajouter">Ajouter</string>
+    <string name="verifier">Vérifier</string>
+    <string name="image_biblio">Image Bibliothèque</string>
+    <string name="logoappli">logoAppli</string>
 </resources>

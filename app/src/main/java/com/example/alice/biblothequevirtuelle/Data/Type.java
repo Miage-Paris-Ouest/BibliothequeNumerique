@@ -12,6 +12,8 @@ public enum Type {
     MANGA("Manga", 4),
     PRESSE("Presse", 5);
 
+    private String nom;
+    private int id;
 
     public String getNom() {
         return nom;
@@ -21,8 +23,10 @@ public enum Type {
         return id;
     }
 
-    private String nom;
-    private int id;
+    public int getIdByName(Type t)
+    {
+        return t.getId();
+    }
 
     Type(String toString, int value) {
         nom = toString;

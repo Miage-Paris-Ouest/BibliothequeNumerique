@@ -20,31 +20,34 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:contentDescription="@string/logoappli" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/biblioAccueil"
+        app:srcCompat="@drawable/biblioaccueil"
         android:id="@+id/ivBiblioAccueil"
         android:adjustViewBounds="true"
         android:cropToPadding="true"
         android:layout_below="@+id/ivLogo"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="21dp" />
+        android:layout_marginTop="21dp"
+        android:contentDescription="@string/image_biblio" />
 
     <Button
-        android:text="Vérification"
+        android:text="@string/verifier"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/bVerification"
         android:layout_below="@+id/ivBiblioAccueil"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:onClick="onClickVerif" />
 
     <Button
-        android:text="Ajouter"
+        android:text="@string/ajouter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/bAjouter"
