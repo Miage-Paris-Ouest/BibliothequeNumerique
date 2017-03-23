@@ -1,6 +1,8 @@
 package com.example.alice.biblothequevirtuelle.Vue;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -14,12 +16,26 @@ import com.google.zxing.integration.android.IntentResult;
 public class Accueil extends Activity
 {
 
-    Scanner scan;
+    private Scanner scan;
+    private FragmentTransaction transaction;
+    private FragScanAjout fragVerif;
+    private String ean;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accueil);
         scan = new Scanner(this);
+
+        if (findViewById(R.id.flVerif) != null) {
+
+            fragVerif = new FragScanAjout();
+            transaction = getFragmentManager().beginTransaction();
+            transaction.add(R.id.flVerif, fragVerif);
+            transaction.addToBackStack(null);
+            transaction.hide(fragVerif);
+            transaction.commit();
+        }
     }
 
     public void onClickVerif(View V)
@@ -27,35 +43,53 @@ public class Accueil extends Activity
         scan.scanner();
     }
 
+    //ne cache pas
+    public void onClickNon(View v)
+    {
+        Toast.makeText(getApplicationContext(), "NON", Toast.LENGTH_SHORT).show();
+        transaction.hide(fragVerif);
+        transaction.commit();
+    }
+    public void onClickOui(View v)
+    {
+        Toast.makeText(getApplicationContext(), "OUI", Toast.LENGTH_SHORT).show();
+        /*
+        Intent ajout = new Intent(this, Ajouter.class);
+        ajout.putExtra("ean", ean);
+        startActivity(ajout);
+        */
+    }
+
     // utilisation du résultat du scan
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
-        String ean = "";
-        String type = "";
-        String prefix ="";
+        String type;
+        String prefix;
 
-        if (resultCode != 0) {
+        if (resultCode == 0) {
+            Toast.makeText(getApplicationContext(),"Aucunes données scannées", Toast.LENGTH_SHORT).show();
+        }
+        else if(scanningResult != null){
             ean = scanningResult.getContents().toLowerCase();
             type = scanningResult.getFormatName().toLowerCase();
             prefix = ean.substring(0, 3);
-        }
-        else{
-            Toast.makeText(getApplicationContext(),"Aucunes données scannées", Toast.LENGTH_SHORT).show();
-        }
+            transaction.show(fragVerif);
 
-        if(!type.equals("ean_13"))
-        {
-            Toast.makeText(getApplicationContext(), "Mauvais format", Toast.LENGTH_SHORT).show();
+            if(!type.equals("ean_13"))
+            {
+                Toast.makeText(getApplicationContext(), "Mauvais format", Toast.LENGTH_SHORT).show();
 
-        }
+            }
+            else if(!(prefix.equals("977") || prefix.equals("978") || prefix.equals("979")))
+            {
+                Toast.makeText(getApplicationContext(),"C'est n'est pas un livre !", Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                Toast.makeText(getApplicationContext(), "code ok : ean = "+ean+" type= "+type+" prefix="+prefix, Toast.LENGTH_LONG).show();
+            }
 
-        if(!(prefix.equals("977") || prefix.equals("978") || prefix.equals("979")))
-        {
-            Toast.makeText(getApplicationContext(),"C'est n'est pas un livre !", Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
-            Toast.makeText(getApplicationContext(), "code ok : ean = "+ean+" type= "+type+" prefix="+prefix, Toast.LENGTH_LONG).show();
+
         }
     }
 }

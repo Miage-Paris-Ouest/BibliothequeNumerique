@@ -35,7 +35,8 @@
                 android:text="Oui"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/bOui" />
+                android:id="@+id/bOui"
+                android:onClick="onClickOui" />
         </LinearLayout>
 
         <Button
@@ -43,7 +44,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/bNon"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:onClick="onClickNon" />
     </LinearLayout>
 
 </LinearLayout>

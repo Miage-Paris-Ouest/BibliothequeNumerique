@@ -1,16 +1,19 @@
 package com.example.alice.biblothequevirtuelle.Data;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.orm.SugarRecord;
 
 /**
  * Created by alice on 21/03/2017.
  */
 
-public class Livre extends SugarRecord
+public class Livre extends SugarRecord implements Parcelable
 {
     // pas besoin de variable id, elle est héritée directement de la classe SugarRecord
     private String titre;
-    private int ean;
+    private String ean;
     private int type;
     private String auteur;
     private String editeur;
@@ -21,7 +24,7 @@ public class Livre extends SugarRecord
 
 
 
-    public Livre(String titre, int ean, int type, String auteur, String editeur, String categorie, int datePub, String langue, String resume ) {
+    public Livre(String titre, String ean, int type, String auteur, String editeur, String categorie, int datePub, String langue, String resume ) {
         this.titre = titre;
         this.ean = ean;
         this.type = type;
@@ -34,6 +37,30 @@ public class Livre extends SugarRecord
 
     }
 
+    protected Livre(Parcel in) {
+        titre = in.readString();
+        ean = in.readString();
+        type = in.readInt();
+        auteur = in.readString();
+        editeur = in.readString();
+        categorie = in.readString();
+        datePub = in.readInt();
+        langue = in.readString();
+        resume = in.readString();
+    }
+
+    public static final Creator<Livre> CREATOR = new Creator<Livre>() {
+        @Override
+        public Livre createFromParcel(Parcel in) {
+            return new Livre(in);
+        }
+
+        @Override
+        public Livre[] newArray(int size) {
+            return new Livre[size];
+        }
+    };
+
     public String getTitre() {
         return titre;
     }
@@ -42,11 +69,11 @@ public class Livre extends SugarRecord
         this.titre = titre;
     }
 
-    public int getEan() {
+    public String getEan() {
         return ean;
     }
 
-    public void setEan(int ean) {
+    public void setEan(String ean) {
         this.ean = ean;
     }
 
@@ -119,5 +146,23 @@ public class Livre extends SugarRecord
                 ", langue='" + langue + '\'' +
                 ", resume='" + resume + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.titre);
+        dest.writeString(this.ean);
+        dest.writeInt(this.type);
+        dest.writeString(this.auteur);
+        dest.writeString(this.editeur);
+        dest.writeString(this.categorie);
+        dest.writeInt(this.datePub);
+        dest.writeString(this.langue);
+        dest.writeString(this.resume);
     }
 }
