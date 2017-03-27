@@ -9,8 +9,8 @@ La branche COLLECTION est utilisée pour développer les US concernant les colle
 Une fois la fonctionnalité terminée et TESTEE, il faut merde la branche en question avec la branche DEV. 
 
 ## Liens utiles
-[Wiki](https://github.com/Miage-Paris-Ouest/BibliothequeNumerique/wiki) 
-[Suivi](https://github.com/Miage-Paris-Ouest/BibliothequeNumerique/projects)
-[Mockup](https://univparisouest.mybalsamiq.com/projects/bibliothequevirtuelle/grid) (Utile pour les layouts) 
+* [Wiki](https://github.com/Miage-Paris-Ouest/BibliothequeNumerique/wiki) 
+* [Suivi](https://github.com/Miage-Paris-Ouest/BibliothequeNumerique/projects)
+* [Mockup](https://univparisouest.mybalsamiq.com/projects/bibliothequevirtuelle/grid) (Utile pour les layouts) 
 
 
