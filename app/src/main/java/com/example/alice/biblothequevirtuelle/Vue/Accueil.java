@@ -43,6 +43,15 @@ public class Accueil extends AppCompatActivity
         SugarContext.init(getApplicationContext());
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Toast.makeText(getApplicationContext(), "onPauseAccueil", Toast.LENGTH_LONG).show();
+        transaction = getFragmentManager().beginTransaction();
+        transaction.hide(fragVerif);
+        transaction.commit();
+    }
+
     public void onClickVerif(View V) {
         scan.scanner();
     }
@@ -58,9 +67,6 @@ public class Accueil extends AppCompatActivity
     {
         Intent ajout = new Intent(this, Ajouter.class);
         ajout.putExtra("ean", ean);
-        transaction = getFragmentManager().beginTransaction();
-        transaction.hide(fragVerif);
-        transaction.commit();
         startActivity(ajout);
     }
 
@@ -79,6 +85,9 @@ public class Accueil extends AppCompatActivity
 
         if (resultCode == 0) {
             Toast.makeText(getApplicationContext(),"Aucunes données scannées", Toast.LENGTH_SHORT).show();
+            transaction = getFragmentManager().beginTransaction();
+            transaction.hide(fragVerif);
+            transaction.commit();
         }
         else if(scanningResult != null){
             ean = scanningResult.getContents().toLowerCase();
@@ -88,16 +97,20 @@ public class Accueil extends AppCompatActivity
             if(!type.equals("ean_13"))
             {
                 Toast.makeText(getApplicationContext(), "Mauvais format", Toast.LENGTH_SHORT).show();
+                transaction = getFragmentManager().beginTransaction();
+                transaction.hide(fragVerif);
+                transaction.commit();
 
             }
             else if(!(prefix.equals("977") || prefix.equals("978") || prefix.equals("979")))
             {
                 Toast.makeText(getApplicationContext(),"C'est n'est pas un livre !", Toast.LENGTH_SHORT).show();
+                transaction = getFragmentManager().beginTransaction();
+                transaction.hide(fragVerif);
+                transaction.commit();
             }
             else
             {
-                Toast.makeText(getApplicationContext(), "code ok : ean = "+ean+" type= "+type+" prefix="+prefix, Toast.LENGTH_LONG).show();
-
                 ArrayList<Livre> resultat = (ArrayList<Livre>) Livre.find(Livre.class, "ean = '"+ean+"'");
                 if(resultat.size() == 0)
                 {
@@ -108,6 +121,9 @@ public class Accueil extends AppCompatActivity
                 else
                 {
                     Toast.makeText(getApplicationContext(), "Vous avez déjà ce livre !", Toast.LENGTH_LONG).show();
+                    transaction = getFragmentManager().beginTransaction();
+                    transaction.hide(fragVerif);
+                    transaction.commit();
                 }
             }
         }

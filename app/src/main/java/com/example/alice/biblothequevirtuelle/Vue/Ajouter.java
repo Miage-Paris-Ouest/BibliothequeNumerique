@@ -3,7 +3,7 @@ package com.example.alice.biblothequevirtuelle.Vue;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
+import android.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -42,6 +42,11 @@ public class Ajouter extends AppCompatActivity {
         ean = reception.getStringExtra("ean");
         scan = new Scanner(this);
 
+        if(ean != null)
+        {
+            appelGoogleBooksApi(ean);
+        }
+
         Button bScanner = (Button) findViewById(R.id.bScan);
         bScanner.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,49 +69,56 @@ public class Ajouter extends AppCompatActivity {
                 final EditText etLangue = (EditText) findViewById(R.id.etLangue);
                 final EditText etResume = (EditText) findViewById(R.id.etResume);
 
-                Livre ajout = new Livre(etTitre.getText().toString(), etEan.getText().toString(), etType.getText().toString(), etAuteur.getText().toString(), etEditeur.getText().toString(), etCateg.getText().toString(), etDate.getText().toString(), etLangue.getText().toString(), etResume.getText().toString());
-                try
+                String titre = etTitre.getText().toString();
+                String auteur = etAuteur.getText().toString();
+                String editeur = etEditeur.getText().toString();
+                String type = etType.getText().toString();
+                String isbn = etEan.getText().toString();
+                String categ = etCateg.getText().toString();
+                String date = etDate.getText().toString();
+                String langue = etLangue.getText().toString();
+                String resume = etResume.getText().toString();
+
+                if(!titre.equals("") && !auteur.equals("") && !isbn.equals(""))
                 {
-                    ajout.save();
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-                    builder.setTitle("Ajout réussi !");
+                    Livre ajout = new Livre(titre, isbn, type, auteur, editeur, categ, date, langue, resume);
+                    try {
+                        ajout.save();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(Ajouter.this);
+                        builder.setTitle("Ajout réussi !");
 
-                    builder.setMessage("Voulez vous ajouter un autre livre ?");
-                    builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
+                        builder.setMessage("Voulez vous ajouter un autre livre ?");
+                        builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
 
-                            etTitre.setText("");
-                            etAuteur.setText("");
-                            etEditeur.setText("");
-                            etType.setText("");
-                            etEan.setText("");
-                            etCateg.setText("");
-                            etDate.setText("");
-                            etLangue.setText("");
-                            etResume.setText("");
-                            ean = null;
-                        }
-                    });
-                    builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            finish();
-                        }
-                    });
-                    builder.show();
-                    Toast.makeText(getApplicationContext(), "Ce livre a été ajouté à votre bibliothèque !", Toast.LENGTH_LONG).show();
+                                etTitre.setText("");
+                                etAuteur.setText("");
+                                etEditeur.setText("");
+                                etType.setText("");
+                                etEan.setText("");
+                                etCateg.setText("");
+                                etDate.setText("");
+                                etLangue.setText("");
+                                etResume.setText("");
+                                ean = null;
+                            }
+                        });
+                        builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                finish();
+                            }
+                        });
+                        builder.show();
+                        Toast.makeText(getApplicationContext(), "Ce livre a été ajouté à votre bibliothèque !", Toast.LENGTH_LONG).show();
 
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
+                else
+                    Toast.makeText(getApplicationContext(), "Il manque un champ obligatoire !", Toast.LENGTH_LONG).show();
             }
         });
-
-        if(ean != null)
-        {
-            appelGoogleBooksApi();
-        }
     }
 
     // utilisation du résultat du scan
@@ -144,7 +156,7 @@ public class Ajouter extends AppCompatActivity {
                 }
                 else
                 {
-                    appelGoogleBooksApi();
+                    appelGoogleBooksApi(ean);
                 }
             }
         }
@@ -152,7 +164,8 @@ public class Ajouter extends AppCompatActivity {
 
     private void lectureJSON(String reponse) throws JSONException {
         JSONObject reponseJson = new JSONObject(reponse);
-        if(reponseJson.has("items")) {
+        if(reponseJson.has("items"))
+        {
             JSONArray tabLivreJson = reponseJson.getJSONArray("items");
             JSONObject livreJson = tabLivreJson.getJSONObject(0);
             JSONObject infoLivreJson = livreJson.getJSONObject("volumeInfo");
@@ -201,17 +214,18 @@ public class Ajouter extends AppCompatActivity {
                 etLangue.setText(langue);
             }
         }
+        else
+            Toast.makeText(getApplicationContext(), "Nous n'avons pas d'informations sur ce livre.", Toast.LENGTH_LONG).show();
     }
 
-    private void appelGoogleBooksApi()
+    private void appelGoogleBooksApi(String isbn)
     {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://www.googleapis.com/books/v1/volumes?q=isbn:"+ean;
+        String url = "https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(getApplicationContext(), "onResponse", Toast.LENGTH_SHORT).show();
                         try {
                             lectureJSON(response);
                         } catch (JSONException e) {
@@ -222,12 +236,10 @@ public class Ajouter extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), "onErrorResponse", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Une erreur s'est produite.", Toast.LENGTH_SHORT).show();
                     }
                 }
         );
         queue.add(stringRequest);
     }
-
-
 }
