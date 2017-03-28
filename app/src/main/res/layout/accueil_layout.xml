@@ -24,27 +24,81 @@
         android:layout_alignParentEnd="true"
         android:contentDescription="@string/logoappli" />
 
-    <ImageView
+    <Button
+        android:text="@string/livres"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/biblioaccueil"
-        android:id="@+id/ivBiblioAccueil"
-        android:adjustViewBounds="true"
-        android:cropToPadding="true"
+        android:id="@+id/bLivres"
+        android:onClick="onClickVerif"
+        android:layout_below="@+id/bScanner"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="@string/collections"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bCollections"
+        android:layout_below="@+id/bLivres"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="@string/Wishlist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bCollections"
+        android:id="@+id/bWishlist"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="@string/compte"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bWishlist"
+        android:id="@+id/bCompte"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/bCompte"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="55dp"
+        android:id="@+id/flVerif">
+
+    </FrameLayout>
+
+    <Button
+        android:text="@string/deconnexion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bdeconnexion"
+        android:layout_below="@+id/bCompte"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="@string/scanner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bScanner"
+        android:onClick="onClickAjouter"
         android:layout_below="@+id/ivLogo"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="21dp"
-        android:contentDescription="@string/image_biblio" />
-
-    <Button
-        android:text="@string/verifier"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/bScan"
-        android:layout_below="@+id/ivBiblioAccueil"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:onClick="onClickVerif" />
+        android:layout_marginTop="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

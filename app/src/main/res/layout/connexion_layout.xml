@@ -47,7 +47,7 @@
         android:text="Inscription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/bInscription"
+        android:id="@+id/bScanner"
         android:layout_below="@+id/ivBiblioAccueil"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -58,7 +58,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/bInscription"
+        android:layout_below="@+id/bScanner"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/flConnexion">

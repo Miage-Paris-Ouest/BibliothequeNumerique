@@ -16,4 +16,9 @@
     <string name="type">Type</string>
     <string name="titre">Titre*</string>
     <string name="couverture">Couverture</string>
+    <string name="livres">Mes livres</string>
+    <string name="collections">Mes collections</string>
+    <string name="Wishlist">Ma WishList</string>
+    <string name="compte">Mon Compte</string>
+    <string name="deconnexion">Deconnexion</string>
 </resources>
