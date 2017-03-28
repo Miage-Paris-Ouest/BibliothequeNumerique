@@ -31,13 +31,18 @@ public class Accueil extends AppCompatActivity
 
         SugarContext.init(getApplicationContext());
 
-        Button bScan = (Button) findViewById(R.id.bScan);
+        Button bScan = (Button) findViewById(R.id.bScanner);
         bScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 scan.scanner();
             }
         });
+    }
+
+    public void search(View v){
+        Intent intent = new Intent(this, Recherche.class);
+        startActivity(intent);
     }
 
     // utilisation du résultat du scan

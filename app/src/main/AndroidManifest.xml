@@ -25,6 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Vue.Ajouter"/>
+        <activity android:name=".Vue.Recherche"/>
     </application>
 
 
