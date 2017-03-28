@@ -18,7 +18,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.alice.biblothequevirtuelle.Data.Livre;
 import com.example.alice.biblothequevirtuelle.R;
-import com.example.alice.biblothequevirtuelle.Scanner;
+import com.example.alice.biblothequevirtuelle.AppelService.Scanner;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -28,6 +28,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+/**
+ * TODO implémenter le fait que le type et la catégorie doivent être des listes déroulantes
+ */
 public class Ajouter extends AppCompatActivity {
 
     private String ean;
@@ -162,7 +165,8 @@ public class Ajouter extends AppCompatActivity {
         }
     }
 
-    private void lectureJSON(String reponse) throws JSONException {
+    private Livre lectureJSON(String reponse) throws JSONException {
+        Livre ajout = null;
         JSONObject reponseJson = new JSONObject(reponse);
         if(reponseJson.has("items"))
         {
@@ -170,17 +174,15 @@ public class Ajouter extends AppCompatActivity {
             JSONObject livreJson = tabLivreJson.getJSONObject(0);
             JSONObject infoLivreJson = livreJson.getJSONObject("volumeInfo");
 
-            String titre;
-            String auteur;
-            String editeur;
-            String dateEdi;
-            String resume;
-            String langue;
+            String titre = null;
+            String auteur = null;
+            String editeur = null;
+            String dateEdi = null;
+            String resume = null;
+            String langue = null;
 
             if (infoLivreJson.has("title")) {
                 titre = infoLivreJson.getString("title");
-                EditText etTitre = (EditText) findViewById(R.id.etTitre);
-                etTitre.setText(titre);
             }
 
             EditText etEan = (EditText) findViewById(R.id.etISBN);
@@ -188,40 +190,33 @@ public class Ajouter extends AppCompatActivity {
 
             if (infoLivreJson.has("authors")) {
                 auteur = infoLivreJson.getJSONArray("authors").getString(0);
-                EditText etAuteur = (EditText) findViewById(R.id.etAuteur);
-                etAuteur.setText(auteur);
             }
 
             if (infoLivreJson.has("publisher")) {
                 editeur = infoLivreJson.getString("publisher");
-                EditText etEditeur = (EditText) findViewById(R.id.etEditeur);
-                etEditeur.setText(editeur);
             }
             if (infoLivreJson.has("publisherDate")) {
                 dateEdi = infoLivreJson.getString("publisherDate");
-                EditText etDate = (EditText) findViewById(R.id.etDatePub);
-                etDate.setText(dateEdi);
             }
 
             if (infoLivreJson.has("resume")) {
                 resume = infoLivreJson.getString("resume");
-                EditText etResume = (EditText) findViewById(R.id.etResume);
-                etResume.setText(resume);
             }
             if (infoLivreJson.has("language")) {
                 langue = infoLivreJson.getString("language");
-                EditText etLangue = (EditText) findViewById(R.id.etLangue);
-                etLangue.setText(langue);
             }
+            ajout = new Livre(titre, ean, auteur, editeur, dateEdi, langue, resume);
         }
         else
             Toast.makeText(getApplicationContext(), "Nous n'avons pas d'informations sur ce livre.", Toast.LENGTH_LONG).show();
+
+        return ajout;
     }
 
-    private void appelGoogleBooksApi(String isbn)
+    private void appelGoogleBooksApi(String ean)
     {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn;
+        String url = "https://www.googleapis.com/books/v1/volumes?q=isbn:"+ean;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override

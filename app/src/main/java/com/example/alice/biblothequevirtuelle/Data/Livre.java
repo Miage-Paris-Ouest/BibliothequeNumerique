@@ -1,11 +1,14 @@
 package com.example.alice.biblothequevirtuelle.Data;
 
-import android.os.Parcel;
-
 import com.orm.SugarRecord;
 
 /**
  * Created by alice on 21/03/2017.
+ */
+
+/**
+ * TODO : Gérer le fait que le type et la catégorie sont des listes déroulantes
+ *
  */
 
 public class Livre extends SugarRecord
@@ -14,10 +17,10 @@ public class Livre extends SugarRecord
     private String titre; // obligatoire
     private String ean; // obligatoire
     private String auteur; // obligatoire
-    private String editeur; // obligatoire
-    private String datePub; // obligatoire
-    private String langue; // obligatoire
-    private String resume; // obligatoire
+    private String editeur;
+    private String datePub;
+    private String langue;
+    private String resume;
     private String type;
     private String categorie;
 
@@ -133,4 +136,6 @@ public class Livre extends SugarRecord
                 ", resume='" + resume + '\'' +
                 '}';
     }
+
+
 }
