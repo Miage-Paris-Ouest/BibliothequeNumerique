@@ -37,26 +37,16 @@ public class Ajouter extends AppCompatActivity {
     private Scanner scan;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ajout_layout);
         Intent reception = getIntent();
         ean = reception.getStringExtra("ean");
         scan = new Scanner(this);
 
-        if(ean != null)
-        {
+        if (ean != null) {
             appelGoogleBooksApi(ean);
         }
-
-        Button bScanner = (Button) findViewById(R.id.bScan);
-        bScanner.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                scan.scanner();
-            }
-        });
 
         Button bAjout = (Button) findViewById(R.id.bAjout);
         bAjout.setOnClickListener(new View.OnClickListener() {
@@ -82,8 +72,7 @@ public class Ajouter extends AppCompatActivity {
                 String langue = etLangue.getText().toString();
                 String resume = etResume.getText().toString();
 
-                if(!titre.equals("") && !auteur.equals("") && !isbn.equals(""))
-                {
+                if (!titre.equals("") && !auteur.equals("") && !isbn.equals("")) {
                     Livre ajout = new Livre(titre, isbn, type, auteur, editeur, categ, date, langue, resume);
                     try {
                         ajout.save();
@@ -104,6 +93,7 @@ public class Ajouter extends AppCompatActivity {
                                 etLangue.setText("");
                                 etResume.setText("");
                                 ean = null;
+                                scan.scanner();
                             }
                         });
                         builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
@@ -112,13 +102,11 @@ public class Ajouter extends AppCompatActivity {
                             }
                         });
                         builder.show();
-                        Toast.makeText(getApplicationContext(), "Ce livre a été ajouté à votre bibliothèque !", Toast.LENGTH_LONG).show();
 
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                }
-                else
+                } else
                     Toast.makeText(getApplicationContext(), "Il manque un champ obligatoire !", Toast.LENGTH_LONG).show();
             }
         });
@@ -130,40 +118,68 @@ public class Ajouter extends AppCompatActivity {
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         String type;
         String prefix;
+        AlertDialog.Builder builder = new AlertDialog.Builder(Ajouter.this);
 
         if (resultCode == 0) {
-            Toast.makeText(getApplicationContext(),"Aucunes données scannées", Toast.LENGTH_SHORT).show();
-        }
-        else if(scanningResult != null){
+            builder.setTitle("Aucune données scannées !");
+        } else if (scanningResult != null) {
             ean = scanningResult.getContents().toLowerCase();
             type = scanningResult.getFormatName().toLowerCase();
             prefix = ean.substring(0, 3);
 
-            if(!type.equals("ean_13"))
-            {
-                Toast.makeText(getApplicationContext(), "Mauvais format", Toast.LENGTH_SHORT).show();
+            if (!type.equals("ean_13")) {
+                builder.setTitle("Mauvais format");
+
+            } else if (!(prefix.equals("977") || prefix.equals("978") || prefix.equals("979"))) {
+                builder.setTitle("Ce n'est pas un livre !");
+            } else {
+                final ArrayList<Livre> resultat = (ArrayList<Livre>) Livre.find(Livre.class, "ean = '" + ean + "'");
+                if (resultat.size() == 0) {
+                    builder.setTitle("Vous n'avez pas ce livre !");
+                    builder.setMessage("Voulez vous l'ajouter à votre bibliothèque ?");
+                    builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            Intent ajout = new Intent(getApplicationContext(), Ajouter.class);
+                            ajout.putExtra("ean", ean);
+                            startActivity(ajout);
+                        }
+                    });
+                } else {
+                    builder.setTitle("Vous avez déjà ce livre !");
+                    builder.setMessage("Que voulez vous faire ?");
+                    builder.setNeutralButton("Supprimer", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            resultat.get(0).delete();
+                        }
+                    });
+                    builder.setNeutralButton("Scanner un autre livre", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            scan.scanner();
+                        }
+                    });
+                    builder.setNegativeButton("Rien", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                        }
+                    });
+                }
 
             }
-            else if(!(prefix.equals("977") || prefix.equals("978") || prefix.equals("979")))
-            {
-                Toast.makeText(getApplicationContext(),"C'est n'est pas un livre !", Toast.LENGTH_SHORT).show();
-            }
-            else
-            {
-                Toast.makeText(getApplicationContext(), "code ok : ean = "+ean+" type= "+type+" prefix="+prefix, Toast.LENGTH_LONG).show();
+            builder.setMessage("Voulez vous scanner un autre livre ?");
+            builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    ean = null;
+                    scan.scanner();
+                }
+            });
+            builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                }
+            });
 
-                ArrayList<Livre> resultat = (ArrayList<Livre>) Livre.find(Livre.class, "ean = '"+ean+"'");
-                if(resultat.size() != 0)
-                {
-                    Toast.makeText(getApplicationContext(), "Vous avez déjà ce livre !", Toast.LENGTH_LONG).show();
-                }
-                else
-                {
-                    appelGoogleBooksApi(ean);
-                }
-            }
         }
+        builder.show();
     }
+
 
     private Livre lectureJSON(String reponse) throws JSONException {
         Livre ajout = null;
