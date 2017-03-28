@@ -1,30 +1,33 @@
 package com.example.alice.biblothequevirtuelle.Data;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.orm.SugarRecord;
 
 /**
  * Created by alice on 21/03/2017.
  */
 
-public class Livre extends SugarRecord implements Parcelable
+/**
+ * TODO : Gérer le fait que le type et la catégorie sont des listes déroulantes
+ *
+ */
+
+public class Livre extends SugarRecord
 {
     // pas besoin de variable id, elle est héritée directement de la classe SugarRecord
-    private String titre;
-    private String ean;
-    private int type;
-    private String auteur;
+    private String titre; // obligatoire
+    private String ean; // obligatoire
+    private String auteur; // obligatoire
     private String editeur;
-    private String categorie;
-    private int datePub;
+    private String datePub;
     private String langue;
     private String resume;
+    private String type;
+    private String categorie;
 
+    public Livre() {
+    }
 
-
-    public Livre(String titre, String ean, int type, String auteur, String editeur, String categorie, int datePub, String langue, String resume ) {
+    public Livre(String titre, String ean, String type, String auteur, String editeur, String categorie, String datePub, String langue, String resume ) {
         this.titre = titre;
         this.ean = ean;
         this.type = type;
@@ -37,29 +40,15 @@ public class Livre extends SugarRecord implements Parcelable
 
     }
 
-    protected Livre(Parcel in) {
-        titre = in.readString();
-        ean = in.readString();
-        type = in.readInt();
-        auteur = in.readString();
-        editeur = in.readString();
-        categorie = in.readString();
-        datePub = in.readInt();
-        langue = in.readString();
-        resume = in.readString();
+    public Livre(String titre, String ean, String auteur, String editeur, String datePub, String langue, String resume) {
+        this.titre = titre;
+        this.ean = ean;
+        this.auteur = auteur;
+        this.editeur = editeur;
+        this.datePub = datePub;
+        this.langue = langue;
+        this.resume = resume;
     }
-
-    public static final Creator<Livre> CREATOR = new Creator<Livre>() {
-        @Override
-        public Livre createFromParcel(Parcel in) {
-            return new Livre(in);
-        }
-
-        @Override
-        public Livre[] newArray(int size) {
-            return new Livre[size];
-        }
-    };
 
     public String getTitre() {
         return titre;
@@ -77,11 +66,11 @@ public class Livre extends SugarRecord implements Parcelable
         this.ean = ean;
     }
 
-    public int getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(String type) {
         this.type = type;
     }
 
@@ -109,11 +98,11 @@ public class Livre extends SugarRecord implements Parcelable
         this.categorie = categorie;
     }
 
-    public int getDatePub() {
+    public String getDatePub() {
         return datePub;
     }
 
-    public void setDatePub(int datePub) {
+    public void setDatePub(String datePub) {
         this.datePub = datePub;
     }
 
@@ -148,21 +137,5 @@ public class Livre extends SugarRecord implements Parcelable
                 '}';
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.titre);
-        dest.writeString(this.ean);
-        dest.writeInt(this.type);
-        dest.writeString(this.auteur);
-        dest.writeString(this.editeur);
-        dest.writeString(this.categorie);
-        dest.writeInt(this.datePub);
-        dest.writeString(this.langue);
-        dest.writeString(this.resume);
-    }
 }
