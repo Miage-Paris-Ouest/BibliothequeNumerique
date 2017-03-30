@@ -40,6 +40,11 @@ public class Accueil extends AppCompatActivity
         });
     }
 
+    public void search(View v){
+        Intent intent = new Intent(this, Recherche.class);
+        startActivity(intent);
+    }
+
     // utilisation du résultat du scan
     public void onActivityResult(int requestCode, int resultCode, Intent intent)
     {

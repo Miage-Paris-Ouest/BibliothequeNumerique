@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:hint="@string/titre2"
+        android:id="@+id/etTitre" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:hint="@string/isbn2"
+        android:id="@+id/etISBN" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:hint="@string/auteur2"
+        android:id="@+id/etAuteur" />
+
+    <Button
+        android:id="@+id/bRecherche"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="rechercher"
+        android:text="@string/rechercher" />
+
+    <ListView
+        android:id="@+id/listView_Recherche"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>
