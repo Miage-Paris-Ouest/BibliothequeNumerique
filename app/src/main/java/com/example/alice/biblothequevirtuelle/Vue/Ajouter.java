@@ -6,8 +6,12 @@ import android.os.Bundle;
 import android.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -28,6 +32,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import io.realm.Realm;
+
 /**
  * TODO implémenter le fait que le type et la catégorie doivent être des listes déroulantes
  */
@@ -40,9 +46,28 @@ public class Ajouter extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ajout_layout);
+
         Intent reception = getIntent();
         ean = reception.getStringExtra("ean");
         scan = new Scanner(this);
+
+        final Spinner sType = (Spinner) findViewById(R.id.sType);
+        String[] tabType={"Grand Format","Poche", "BD", "Comics", "Presse", "Manga"};
+        ArrayAdapter<String> dataAdapterR = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, tabType);
+        dataAdapterR.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sType.setAdapter(dataAdapterR);
+
+        sType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                TextView tvType = (TextView) findViewById(R.id.tvTypeHidden);
+                tvType.setText(String.valueOf(sType.getSelectedItem()));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         if (ean != null) {
             appelGoogleBooksApi(ean);
@@ -55,22 +80,22 @@ public class Ajouter extends AppCompatActivity {
                 final EditText etTitre = (EditText) findViewById(R.id.etTitre);
                 final EditText etAuteur = (EditText) findViewById(R.id.etAuteur);
                 final EditText etEditeur = (EditText) findViewById(R.id.etEditeur);
-                final EditText etType = (EditText) findViewById(R.id.etType);
+                final TextView tvType = (TextView) findViewById(R.id.tvTypeHidden);
                 final EditText etEan = (EditText) findViewById(R.id.etISBN);
                 final EditText etCateg = (EditText) findViewById(R.id.etCategorie);
                 final EditText etDate = (EditText) findViewById(R.id.etDatePub);
                 final EditText etLangue = (EditText) findViewById(R.id.etLangue);
                 final EditText etResume = (EditText) findViewById(R.id.etResume);
 
-                String titre = etTitre.getText().toString();
-                String auteur = etAuteur.getText().toString();
-                String editeur = etEditeur.getText().toString();
-                String type = etType.getText().toString();
-                String isbn = etEan.getText().toString();
-                String categ = etCateg.getText().toString();
-                String date = etDate.getText().toString();
-                String langue = etLangue.getText().toString();
-                String resume = etResume.getText().toString();
+                final String titre = etTitre.getText().toString();
+                final String auteur = etAuteur.getText().toString();
+                final String editeur = etEditeur.getText().toString();
+                final String type = tvType.getText().toString();
+                final String isbn = etEan.getText().toString();
+                final String categ = etCateg.getText().toString();
+                final String date = etDate.getText().toString();
+                final String langue = etLangue.getText().toString();
+                final String resume = etResume.getText().toString();
 
                 if (!titre.equals("") && !auteur.equals("") && !isbn.equals("")) {
                     Livre ajout = new Livre(titre, isbn, type, auteur, editeur, categ, date, langue, resume);
@@ -86,7 +111,7 @@ public class Ajouter extends AppCompatActivity {
                                 etTitre.setText("");
                                 etAuteur.setText("");
                                 etEditeur.setText("");
-                                etType.setText("");
+                                tvType.setText("");
                                 etEan.setText("");
                                 etCateg.setText("");
                                 etDate.setText("");

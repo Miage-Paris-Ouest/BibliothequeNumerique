@@ -16,20 +16,35 @@ import com.google.zxing.integration.android.IntentResult;
 import com.orm.SugarContext;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import io.realm.Realm;
 
 public class Accueil extends AppCompatActivity
 {
 
     private Scanner scan;
     private static String ean;
+    private List<String> ltype;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.accueil_layout);
+
         scan = new Scanner(this);
+        ltype = new ArrayList<>();
+        ltype.add("Grand Format");
+        ltype.add("Poche");
+        ltype.add("Bande dessinée");
+        ltype.add("BD");
+        ltype.add("Comics");
+        ltype.add("Manga");
+        ltype.add("Presse");
 
         SugarContext.init(getApplicationContext());
+
+
 
         Button bScan = (Button) findViewById(R.id.bScanner);
         bScan.setOnClickListener(new View.OnClickListener() {
@@ -62,6 +77,12 @@ public class Accueil extends AppCompatActivity
                     scan.scanner();
                 }
             });
+            builder.setNeutralButton("Recherche manuelle",new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    Intent intent = new Intent(getApplicationContext(), Recherche.class);
+                    startActivity(intent);
+                }
+            });
             builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     ean ="";
@@ -84,6 +105,18 @@ public class Accueil extends AppCompatActivity
                         scan.scanner();
                     }
                 });
+                builder.setNeutralButton("Recherche manuelle",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent intent = new Intent(getApplicationContext(), Recherche.class);
+                        startActivity(intent);
+                    }
+                });
+                builder.setNeutralButton("Ajout manuel",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent intent = new Intent(getApplicationContext(), Ajouter.class);
+                        startActivity(intent);
+                    }
+                });
                 builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         ean = "";
@@ -99,6 +132,18 @@ public class Accueil extends AppCompatActivity
                     public void onClick(DialogInterface dialog, int id) {
                         ean = null;
                         scan.scanner();
+                    }
+                });
+                builder.setNeutralButton("Recherche manuelle",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent intent = new Intent(getApplicationContext(), Recherche.class);
+                        startActivity(intent);
+                    }
+                });
+                builder.setNeutralButton("Ajout manuel",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent intent = new Intent(getApplicationContext(), Ajouter.class);
+                        startActivity(intent);
                     }
                 });
                 builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {

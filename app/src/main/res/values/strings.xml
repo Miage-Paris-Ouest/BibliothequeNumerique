@@ -25,4 +25,7 @@
     <string name="compte">Mon Compte</string>
     <string name="deconnexion">Deconnexion</string>
     <string name="rechercher">Rechercher</string>
+    <string name="dans_notre_base">dans notre base</string>
+    <string name="dans_ma_base">dans ma base</string>
+    <string name="o_voulez_vous_chercher">Où voulez vous chercher ?</string>
 </resources>
