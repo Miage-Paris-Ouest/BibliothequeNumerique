@@ -28,8 +28,14 @@
         android:id="@+id/etAuteur" />
 
     <Button
-        android:text="@string/rechercher"
+        android:id="@+id/bRecherche"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/bRecherche" />
+        android:onClick="rechercher"
+        android:text="@string/rechercher" />
+
+    <ListView
+        android:id="@+id/listView_Recherche"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

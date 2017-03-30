@@ -73,6 +73,12 @@
         android:layout_marginTop="55dp"
         android:id="@+id/flVerif">
 
+        <Button
+            android:id="@+id/button_Rech"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="search"
+            android:text="Search" />
     </FrameLayout>
 
     <Button
