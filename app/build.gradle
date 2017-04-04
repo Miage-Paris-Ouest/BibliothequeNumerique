@@ -30,6 +30,7 @@ dependencies {
     compile 'com.android.volley:volley:1.0.0'
     compile 'com.github.satyan:sugar:1.4'
     testCompile 'junit:junit:4.12'
+    compile 'com.google.firebase:firebase-auth:9.2.0'
 
 }
 apply plugin: 'com.google.gms.google-services'
