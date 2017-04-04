@@ -8,123 +8,141 @@
     android:theme="@style/Theme.AppCompat.Light"
     >
 
-    <Button
-        android:text="@string/scanner"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/bScan"
-        tools:background="#AE8964"
-        tools:textColor="#E1CE9A"
-        android:layout_marginBottom="10dp" />
-
-    <ImageView
-        android:id="@+id/ivCouverture"
+        android:layout_height="match_parent">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/couverture"
-        app:srcCompat="@drawable/logo" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/etISBN"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/isbn"
-        android:inputType="textPersonName" />
+        <Button
+            android:text="@string/scanner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/bScan"
+            tools:background="#AE8964"
+            tools:textColor="#E1CE9A"
+            android:layout_marginBottom="10dp" />
 
-    <EditText
-        android:id="@+id/etTitre"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/titre"
-        android:inputType="textPersonName" />
+        <ImageView
+            android:id="@+id/ivCouverture"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/couverture"
+            app:srcCompat="@drawable/logo" />
 
-    <EditText
-        android:id="@+id/etAuteur"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/auteur"
-        android:inputType="textPersonName" />
+        <EditText
+            android:id="@+id/etISBN"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/isbn"
+            android:inputType="textPersonName" />
 
-    <EditText
-        android:id="@+id/etEditeur"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/editeur"
-        android:inputType="textPersonName" />
+        <EditText
+            android:id="@+id/etTitre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/titre"
+            android:inputType="textPersonName" />
 
-    <EditText
-        android:id="@+id/etDatePub"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/date_de_publication"
-        android:inputType="" />
+        <EditText
+            android:id="@+id/etAuteur"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/auteur"
+            android:inputType="textPersonName" />
 
-    <EditText
-        android:id="@+id/etResume"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/resume"
-        android:inputType="textPersonName" />
+        <EditText
+            android:id="@+id/etEditeur"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/editeur"
+            android:inputType="textPersonName" />
 
-    <TextView
-        android:id="@+id/tvLabelType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:text="Type"
-        android:textSize="18sp" />
+        <EditText
+            android:id="@+id/etDatePub"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/date_de_publication"
+            android:inputType="" />
 
-    <Spinner
-        android:id="@+id/sType"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/etResume"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/resume"
+            android:inputType="textPersonName" />
 
-    <TextView
-        android:id="@+id/tvTypeHidden"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/etCategorie"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/categorie"
-        android:inputType="textPersonName" />
+            <TextView
+                android:id="@+id/tvLabelType"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:text="Type"
+                android:textSize="18sp" />
 
-    <EditText
-        android:id="@+id/etLangue"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/langue"
-        android:inputType="textPersonName" />
+            <Spinner
+                android:id="@+id/sType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
 
-    <EditText
-        android:id="@+id/etAvis"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/avis"
-        android:inputType="textPersonName" />
+            <TextView
+                android:id="@+id/tvTypeHidden"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:visibility="gone" />
+        </LinearLayout>
 
-    <RatingBar
-        android:id="@+id/rbNote"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:numStars="5" />
+        <EditText
+            android:id="@+id/etCategorie"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/categorie"
+            android:inputType="textPersonName" />
 
-    <Button
-        android:id="@+id/bAjout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/ajouter" />
+        <EditText
+            android:id="@+id/etLangue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/langue"
+            android:inputType="textPersonName" />
 
+        <EditText
+            android:id="@+id/etAvis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/avis"
+            android:inputType="textPersonName" />
+
+        <RatingBar
+            android:id="@+id/rbNote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="1dp"
+            android:numStars="5" />
+
+        <Button
+            android:id="@+id/bAjout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ajouter" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
