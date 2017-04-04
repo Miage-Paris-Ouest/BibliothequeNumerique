@@ -20,28 +20,13 @@ public class CreationCompte extends Activity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-     //   setContentView(R.layout.ajout);
+        setContentView(R.layout.fragment_inscription_layout);
     }
 
     public void ClickValider(View v) throws IOException {
 
 
-       try{
-            EditText pseudo = (EditText) findViewById(R.id.etPseudoInscription);
-            EditText nom = (EditText) findViewById(R.id.etNomInscription);
-            EditText prenom = (EditText) findViewById(R.id.etPrenomInscription);
-            EditText motDePasse = (EditText) findViewById(R.id.etMdpInscription1);
-            EditText email = (EditText) findViewById(R.id.etMailInscription);
 
-            Utilisateur u = new Utilisateur (pseudo.getText().toString(),nom.getText().toString(),prenom.getText().toString(), motDePasse.getText().toString(), email.getText().toString());
-            u.save();
-            Toast toast = Toast.makeText(getApplicationContext(), nom.getText().toString() + " " + prenom.getText().toString() + " a bien été crée et ajouté", Toast.LENGTH_LONG);
-            toast.show();
-        }
-
-        catch (Exception e){
-            Toast.makeText(this, "L'utilisateur n'a pas pu être crée", Toast.LENGTH_SHORT).show();
-        }
     }
 }
 
