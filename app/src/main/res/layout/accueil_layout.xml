@@ -25,17 +25,16 @@
         android:contentDescription="@string/logoappli" />
 
     <Button
-        android:text="@string/livres"
+        android:id="@+id/bLivres"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/bLivres"
-        android:onClick="onClickVerif"
-        android:layout_below="@+id/bScanner"
-        tools:background="#AE8964"
-        tools:textColor="#FFFFFF"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="2dp" />
+        android:layout_below="@+id/bScanner"
+        android:layout_marginBottom="2dp"
+        android:text="@string/livres"
+        tools:background="#AE8964"
+        tools:textColor="#FFFFFF" />
 
     <Button
         android:text="@string/collections"
