@@ -10,7 +10,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.alice.biblothequevirtuelle.Vue.Accueil"
-    android:theme="@style/Theme.AppCompat.Light">
+    android:theme="@style/Theme.AppCompat.Light"
+    android:background="#fbf7ed">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -28,6 +29,11 @@
         android:id="@+id/bLivres"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/bLivres"
+        android:onClick="onClickVerif"
+        android:layout_below="@+id/bScanner"
+        tools:background="#82c46c"
+        tools:textColor="#533312"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/bScanner"
@@ -45,8 +51,8 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
-        tools:background="#AE8964"
-        tools:textColor="#FFFFFF"
+        tools:background="#82c46c"
+        tools:textColor="#533312"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="2dp" />
 
@@ -59,26 +65,17 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
-        tools:background="#AE8964"
-        tools:textColor="#FFFFFF"
+        tools:background="#82c46c"
+        tools:textColor="#533312"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="2dp" />
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/bCompte"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="55dp"
-        android:id="@+id/flVerif">
-
-        <Button
-            android:id="@+id/button_Rech"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="search"
-            android:text="Search" />
-    </FrameLayout>
+    <Button
+        android:id="@+id/button_Rech"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="search"
+        android:text="Search" />
 
     <Button
         android:text="@string/deconnexion"
@@ -86,41 +83,53 @@
         android:layout_height="wrap_content"
         android:id="@+id/bdeconnexion"
         android:layout_below="@+id/bCompte"
-        tools:background="#AE8964"
-        tools:textColor="#FFFFFF"
+        tools:background="#e1ce9a"
+        tools:textColor="#533312"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <Button
-        android:text="@string/scanner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/bScanner"
-        tools:background="#AE8964"
-        tools:textColor="#FFFFFF"
-        android:onClick="onClickAjouter"
-        android:layout_below="@+id/ivLogo"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="2dp" />
-
-    <Button
         android:text="@string/compte"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/bCompte"
-        tools:background="#AE8964"
-        tools:textColor="#FFFFFF"
+        tools:background="#82c46c"
+        tools:textColor="#533312"
         android:layout_below="@+id/bWishlist"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="2dp" />
+
+    <Button
+        android:text="@string/scanner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bScanner"
+        tools:background="#82c46c"
+        tools:textColor="#533312"
+        android:onClick="onClickAjouter"
+        android:layout_marginTop="170dp"
+        android:layout_below="@+id/ivLogo"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="2dp" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/biblioaccueil"
+        android:id="@+id/imageView"
+        android:adjustViewBounds="true"
+        android:layout_below="@+id/ivLogo"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"
+        tools:textColor="#533312" />
 
 </RelativeLayout>
