@@ -8,15 +8,6 @@
     android:theme="@style/Theme.AppCompat.Light"
     >
 
-    <Button
-        android:text="@string/scanner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/bScan"
-        tools:background="#AE8964"
-        tools:textColor="#E1CE9A"
-        android:layout_marginBottom="10dp" />
-
     <ImageView
         android:id="@+id/ivCouverture"
         android:layout_width="match_parent"
