@@ -89,11 +89,6 @@ public class BVAppli extends Application
                 System.err.println(re.toString());
             }
         }
-        else if(!sharedPreferences.contains(INSTAL_OK))
-        {
-            Toast.makeText(getApplicationContext(), "INSTAL_OK n'existe pas", Toast.LENGTH_LONG).show();
-            sharedPreferences.edit().putBoolean(INSTAL_OK, false).apply();
-        }
         else
             Toast.makeText(getApplicationContext(), "données déjà dl", Toast.LENGTH_LONG).show();
 

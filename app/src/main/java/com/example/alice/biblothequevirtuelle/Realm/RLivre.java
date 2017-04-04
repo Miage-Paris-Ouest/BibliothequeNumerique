@@ -2,11 +2,16 @@ package com.example.alice.biblothequevirtuelle.Realm;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.RealmClass;
 
 /**
  * Created by alice on 03/04/2017.
  */
 
+/*
+TODO Faire une classe auteur et modifier la classe RLivre pour l'implémenter
+ */
+@RealmClass
 public class RLivre extends RealmObject
 {
     @PrimaryKey

@@ -5,14 +5,24 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.alice.biblothequevirtuelle.Appli.BVAppli;
 import com.example.alice.biblothequevirtuelle.R;
+import com.example.alice.biblothequevirtuelle.Realm.RLivre;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,6 +30,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import io.realm.Realm;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
 
 /**
  * Created by Kiki on 28/03/2017.
@@ -30,12 +44,15 @@ public class Recherche extends AppCompatActivity {
     SimpleAdapter adapter;
     ListView listLivres;
     boolean dsMaBibli;
+    Realm realm;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recherche_layout);
+
+        realm = Realm.getInstance(BVAppli.getInstance());
 
         adapter = new SimpleAdapter(this, donnees, R.layout.item,
                 new String[]{"isbn", "titre", "auteur"},
@@ -73,7 +90,7 @@ public class Recherche extends AppCompatActivity {
 
 
     public void rechercher(View v){
-        /*
+
         EditText etisbn = (EditText) findViewById(R.id.etISBN);
         EditText ettitre = (EditText) findViewById(R.id.etTitre);
         EditText etauteur = (EditText) findViewById(R.id.etAuteur);
@@ -82,52 +99,48 @@ public class Recherche extends AppCompatActivity {
         String titre = ettitre.getText().toString();
         String auteur = etauteur.getText().toString();
 
+        // si on a choisi la recherche dans la biliothèque personnelle
         if(dsMaBibli) {
-            try {
+            if(isbn.equals("") && titre.equals("") && auteur.equals(""))
+            {
+                Toast.makeText(getApplicationContext(), "Vous n'avez entré aucun élément de recherche.", Toast.LENGTH_LONG).show();
+            }
+            else {
+                try {
 
-                StringBuilder sb = new StringBuilder("");
+                    RealmQuery<RLivre> rr = realm.where(RLivre.class);
+                    if (!isbn.equals("")) {
+                        rr = rr.equalTo("ean", isbn);
+                    }
 
-                if (!isbn.equals("")) {
-                    if (!sb.toString().equals(""))
-                        sb.append(" AND ");
-                    sb.append("ean LIKE '%").append(isbn).append("%'");
-                }
+                    if (!titre.equals("")) {
+                        rr = rr.equalTo("titre", titre);
+                    }
 
-                if (!titre.equals("")) {
-                    if (!sb.toString().equals(""))
-                        sb.append(" AND ");
-                    sb.append("titre LIKE '%").append(titre).append("%'");
-                }
+                    if (!auteur.equals("")) {
+                        rr.equalTo("auteur", auteur);
+                    }
 
-                if (!auteur.equals("")) {
-                    if (!sb.toString().equals(""))
-                        sb.append(" AND ");
-                    sb.append("auteur LIKE '%").append(auteur).append("%'");
-                }
+                    donnees.clear();
 
-                donnees.clear();
-
-
-                if(sb.length() > 0) {
-                    List<Livre> corresp = Livre.find(Livre.class, sb.toString());
-
-                    if (corresp.isEmpty()) {
+                    RealmResults<RLivre> rrLivre = rr.findAll();
+                    if (rrLivre.isEmpty()) {
                         Toast.makeText(this.getBaseContext(), "Oups aucune correspondance...", Toast.LENGTH_LONG).show();
                     } else {
-                        for (Livre lv : corresp) {
+                        for (RLivre lv : rrLivre) {
                             addItem(lv.getEan(), lv.getTitre(), lv.getAuteur());
                         }
                     }
+
                     adapter.notifyDataSetChanged();
+
+
+                } catch (Exception e) {
+                    Log.e("Main : ", e.toString());
                 }
-                else
-                    Toast.makeText(getApplicationContext(), "Vous n'avez entré aucun élément de recherche.", Toast.LENGTH_LONG).show();
-
-
-            } catch (Exception e) {
-                Log.e("Main : ", e.toString());
             }
         }
+        // Si on a choisis la recherche dans la BDD de l'application
         else
         {
             StringBuilder sb = new StringBuilder("https://www.googleapis.com/books/v1/volumes?q=");
@@ -183,7 +196,6 @@ public class Recherche extends AppCompatActivity {
             else
                 Toast.makeText(getApplicationContext(), "Vous n'avez entré aucun élément de recherche.", Toast.LENGTH_LONG).show();
         }
-        */
     }
 
     private void lectureJSON(String reponse, String ean) throws JSONException {

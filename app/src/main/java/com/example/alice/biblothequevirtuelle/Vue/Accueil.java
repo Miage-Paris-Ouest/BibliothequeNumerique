@@ -160,7 +160,6 @@ public class Accueil extends AppCompatActivity
                     builder.setMessage("Voulez vous l'ajouter à votre bibliothèque ?");
                     builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            realm.close();
                             Intent ajout = new Intent(getApplicationContext(), Ajouter.class);
                             ajout.putExtra("ean", ean);
                             startActivity(ajout);
@@ -181,14 +180,18 @@ public class Accueil extends AppCompatActivity
                         public void onClick(DialogInterface dialog, int id) {
                             try
                             {
-                                realm.beginTransaction();
-                                livre.removeFromRealm();
-                                realm.commitTransaction();
+                                realm.executeTransaction(new Realm.Transaction() {
+                                    @Override
+                                    public void execute(Realm realm) {
+                                        livre.removeFromRealm();
+                                        }
+                                });
                                 ean = "";
                                 Toast.makeText(getApplicationContext(), "Suppression effectuée", Toast.LENGTH_LONG).show();
-                            }catch (RealmException re)
+                            }catch (Exception e)
                             {
-                                System.err.println(re.toString());
+                                System.err.println(e.toString());
+                                realm.cancelTransaction();
                                 Toast.makeText(getApplicationContext(), "Erreur lors de la suppression", Toast.LENGTH_LONG).show();
                             }
                         }
