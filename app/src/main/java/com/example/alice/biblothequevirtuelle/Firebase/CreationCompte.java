@@ -2,6 +2,7 @@ package com.example.alice.biblothequevirtuelle.Firebase;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -45,7 +46,15 @@ public class CreationCompte extends AppCompatActivity implements View.OnClickLis
 
     private void registerUser(){
         String email = etMailInscription.getText().toString().trim();
+        String password = etMdpInscription1.getText().toString().trim();
 
+        if(TextUtils.isEmpty(email)){
+
+        }
+
+        if(TextUtils.isEmpty(password)){
+
+        }
     }
 
     @Override
