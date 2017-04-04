@@ -1,31 +1,31 @@
 package com.example.alice.biblothequevirtuelle.Vue;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.alice.biblothequevirtuelle.AppelService.Scanner;
-import com.example.alice.biblothequevirtuelle.Data.Livre;
+import com.example.alice.biblothequevirtuelle.Appli.BVAppli;
 import com.example.alice.biblothequevirtuelle.R;
+import com.example.alice.biblothequevirtuelle.Realm.RLivre;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-import com.orm.SugarContext;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmResults;
+import io.realm.exceptions.RealmException;
 
 public class Accueil extends AppCompatActivity
 {
 
     private Scanner scan;
     private static String ean;
-    private List<String> ltype;
+    private Realm realm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,18 +33,7 @@ public class Accueil extends AppCompatActivity
         setContentView(R.layout.accueil_layout);
 
         scan = new Scanner(this);
-        ltype = new ArrayList<>();
-        ltype.add("Grand Format");
-        ltype.add("Poche");
-        ltype.add("Bande dessinée");
-        ltype.add("BD");
-        ltype.add("Comics");
-        ltype.add("Manga");
-        ltype.add("Presse");
-
-        SugarContext.init(getApplicationContext());
-
-
+        realm = Realm.getInstance(BVAppli.getInstance());
 
         Button bScan = (Button) findViewById(R.id.bScanner);
         bScan.setOnClickListener(new View.OnClickListener() {
@@ -154,13 +143,24 @@ public class Accueil extends AppCompatActivity
             }
             else
             {
-                final ArrayList<Livre> resultat = (ArrayList<Livre>) Livre.find(Livre.class, "ean = '"+ean+"'");
-                if(resultat.size() == 0)
+                RealmResults<RLivre> trouvaille;
+                try
+                {
+                    trouvaille = realm.where(RLivre.class).equalTo("ean", ean).findAll();
+                }
+                catch(RealmException re)
+                {
+                    System.err.println(re.toString());
+                    trouvaille = null;
+                }
+
+                if((trouvaille != null && trouvaille.size() == 0) || trouvaille == null)
                 {
                     builder.setTitle("Vous n'avez pas ce livre !");
                     builder.setMessage("Voulez vous l'ajouter à votre bibliothèque ?");
                     builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
+                            realm.close();
                             Intent ajout = new Intent(getApplicationContext(), Ajouter.class);
                             ajout.putExtra("ean", ean);
                             startActivity(ajout);
@@ -174,12 +174,23 @@ public class Accueil extends AppCompatActivity
                 }
                 else
                 {
-                    builder.setTitle("Vous avez déjà ce livre !");
+                    final RLivre livre = trouvaille.first();
+                    builder.setTitle("Vous avez déjà ce livre ! ("+trouvaille.get(0).getTitre()+")");
                     builder.setMessage("Que voulez vous faire ?");
                     builder.setPositiveButton("Supprimer", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            resultat.get(0).delete();
-                            ean = "";
+                            try
+                            {
+                                realm.beginTransaction();
+                                livre.removeFromRealm();
+                                realm.commitTransaction();
+                                ean = "";
+                                Toast.makeText(getApplicationContext(), "Suppression effectuée", Toast.LENGTH_LONG).show();
+                            }catch (RealmException re)
+                            {
+                                System.err.println(re.toString());
+                                Toast.makeText(getApplicationContext(), "Erreur lors de la suppression", Toast.LENGTH_LONG).show();
+                            }
                         }
                     });
                     builder.setNeutralButton("Scanner", new DialogInterface.OnClickListener() {
@@ -194,7 +205,6 @@ public class Accueil extends AppCompatActivity
                         }
                     });
                 }
-
             }
         }
         builder.show();

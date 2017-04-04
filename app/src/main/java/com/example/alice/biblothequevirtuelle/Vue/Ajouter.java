@@ -1,9 +1,7 @@
 package com.example.alice.biblothequevirtuelle.Vue;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,27 +18,26 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.alice.biblothequevirtuelle.Data.Livre;
+import com.example.alice.biblothequevirtuelle.Appli.BVAppli;
 import com.example.alice.biblothequevirtuelle.R;
-import com.example.alice.biblothequevirtuelle.AppelService.Scanner;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
+import com.example.alice.biblothequevirtuelle.Realm.RLivre;
+import com.example.alice.biblothequevirtuelle.Realm.Type;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import io.realm.Realm;
+import io.realm.RealmResults;
+import io.realm.exceptions.RealmException;
 
-/**
- * TODO implémenter le fait que le type et la catégorie doivent être des listes déroulantes
- */
 public class Ajouter extends AppCompatActivity {
 
     private String ean;
-    private Scanner scan;
+    private Realm realm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +46,19 @@ public class Ajouter extends AppCompatActivity {
 
         Intent reception = getIntent();
         ean = reception.getStringExtra("ean");
-        scan = new Scanner(this);
+
+        realm = Realm.getInstance(BVAppli.getInstance());
 
         final Spinner sType = (Spinner) findViewById(R.id.sType);
-        String[] tabType={"Grand Format","Poche", "BD", "Comics", "Presse", "Manga"};
-        ArrayAdapter<String> dataAdapterR = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, tabType);
+
+        RealmResults listeType = realm.where(Type.class).findAll();
+        ArrayList<String> types = new ArrayList<>();
+        Iterator iterator = listeType.iterator();
+        while(iterator.hasNext()){
+            Type t = (Type) iterator.next();
+            types.add(t.getNom());
+        }
+        ArrayAdapter<String> dataAdapterR = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, types);
         dataAdapterR.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sType.setAdapter(dataAdapterR);
 
@@ -65,6 +70,9 @@ public class Ajouter extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+                sType.setSelection(0);
+                TextView tvType = (TextView) findViewById(R.id.tvTypeHidden);
+                tvType.setText(String.valueOf(sType.getSelectedItem()));
 
             }
         });
@@ -98,38 +106,25 @@ public class Ajouter extends AppCompatActivity {
                 final String resume = etResume.getText().toString();
 
                 if (!titre.equals("") && !auteur.equals("") && !isbn.equals("")) {
-                    Livre ajout = new Livre(titre, isbn, type, auteur, editeur, categ, date, langue, resume);
                     try {
-                        ajout.save();
-                        AlertDialog.Builder builder = new AlertDialog.Builder(Ajouter.this);
-                        builder.setTitle("Ajout réussi !");
+                        realm.beginTransaction();
+                        RLivre rl = realm.createObject(RLivre.class);
+                        rl.setEan(ean);
+                        rl.setTitre(titre);
+                        rl.setAuteur(auteur);
+                        rl.setEditeur(editeur);
+                        rl.setDatePub(date);
+                        rl.setLangue(langue);
+                        rl.setResume(resume);
+                        rl.setCategorie(categ);
+                        rl.setType(realm.where(Type.class).equalTo("nom",type).findFirst());
+                        realm.commitTransaction();
 
-                        builder.setMessage("Voulez vous ajouter un autre livre ?");
-                        builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
+                        Toast.makeText(getApplicationContext(), "Ajout réussi !", Toast.LENGTH_LONG).show();
 
-                                etTitre.setText("");
-                                etAuteur.setText("");
-                                etEditeur.setText("");
-                                tvType.setText("");
-                                etEan.setText("");
-                                etCateg.setText("");
-                                etDate.setText("");
-                                etLangue.setText("");
-                                etResume.setText("");
-                                ean = null;
-                                scan.scanner();
-                            }
-                        });
-                        builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                finish();
-                            }
-                        });
-                        builder.show();
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                    } catch (RealmException re) {
+                        System.err.println(re.toString());
+                        Toast.makeText(getApplicationContext(), "Erreur lors de l'ajout", Toast.LENGTH_LONG).show();
                     }
                 } else
                     Toast.makeText(getApplicationContext(), "Il manque un champ obligatoire !", Toast.LENGTH_LONG).show();
@@ -137,77 +132,8 @@ public class Ajouter extends AppCompatActivity {
         });
     }
 
-    // utilisation du résultat du scan
-    public void onActivityResult(int requestCode, int resultCode, Intent intent)
+    private RLivre lectureJSON(String reponse) throws JSONException
     {
-        IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
-        String type;
-        String prefix;
-        AlertDialog.Builder builder = new AlertDialog.Builder(Ajouter.this);
-
-        if (resultCode == 0) {
-            builder.setTitle("Aucune données scannées !");
-        } else if (scanningResult != null) {
-            ean = scanningResult.getContents().toLowerCase();
-            type = scanningResult.getFormatName().toLowerCase();
-            prefix = ean.substring(0, 3);
-
-            if (!type.equals("ean_13")) {
-                builder.setTitle("Mauvais format");
-
-            } else if (!(prefix.equals("977") || prefix.equals("978") || prefix.equals("979"))) {
-                builder.setTitle("Ce n'est pas un livre !");
-            } else {
-                final ArrayList<Livre> resultat = (ArrayList<Livre>) Livre.find(Livre.class, "ean = '" + ean + "'");
-                if (resultat.size() == 0) {
-                    builder.setTitle("Vous n'avez pas ce livre !");
-                    builder.setMessage("Voulez vous l'ajouter à votre bibliothèque ?");
-                    builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            Intent ajout = new Intent(getApplicationContext(), Ajouter.class);
-                            ajout.putExtra("ean", ean);
-                            startActivity(ajout);
-                        }
-                    });
-                } else {
-                    builder.setTitle("Vous avez déjà ce livre !");
-                    builder.setMessage("Que voulez vous faire ?");
-                    builder.setNeutralButton("Supprimer", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            resultat.get(0).delete();
-                        }
-                    });
-                    builder.setNeutralButton("Scanner un autre livre", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            scan.scanner();
-                        }
-                    });
-                    builder.setNegativeButton("Rien", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                        }
-                    });
-                }
-
-            }
-            builder.setMessage("Voulez vous scanner un autre livre ?");
-            builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    ean = null;
-                    scan.scanner();
-                }
-            });
-            builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                }
-            });
-
-        }
-        builder.show();
-    }
-
-
-    private Livre lectureJSON(String reponse) throws JSONException {
-        Livre ajout = null;
         JSONObject reponseJson = new JSONObject(reponse);
         if(reponseJson.has("items"))
         {
@@ -222,8 +148,12 @@ public class Ajouter extends AppCompatActivity {
             String resume = null;
             String langue = null;
 
+            TextView tvCache = (TextView) findViewById(R.id.tvTypeHidden);
+
             if (infoLivreJson.has("title")) {
                 titre = infoLivreJson.getString("title");
+                EditText etTitre = (EditText) findViewById(R.id.etTitre);
+                etTitre.setText(titre);
             }
 
             EditText etEan = (EditText) findViewById(R.id.etISBN);
@@ -231,27 +161,43 @@ public class Ajouter extends AppCompatActivity {
 
             if (infoLivreJson.has("authors")) {
                 auteur = infoLivreJson.getJSONArray("authors").getString(0);
+                EditText etAuteur = (EditText) findViewById(R.id.etAuteur);
+                etAuteur.setText(auteur);
             }
 
             if (infoLivreJson.has("publisher")) {
                 editeur = infoLivreJson.getString("publisher");
+                EditText etEdit = (EditText) findViewById(R.id.etEditeur);
+                etEdit.setText(editeur);
             }
             if (infoLivreJson.has("publisherDate")) {
                 dateEdi = infoLivreJson.getString("publisherDate");
+                EditText etDate = (EditText) findViewById(R.id.etDatePub);
+                etDate.setText(dateEdi);
             }
 
             if (infoLivreJson.has("resume")) {
                 resume = infoLivreJson.getString("resume");
+                EditText etResume = (EditText) findViewById(R.id.etResume);
+                etResume.setText(resume);
             }
             if (infoLivreJson.has("language")) {
                 langue = infoLivreJson.getString("language");
+                EditText etLangue = (EditText) findViewById(R.id.etLangue);
+                etLangue.setText(langue);
             }
-            ajout = new Livre(titre, ean, auteur, editeur, dateEdi, langue, resume);
+            try {
+                return new RLivre(ean, titre, auteur, editeur, dateEdi, resume, langue, realm.where(Type.class).equalTo("nom", tvCache.getText().toString()).findFirst());
+            }catch (RealmException re)
+            {
+                System.err.println(re.toString());
+                Toast.makeText(getApplicationContext(), "Erreur lors de l'ajout", Toast.LENGTH_LONG).show();
+            }
         }
         else
             Toast.makeText(getApplicationContext(), "Nous n'avons pas d'informations sur ce livre.", Toast.LENGTH_LONG).show();
 
-        return ajout;
+        return null;
     }
 
     private void appelGoogleBooksApi(String ean)

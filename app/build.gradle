@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 24
@@ -27,7 +26,9 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:support-v4:24.2.1'
+    // Volley = appeler URL
     compile 'com.android.volley:volley:1.0.0'
-    compile 'com.github.satyan:sugar:1.4'
+    // Realm = BDD interne
+    compile 'io.realm:realm-android:0.82.1'
     testCompile 'junit:junit:4.12'
 }

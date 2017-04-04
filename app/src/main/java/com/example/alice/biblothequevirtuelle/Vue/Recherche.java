@@ -5,22 +5,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.example.alice.biblothequevirtuelle.Data.Livre;
 import com.example.alice.biblothequevirtuelle.R;
 
 import org.json.JSONArray;
@@ -29,7 +20,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by Kiki on 28/03/2017.
@@ -83,6 +73,7 @@ public class Recherche extends AppCompatActivity {
 
 
     public void rechercher(View v){
+        /*
         EditText etisbn = (EditText) findViewById(R.id.etISBN);
         EditText ettitre = (EditText) findViewById(R.id.etTitre);
         EditText etauteur = (EditText) findViewById(R.id.etAuteur);
@@ -192,10 +183,13 @@ public class Recherche extends AppCompatActivity {
             else
                 Toast.makeText(getApplicationContext(), "Vous n'avez entré aucun élément de recherche.", Toast.LENGTH_LONG).show();
         }
+        */
     }
 
     private void lectureJSON(String reponse, String ean) throws JSONException {
         JSONObject reponseJson = new JSONObject(reponse);
+
+
         if(reponseJson.has("items")) {
             JSONArray tabLivreJson = reponseJson.getJSONArray("items");
             if(tabLivreJson.length() > 10)

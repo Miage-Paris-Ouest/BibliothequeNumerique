@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.alice.biblothequevirtuelle.Data.Utilisateur;
 import com.example.alice.biblothequevirtuelle.R;
 
 import java.io.IOException;
@@ -33,8 +32,8 @@ public class CreationCompte extends Activity {
             EditText motDePasse = (EditText) findViewById(R.id.etMdpInscription1);
             EditText email = (EditText) findViewById(R.id.etMailInscription);
 
-            Utilisateur u = new Utilisateur (pseudo.getText().toString(),nom.getText().toString(),prenom.getText().toString(), motDePasse.getText().toString(), email.getText().toString());
-            u.save();
+            //Utilisateur u = new Utilisateur (pseudo.getText().toString(),nom.getText().toString(),prenom.getText().toString(), motDePasse.getText().toString(), email.getText().toString());
+            //u.save();
             Toast toast = Toast.makeText(getApplicationContext(), nom.getText().toString() + " " + prenom.getText().toString() + " a bien été crée et ajouté", Toast.LENGTH_LONG);
             toast.show();
         }
