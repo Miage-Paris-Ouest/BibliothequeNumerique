@@ -5,13 +5,10 @@
     android:id="@+id/activity_accueil"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.alice.biblothequevirtuelle.Vue.Accueil"
     android:theme="@style/Theme.AppCompat.Light"
-    android:background="#fbf7ed">
+    android:background="#fbf7ed"
+    android:paddingTop="16dp">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -26,45 +23,32 @@
         android:contentDescription="@string/logoappli" />
 
     <Button
-        android:id="@+id/bLivres"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onClickVerif"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/bScanner"
-        android:layout_marginBottom="2dp"
-        android:text="@string/livres"
-        tools:background="#AE8964"
-        tools:textColor="#FFFFFF" />
-
-    <Button
-        android:text="@string/collections"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/bCollections"
-        android:layout_below="@+id/bLivres"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        tools:background="#AE8964"
-        tools:textColor="#FFFFFF"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="2dp" />
-
-    <Button
-        android:text="@string/Wishlist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/bCollections"
-        android:id="@+id/bWishlist"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
-        tools:background="#AE8964"
-        tools:textColor="#FFFFFF"
+        android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="2dp" />
+        android:layout_below="@+id/bLivres"
+        android:layout_marginBottom="2dp"
+        android:text="@string/collections"
+        tools:background="#82c46c"
+        tools:textColor="#533312" />
+
+    <Button
+        android:id="@+id/bWishlist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/bCollections"
+        android:layout_marginBottom="2dp"
+        android:text="@string/Wishlist"
+        tools:background="#82c46c"
+        tools:textColor="#533312" />
 
     <Button
         android:id="@+id/button_Rech"
@@ -74,47 +58,47 @@
         android:text="Search" />
 
     <Button
-        android:text="@string/deconnexion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/bdeconnexion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/bCompte"
-        tools:background="#AE8964"
-        tools:textColor="#FFFFFF"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:text="@string/deconnexion"
+        tools:background="#e1ce9a"
+        tools:textColor="#533312" />
 
     <Button
-        android:text="@string/compte"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/bCompte"
-        tools:background="#AE8964"
-        tools:textColor="#FFFFFF"
-        android:layout_below="@+id/bWishlist"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="2dp" />
-
-    <Button
-        android:text="@string/scanner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/bScanner"
-        tools:background="#AE8964"
-        tools:textColor="#FFFFFF"
-        android:onClick="onClickAjouter"
-        android:layout_marginTop="170dp"
-        android:layout_below="@+id/ivLogo"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="2dp" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/bWishlist"
+        android:layout_marginBottom="2dp"
+        android:text="@string/compte"
+        tools:background="#82c46c"
+        tools:textColor="#533312" />
+
+    <Button
+        android:id="@+id/bScanner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/ivLogo"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="170dp"
+        android:onClick="onClickAjouter"
+        android:text="@string/scanner"
+        tools:background="#82c46c"
+        tools:textColor="#533312" />
 
     <ImageView
         android:layout_width="match_parent"
@@ -126,6 +110,20 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="10dp"
+        tools:textColor="#533312" />
+
+    <Button
+        android:id="@+id/bLivres"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/bScanner"
+        android:layout_marginBottom="2dp"
+        android:onClick="onClickVerif"
+        android:text="@string/livres"
+        android:textAppearance="@style/TextAppearance.AppCompat.Button"
+        tools:background="#82c46c"
         tools:textColor="#533312" />
 
 </RelativeLayout>
