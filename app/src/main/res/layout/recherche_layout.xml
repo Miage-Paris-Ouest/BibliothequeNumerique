@@ -33,6 +33,7 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:text="@string/o_voulez_vous_chercher"
         android:textAlignment="center"
         android:textSize="18sp"
@@ -41,25 +42,31 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="1">
 
         <Button
             android:id="@+id/bRechercheInterne"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
-            android:layout_height="90dp"
-            android:layout_weight="0.55"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight="0.99"
+            android:background="@color/btnBackground"
             android:onClick="rechercher"
             android:text="@string/dans_ma_base"
-            tools:ignore="ButtonStyle" />
+            android:textColor="@color/textColor" />
 
         <Button
             android:id="@+id/bRechercheExterne"
-            android:layout_width="wrap_content"
-            android:layout_height="90dp"
-            android:layout_weight="0.55"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="185dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:background="@color/btnBackground"
             android:onClick="rechercher"
             android:text="@string/dans_notre_base"
-            tools:ignore="ButtonStyle" />
+            android:textColor="@color/textColor" />
 
     </LinearLayout>
 

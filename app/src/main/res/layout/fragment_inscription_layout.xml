@@ -52,15 +52,20 @@
         android:hint="E-mail" />
 
     <Button
-        android:text="Valider"
+        android:id="@+id/bValiderInscription"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@color/btnBackground"
         android:onClick="ClickValider"
-        android:id="@+id/bValiderInscription" />
+        android:text="Valider"
+        android:textColor="@color/textColor" />
 
     <TextView
         android:id="@+id/tvSignin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="Already Registered ? Sign in here !" />
 </LinearLayout>
