@@ -1,6 +1,7 @@
 language: android
 
-sudo: false
+#JDK
+jdk: oraclejdk8
 
 notifications:
   email:
