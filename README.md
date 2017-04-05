@@ -1,4 +1,7 @@
 # Bibliothèque virtuelle
+
+[![Build Status](https://travis-ci.org/Miage-Paris-Ouest/BibliothequeNumerique.svg?branch=master)](https://travis-ci.org/Miage-Paris-Ouest/BibliothequeNumerique)
+
 ## Résumé
 Ceci est une application mobile Android, développé pour aider à l'achat de livre. 
 La branche MASTER ne sera utilisée qu'au rendu final de l'application. 
