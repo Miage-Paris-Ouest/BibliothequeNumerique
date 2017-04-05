@@ -11,12 +11,12 @@
     tools:context="com.example.alice.biblothequevirtuelle.Vue.Accueil">
 
     <Button
-        android:text="Scanner"
+        android:id="@+id/bScan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/bScan"
-        android:onClick="onClickScan" />
+        android:layout_alignParentTop="true"
+        android:onClick="onClickScan"
+        android:text="Scanner !" />
 </RelativeLayout>
