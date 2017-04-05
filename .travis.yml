@@ -43,8 +43,10 @@ android:
     - sys-img-x86-android-$EMULATOR_API_LEVEL
     - sys-img-armeabi-v7a-android-22
 licenses:
-    - 'android-sdk-preview-license-52d11cd2'
+    - 'android-sdk-preview-license-.+'
+    - 'android-sdk-preview-license'
     - 'android-sdk-license-.+'
+    - 'android-sdk-license'
     - 'google-gdk-license-.+'
 before_install:
 - chmod +x gradlew
