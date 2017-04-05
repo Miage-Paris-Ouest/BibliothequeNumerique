@@ -20,8 +20,12 @@
         android:hint="Mot de passe" />
 
     <Button
-        android:text="Valider"
+        android:id="@+id/bValiderInscription"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/bValiderInscription" />
+        android:layout_marginTop="15dp"
+        android:background="@color/btnBackground"
+        android:text="Valider"
+        android:textColor="@color/textColor" />
 </LinearLayout>

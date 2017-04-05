@@ -134,7 +134,10 @@
             android:id="@+id/bAjout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/ajouter" />
+            android:text="@string/ajouter"
+            style="?android:attr/borderlessButtonStyle"
+            android:background="@color/btnBackground"
+            android:textColor="@color/textColor"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

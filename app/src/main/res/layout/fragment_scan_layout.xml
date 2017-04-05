@@ -32,20 +32,30 @@
             android:layout_weight="0.05">
 
             <Button
-                android:text="Oui"
+                android:id="@+id/bOui"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/bOui"
-                android:onClick="onClickOui" />
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/btnBackground"
+                android:onClick="onClickOui"
+                android:text="Oui"
+                android:textColor="@color/textColor" />
         </LinearLayout>
 
         <Button
-            android:text="Non"
+            android:id="@+id/bNon"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/bNon"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="15dp"
             android:layout_weight="1"
-            android:onClick="onClickNon" />
+            android:background="@color/btnBackground"
+            android:onClick="onClickNon"
+            android:text="Non"
+            android:textColor="@color/textColor" />
     </LinearLayout>
 
 </LinearLayout>
