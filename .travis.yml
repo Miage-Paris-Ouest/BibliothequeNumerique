@@ -1,8 +1,6 @@
 language: android
-
 #JDK
 jdk: oraclejdk8
-
 notifications:
   email:
     recipients:
@@ -12,7 +10,6 @@ notifications:
       - coralinebouri@gmail.com
     on_success: change
     on_failure: change
-
 android:
   components:
     # Uncomment the lines below if you want to
