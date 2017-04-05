@@ -1,4 +1,4 @@
-https://travis-ci.org/Miage-Paris-Ouest/BibliothequeNumerique.svg?branch=master
+https://travis-ci.org/Miage-Paris-Ouest/BibliothequeNumerique.svg?branch=master 
 
 # Scanner
 Ceci est une application mobile Android, développé pour aider à l'achat de livre. 
