@@ -2,6 +2,8 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 24
+    signingConfigs {
+    }
     buildToolsVersion "25.0.0"
     defaultConfig {
         applicationId "com.example.alice.biblothequevirtuelle"
@@ -39,6 +41,7 @@ dependencies {
     // Realm = BDD interne
     compile 'io.realm:realm-android:0.82.1'
     compile 'com.google.firebase:firebase-auth:9.2.0'
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     testCompile "org.mockito:mockito-core:2.+"
 }
