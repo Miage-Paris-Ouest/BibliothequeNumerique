@@ -107,23 +107,27 @@ public class Ajouter extends AppCompatActivity {
 
                 if (!titre.equals("") && !auteur.equals("") && !isbn.equals("")) {
                     try {
-                        realm.beginTransaction();
-                        RLivre rl = realm.createObject(RLivre.class);
-                        rl.setEan(ean);
-                        rl.setTitre(titre);
-                        rl.setAuteur(auteur);
-                        rl.setEditeur(editeur);
-                        rl.setDatePub(date);
-                        rl.setLangue(langue);
-                        rl.setResume(resume);
-                        rl.setCategorie(categ);
-                        rl.setType(realm.where(Type.class).equalTo("nom",type).findFirst());
-                        realm.commitTransaction();
 
+                        realm.executeTransaction(new Realm.Transaction() {
+                            @Override
+                            public void execute(Realm realm) {
+                                RLivre rl = realm.createObject(RLivre.class);
+                                rl.setEan(ean);
+                                rl.setTitre(titre);
+                                rl.setAuteur(auteur);
+                                rl.setEditeur(editeur);
+                                rl.setDatePub(date);
+                                rl.setLangue(langue);
+                                rl.setResume(resume);
+                                rl.setCategorie(categ);
+                                rl.setType(realm.where(Type.class).equalTo("nom",type).findFirst());
+                            }
+                        });
                         Toast.makeText(getApplicationContext(), "Ajout réussi !", Toast.LENGTH_LONG).show();
 
                     } catch (RealmException re) {
                         System.err.println(re.toString());
+                        realm.cancelTransaction();
                         Toast.makeText(getApplicationContext(), "Erreur lors de l'ajout", Toast.LENGTH_LONG).show();
                     }
                 } else

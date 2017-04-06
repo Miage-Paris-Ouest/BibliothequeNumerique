@@ -110,15 +110,15 @@ public class Recherche extends AppCompatActivity {
 
                     RealmQuery<RLivre> rr = realm.where(RLivre.class);
                     if (!isbn.equals("")) {
-                        rr = rr.equalTo("ean", isbn);
+                        rr = rr.contains("ean", isbn, RealmQuery.CASE_INSENSITIVE);
                     }
 
                     if (!titre.equals("")) {
-                        rr = rr.equalTo("titre", titre);
+                        rr = rr.contains("titre", titre, RealmQuery.CASE_INSENSITIVE);
                     }
 
                     if (!auteur.equals("")) {
-                        rr.equalTo("auteur", auteur);
+                        rr.contains("auteur", auteur, RealmQuery.CASE_INSENSITIVE);
                     }
 
                     donnees.clear();
@@ -133,6 +133,7 @@ public class Recherche extends AppCompatActivity {
                     }
 
                     adapter.notifyDataSetChanged();
+                    rr = null;
 
 
                 } catch (Exception e) {
@@ -200,7 +201,6 @@ public class Recherche extends AppCompatActivity {
 
     private void lectureJSON(String reponse, String ean) throws JSONException {
         JSONObject reponseJson = new JSONObject(reponse);
-
 
         if(reponseJson.has("items")) {
             JSONArray tabLivreJson = reponseJson.getJSONArray("items");

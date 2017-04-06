@@ -191,7 +191,6 @@ public class Accueil extends AppCompatActivity
                             }catch (Exception e)
                             {
                                 System.err.println(e.toString());
-                                realm.cancelTransaction();
                                 Toast.makeText(getApplicationContext(), "Erreur lors de la suppression", Toast.LENGTH_LONG).show();
                             }
                         }
@@ -211,5 +210,11 @@ public class Accueil extends AppCompatActivity
             }
         }
         builder.show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        realm.close();
     }
 }
