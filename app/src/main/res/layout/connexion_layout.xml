@@ -5,63 +5,68 @@
     android:id="@+id/activity_accueil"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.alice.biblothequevirtuelle.Vue.Accueil">
 
     <ImageView
+        android:id="@+id/ivLogo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/logo"
-        android:id="@+id/ivLogo"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        app:srcCompat="@drawable/logo" />
 
     <ImageView
+        android:id="@+id/ivBiblioAccueil"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/biblioaccueil"
-        android:id="@+id/ivBiblioAccueil"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/ivLogo"
+        android:layout_marginTop="21dp"
         android:adjustViewBounds="true"
         android:cropToPadding="true"
-        android:layout_below="@+id/ivLogo"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="21dp" />
+        app:srcCompat="@drawable/biblioaccueil" />
 
     <Button
-        android:text="Connexion"
+        android:id="@+id/bConnexion"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/bConnexion"
-        android:layout_below="@+id/ivBiblioAccueil"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/ivBiblioAccueil"
+        android:layout_marginBottom="2dp"
+        android:background="@color/btnBackground"
+        android:text="@string/connexion"
+        android:textColor="@color/textColor" />
 
     <Button
-        android:text="Inscription"
+        android:id="@+id/bScanner"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/bScanner"
-        android:layout_below="@+id/ivBiblioAccueil"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="46dp"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/bConnexion"
+        android:background="@color/btnBackground"
+        android:paddingTop="2dp"
+        android:text="@string/inscription"
+        android:textColor="@color/textColor" />
 
     <FrameLayout
+        android:id="@+id/flConnexion"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/bScanner"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/flConnexion">
+        android:layout_below="@+id/bScanner"
+        android:paddingTop="2dp">
 
     </FrameLayout>
 

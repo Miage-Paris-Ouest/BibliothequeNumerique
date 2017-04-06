@@ -28,4 +28,6 @@
     <string name="dans_notre_base">dans notre base</string>
     <string name="dans_ma_base">dans ma base</string>
     <string name="o_voulez_vous_chercher">Où voulez vous chercher ?</string>
+    <string name="inscription">Inscription</string>
+    <string name="connexion">Connexion</string>
 </resources>
