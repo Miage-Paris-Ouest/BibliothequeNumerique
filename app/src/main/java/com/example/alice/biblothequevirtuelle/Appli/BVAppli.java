@@ -18,9 +18,7 @@ import io.realm.exceptions.RealmException;
  * Created by alice on 03/04/2017.
  */
 
-public class BVAppli extends Application
-{
-
+public class BVAppli extends Application {
     private SharedPreferences sharedPreferences;
     private static final String PREFS = "PREFS";
     private static final String INSTAL_OK = "INSTAL_OK";
