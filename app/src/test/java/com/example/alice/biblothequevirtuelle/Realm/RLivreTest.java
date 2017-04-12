@@ -15,6 +15,8 @@ public class RLivreTest {
     Type typeTest2 = new Type("nom2");
     Type typeTest3 = new Type();
     RealmList<Statut> statut= new RealmList<Statut>();
+    Statut s1=new Statut("A Lire");
+    Statut s2=new Statut("Preté");
 
     @Test
     public void testRLivreType() throws Exception {
@@ -27,8 +29,8 @@ public class RLivreTest {
         livreTest.setLangue("langue");
         livreTest.setType(typeTest);
         livreTest.setCategorie("categorie");
-        statut.add(1,new Statut("A Lire"));
-        statut.add(2,new Statut("Preté"));
+        statut.add(0,s1);
+        statut.add(1,s2);
 
         assertEquals(livreTest.getEan(),"ean");
         assertEquals(livreTest.getTitre(),"titre");

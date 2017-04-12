@@ -154,8 +154,8 @@ public class Ajouter extends AppCompatActivity {
                                                          rl.setCategorie(categ);
                                                          rl.setType(realm.where(Type.class).equalTo("nom", type).findFirst());
                                                          //------------------ recupérer la liste dans rlivre puis faire add((realm.where... pour les deux
-                                                         rl.getStatut().add(1,(realm.where(Statut.class).equalTo("intitule", finstatutLu).findFirst()));
-                                                         rl.getStatut().add(2,(realm.where(Statut.class).equalTo("intitule", finstatutPret).findFirst()));
+                                                         rl.getStatut().add(0,(realm.where(Statut.class).equalTo("intitule", finstatutLu).findFirst()));
+                                                         rl.getStatut().add(1,(realm.where(Statut.class).equalTo("intitule", finstatutPret).findFirst()));
                                                      }
                                                  });
 

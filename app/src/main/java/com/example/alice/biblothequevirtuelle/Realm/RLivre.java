@@ -25,7 +25,7 @@ public class RLivre extends RealmObject
     private String langue;
     private Type type; // grand format, poche, BD, ....
     private String categorie; // à définir
-    private RealmList<Statut> statut; // position:1 => lu ou nonlu ou encours, position : 2 => pret ou nonpret
+    private RealmList<Statut> statut; // position:0 => lu ou nonlu ou encours, position : 1 => pret ou nonpret
 
     public RLivre(String ean, String titre, String auteur, String editeur, String datePub, String resume, String langue, Type type, String categorie, RealmList<Statut> statut) {
         this.ean = ean;
