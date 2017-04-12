@@ -10,8 +10,7 @@ public class StatutTest {
 
     @Test
     public void testStatut() throws Exception {
-        statutTest.setId(1);
         statutTest.setIntitule("intitule");
-        Statut statutTest2 = new Statut(statutTest.getId(),statutTest.getIntitule());
+        Statut statutTest2 = new Statut(statutTest.getIntitule());
     }
 }

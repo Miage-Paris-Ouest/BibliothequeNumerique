@@ -8,6 +8,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +23,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.alice.biblothequevirtuelle.Appli.BVAppli;
 import com.example.alice.biblothequevirtuelle.R;
 import com.example.alice.biblothequevirtuelle.Realm.RLivre;
+import com.example.alice.biblothequevirtuelle.Realm.Statut;
 import com.example.alice.biblothequevirtuelle.Realm.Type;
 
 import org.json.JSONArray;
@@ -31,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import io.realm.Realm;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 import io.realm.exceptions.RealmException;
 
@@ -81,6 +85,10 @@ public class Ajouter extends AppCompatActivity {
             appelGoogleBooksApi(ean);
         }
 
+        final EditText etEan = (EditText) findViewById(R.id.etISBN);
+        if(etEan.getText().toString().equals(""))//si l'api google na pas trouvé d'info on empli l'edittext ean avec l'ean que le scanner a trouvé
+            etEan.setText(ean);
+
         Button bAjout = (Button) findViewById(R.id.bAjout);
         bAjout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,11 +97,16 @@ public class Ajouter extends AppCompatActivity {
                 final EditText etAuteur = (EditText) findViewById(R.id.etAuteur);
                 final EditText etEditeur = (EditText) findViewById(R.id.etEditeur);
                 final TextView tvType = (TextView) findViewById(R.id.tvTypeHidden);
-                final EditText etEan = (EditText) findViewById(R.id.etISBN);
+                //final EditText etEan = (EditText) findViewById(R.id.etISBN);
                 final EditText etCateg = (EditText) findViewById(R.id.etCategorie);
                 final EditText etDate = (EditText) findViewById(R.id.etDatePub);
                 final EditText etLangue = (EditText) findViewById(R.id.etLangue);
                 final EditText etResume = (EditText) findViewById(R.id.etResume);
+                final RadioButton rbLu =(RadioButton) findViewById(R.id.rbLu);
+                final RadioButton rbNonLu =(RadioButton) findViewById(R.id.rbNonLu);
+                final RadioButton rbEnCours=(RadioButton) findViewById(R.id.rbEnCours);
+                final RadioButton rbNonPret=(RadioButton) findViewById(R.id.rbNonPrete);
+                final RadioButton rbPret=(RadioButton) findViewById(R.id.rbPrete);
 
                 final String titre = etTitre.getText().toString();
                 final String auteur = etAuteur.getText().toString();
@@ -105,29 +118,51 @@ public class Ajouter extends AppCompatActivity {
                 final String langue = etLangue.getText().toString();
                 final String resume = etResume.getText().toString();
 
+                // récupère l'élément coché grace a l'id trouvé ci dessus
+                String statutLu="";
+                String statutPret="";
+
+                if(rbLu.isChecked())
+                    statutLu="Lu";
+                else if(rbNonLu.isChecked())
+                    statutLu="En Cours";
+                else if(rbEnCours.isChecked())
+                    statutLu="A Lire";
+
+                if(rbPret.isChecked())
+                    statutPret="Preté";
+                else if(rbNonPret.isChecked())
+                    statutPret="Non Preté";
+
+                final String finstatutLu=statutLu;
+                final String finstatutPret=statutPret;
+
                 if (!titre.equals("") && !auteur.equals("") && !isbn.equals("")) {
                     try {
 
                         realm.executeTransaction(new Realm.Transaction() {
-                            @Override
-                            public void execute(Realm realm) {
-                                RLivre rl = realm.createObject(RLivre.class);
-                                rl.setEan(ean);
-                                rl.setTitre(titre);
-                                rl.setAuteur(auteur);
-                                rl.setEditeur(editeur);
-                                rl.setDatePub(date);
-                                rl.setLangue(langue);
-                                rl.setResume(resume);
-                                rl.setCategorie(categ);
-                                rl.setType(realm.where(Type.class).equalTo("nom",type).findFirst());
-                            }
-                        });
+                                                     @Override
+                                                     public void execute(Realm realm) {
+                                                         RLivre rl = realm.createObject(RLivre.class);
+                                                         rl.setEan(ean);
+                                                         rl.setTitre(titre);
+                                                         rl.setAuteur(auteur);
+                                                         rl.setEditeur(editeur);
+                                                         rl.setDatePub(date);
+                                                         rl.setLangue(langue);
+                                                         rl.setResume(resume);
+                                                         rl.setCategorie(categ);
+                                                         rl.setType(realm.where(Type.class).equalTo("nom", type).findFirst());
+                                                         //------------------ recupérer la liste dans rlivre puis faire add((realm.where... pour les deux
+                                                         rl.getStatut().add(1,(realm.where(Statut.class).equalTo("intitule", finstatutLu).findFirst()));
+                                                         rl.getStatut().add(2,(realm.where(Statut.class).equalTo("intitule", finstatutPret).findFirst()));
+                                                     }
+                                                 });
+
                         Toast.makeText(getApplicationContext(), "Ajout réussi !", Toast.LENGTH_LONG).show();
 
                     } catch (RealmException re) {
                         System.err.println(re.toString());
-                        realm.cancelTransaction();
                         Toast.makeText(getApplicationContext(), "Erreur lors de l'ajout", Toast.LENGTH_LONG).show();
                     }
                 } else

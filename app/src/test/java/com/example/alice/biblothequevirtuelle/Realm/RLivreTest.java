@@ -2,6 +2,8 @@ package com.example.alice.biblothequevirtuelle.Realm;
 
 import org.junit.Test;
 
+import io.realm.RealmList;
+
 import static org.junit.Assert.*;
 
 /**
@@ -12,6 +14,7 @@ public class RLivreTest {
     Type typeTest = new Type();
     Type typeTest2 = new Type("nom2");
     Type typeTest3 = new Type();
+    RealmList<Statut> statut= new RealmList<Statut>();
 
     @Test
     public void testRLivreType() throws Exception {
@@ -24,6 +27,8 @@ public class RLivreTest {
         livreTest.setLangue("langue");
         livreTest.setType(typeTest);
         livreTest.setCategorie("categorie");
+        statut.add(1,new Statut("A Lire"));
+        statut.add(2,new Statut("Preté"));
 
         assertEquals(livreTest.getEan(),"ean");
         assertEquals(livreTest.getTitre(),"titre");
@@ -35,7 +40,7 @@ public class RLivreTest {
         assertEquals(livreTest.getType(),typeTest);
         assertEquals(livreTest.getCategorie(),"categorie");
 
-        RLivre livreTest2 = new RLivre("ean2","titre2","auteur2","editeur2","datePub2","resume2","langue2",typeTest2,"categorie2");
+        RLivre livreTest2 = new RLivre("ean2","titre2","auteur2","editeur2","datePub2","resume2","langue2",typeTest2,"categorie2",statut);
         typeTest3.setNom(typeTest2.getNom());
         RLivre livreTest3 = new RLivre("ean3","titre3","auteur3","editeur3","datePub3","resume3","langue3",typeTest3);
     }

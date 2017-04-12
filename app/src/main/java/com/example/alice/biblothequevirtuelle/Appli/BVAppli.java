@@ -66,17 +66,15 @@ public class BVAppli extends Application {
 
                 //On ajoute tous les status disponibles
                 Statut aLire = realm.createObject(Statut.class);
-                aLire.setId(realm.where(Statut.class).maximumInt("id") + 1);
                 aLire.setIntitule("A Lire");
                 Statut enCours = realm.createObject(Statut.class);
-                enCours.setId(realm.where(Statut.class).maximumInt("id") + 1);
                 enCours.setIntitule("En Cours");
                 Statut lu = realm.createObject(Statut.class);
-                lu.setId(realm.where(Statut.class).maximumInt("id") + 1);
-                lu.setIntitule("Terminé");
+                lu.setIntitule("Lu");
                 Statut prete = realm.createObject(Statut.class);
-                prete.setId(realm.where(Statut.class).maximumInt("id") + 1);
-                prete.setIntitule("Prêté");
+                prete.setIntitule("Preté");
+                Statut nonprete = realm.createObject(Statut.class);
+                nonprete.setIntitule("Non Preté");
                 realm.commitTransaction();
 
                 sharedPreferences.edit().putBoolean(INSTAL_OK, true).apply();

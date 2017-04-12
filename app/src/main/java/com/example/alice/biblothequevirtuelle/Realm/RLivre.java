@@ -1,5 +1,6 @@
 package com.example.alice.biblothequevirtuelle.Realm;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
@@ -24,9 +25,9 @@ public class RLivre extends RealmObject
     private String langue;
     private Type type; // grand format, poche, BD, ....
     private String categorie; // à définir
-    //    private Statut statut; // acheté, lu, en cours, ...
+    private RealmList<Statut> statut; // position:1 => lu ou nonlu ou encours, position : 2 => pret ou nonpret
 
-    public RLivre(String ean, String titre, String auteur, String editeur, String datePub, String resume, String langue, Type type, String categorie) {
+    public RLivre(String ean, String titre, String auteur, String editeur, String datePub, String resume, String langue, Type type, String categorie, RealmList<Statut> statut) {
         this.ean = ean;
         this.titre = titre;
         this.auteur = auteur;
@@ -36,6 +37,7 @@ public class RLivre extends RealmObject
         this.langue = langue;
         this.type = type;
         this.categorie = categorie;
+        this.statut = statut;
     }
 
     public RLivre() {
@@ -50,6 +52,7 @@ public class RLivre extends RealmObject
         this.resume = resume;
         this.langue = langue;
         this.type = type;
+        this.statut = statut;
     }
 
     public String getEan() {
@@ -115,15 +118,15 @@ public class RLivre extends RealmObject
     public void setType(Type type) {
         this.type = type;
     }
-/*
-    public Statut getStatut() {
+
+    public RealmList<Statut> getStatut() {
         return statut;
     }
 
-    public void setStatut(Statut statut) {
+    public void setStatut(RealmList<Statut> statut) {
         this.statut = statut;
     }
-*/
+
     public String getCategorie() {
         return categorie;
     }
