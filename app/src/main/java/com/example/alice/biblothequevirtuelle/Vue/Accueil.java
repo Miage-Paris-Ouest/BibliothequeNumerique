@@ -42,10 +42,24 @@ public class Accueil extends AppCompatActivity
                 scan.scanner();
             }
         });
+
+        Button bMesLivres = (Button) findViewById(R.id.bLivres);
+        bMesLivres.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mesLivres(v);
+            }
+        });
     }
 
     public void search(View v){
         Intent intent = new Intent(this, Recherche.class);
+        startActivity(intent);
+    }
+
+    public void mesLivres(View v)
+    {
+        Intent intent = new Intent(getApplicationContext(), MesLivres.class);
         startActivity(intent);
     }
 

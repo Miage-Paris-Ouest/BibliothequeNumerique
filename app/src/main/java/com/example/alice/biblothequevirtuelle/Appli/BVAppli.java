@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.SharedPreferences;
 import android.widget.Toast;
 
-import com.example.alice.biblothequevirtuelle.Realm.Auteur;
 import com.example.alice.biblothequevirtuelle.Realm.Livre;
 import com.example.alice.biblothequevirtuelle.Realm.Statut;
 import com.example.alice.biblothequevirtuelle.Realm.Type;
@@ -26,7 +25,7 @@ public class BVAppli extends Application {
     private static Realm realm;
 
     // Create the module
-    @RealmModule(classes = { Livre.class, Auteur.class, Type.class, Statut.class })
+    @RealmModule(classes = { Livre.class, Type.class, Statut.class })
     private class MyModule {
     }
 
@@ -44,8 +43,6 @@ public class BVAppli extends Application {
         Realm realm = Realm.getInstance(getInstance());
 
         SharedPreferences sharedPreferences = getBaseContext().getSharedPreferences(PREFS, MODE_PRIVATE);
-        boolean test2 = sharedPreferences.contains(INSTAL_OK);
-        boolean test = sharedPreferences.getBoolean(INSTAL_OK, false);
         //objectif : sauvegarder une seule fois si les types et les statuts ont été chargé dans la BDD interne
         //Si la clef n'existe pas ou si elle existe mais que la valeur est fausse
         if ((!sharedPreferences.contains(INSTAL_OK)) || (sharedPreferences.contains(INSTAL_OK) && (sharedPreferences.getBoolean(INSTAL_OK, false)== false)))

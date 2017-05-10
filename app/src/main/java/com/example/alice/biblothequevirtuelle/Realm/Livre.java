@@ -10,7 +10,7 @@ import io.realm.annotations.RealmClass;
  */
 
 /*
-TODO Faire une classe auteur et modifier la classe RLivre pour l'implémenter
+TODO Modifier gestion statut et type
  */
 @RealmClass
 public class Livre extends RealmObject

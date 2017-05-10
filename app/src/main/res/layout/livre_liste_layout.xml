@@ -5,21 +5,21 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/cellule_isbn"
+        android:id="@+id/tvCelluleIsbn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="0dip"
         android:textSize="0dip" />
 
     <TextView
-        android:id="@+id/cellule_titre"
+        android:id="@+id/tvCelluleTitre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:textSize="12dip" />
 
     <TextView
-        android:id="@+id/cellule_auteur"
+        android:id="@+id/tvCelluleAuteur"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"

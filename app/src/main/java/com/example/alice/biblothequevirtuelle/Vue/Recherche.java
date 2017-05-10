@@ -56,7 +56,7 @@ public class Recherche extends AppCompatActivity {
 
         adapter = new SimpleAdapter(this, donnees, R.layout.livre_liste_layout,
                 new String[]{"isbn", "titre", "auteur"},
-                new int[]{R.id.cellule_isbn, R.id.cellule_titre, R.id.cellule_auteur});
+                new int[]{R.id.tvCelluleIsbn, R.id.tvCelluleTitre, R.id.tvCelluleAuteur});
         listLivres = (ListView) findViewById(R.id.listView_Recherche);
         listLivres.setAdapter(adapter);
 
