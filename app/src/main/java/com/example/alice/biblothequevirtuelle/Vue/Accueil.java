@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.alice.biblothequevirtuelle.AppelService.Scanner;
-import com.example.alice.biblothequevirtuelle.Appli.BVAppli;
 import com.example.alice.biblothequevirtuelle.R;
 import com.example.alice.biblothequevirtuelle.Realm.Livre;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -33,7 +32,7 @@ public class Accueil extends AppCompatActivity
         setContentView(R.layout.accueil_layout);
 
         scan = new Scanner(this);
-        realm = Realm.getInstance(BVAppli.getInstance());
+        realm = Realm.getDefaultInstance();
 
         Button bScan = (Button) findViewById(R.id.bScanner);
         bScan.setOnClickListener(new View.OnClickListener() {
@@ -146,6 +145,7 @@ public class Accueil extends AppCompatActivity
                 builder.setNeutralButton("Ajout manuel",new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Intent intent = new Intent(getApplicationContext(), Ajouter.class);
+                        intent.putExtra("précédent", "Accueil");
                         startActivity(intent);
                     }
                 });
@@ -197,7 +197,7 @@ public class Accueil extends AppCompatActivity
                                 realm.executeTransaction(new Realm.Transaction() {
                                     @Override
                                     public void execute(Realm realm) {
-                                        livre.removeFromRealm();
+                                        livre.deleteFromRealm();
                                         }
                                 });
                                 ean = "";

@@ -16,6 +16,7 @@ TODO Modifier gestion statut et type
 public class Livre extends RealmObject
 {
     @PrimaryKey
+    private int id;
     private String ean;
     private String titre;
     private String auteur;
@@ -40,6 +41,16 @@ public class Livre extends RealmObject
         this.statut = statut;
     }
 
+    public Livre(String ean, String titre, String auteur, String editeur, String datePub, String resume, String langue) {
+        this.ean = ean;
+        this.titre = titre;
+        this.auteur = auteur;
+        this.editeur = editeur;
+        this.datePub = datePub;
+        this.resume = resume;
+        this.langue = langue;
+    }
+
     public Livre() {
     }
 
@@ -52,6 +63,14 @@ public class Livre extends RealmObject
         this.resume = resume;
         this.langue = langue;
         this.type = type;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getEan() {

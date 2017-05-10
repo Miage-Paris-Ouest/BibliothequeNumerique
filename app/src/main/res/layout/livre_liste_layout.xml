@@ -1,29 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:background="@drawable/bordure"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <TextView
+        android:id="@+id/tvIdHidden"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+
+    <TextView
+        android:id="@+id/tvEditeurHidden"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tvDateEdiHidden"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tvResumeHidden"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tvLangueHidden"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tvLabelIsbn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ISBN" />
 
     <TextView
         android:id="@+id/tvCelluleIsbn"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="0dip"
-        android:textSize="0dip" />
+        android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/tvCelluleTitre"
-        android:layout_width="wrap_content"
+        android:id="@+id/tvLabelAuteur"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:textSize="12dip" />
+        android:text="Auteur" />
 
     <TextView
         android:id="@+id/tvCelluleAuteur"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:textSize="12dip"
+        android:textSize="14sp"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvLabelTitre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Titre" />
+
+    <TextView
+        android:id="@+id/tvCelluleTitre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp" />
 
 </LinearLayout>

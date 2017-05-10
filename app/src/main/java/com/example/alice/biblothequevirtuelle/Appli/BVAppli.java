@@ -33,15 +33,14 @@ public class BVAppli extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(this)
-                .name(Realm.DEFAULT_REALM_NAME)
+        Realm.init(this);
+        RealmConfiguration config = new RealmConfiguration.Builder()
                 .deleteRealmIfMigrationNeeded()
-                .schemaVersion(1)
-                .setModules(new MyModule())
                 .build();
-        Realm.setDefaultConfiguration(realmConfiguration);
-        Realm realm = Realm.getInstance(getInstance());
+        Realm.setDefaultConfiguration(config);
 
+
+        realm = Realm.getDefaultInstance();
         SharedPreferences sharedPreferences = getBaseContext().getSharedPreferences(PREFS, MODE_PRIVATE);
         //objectif : sauvegarder une seule fois si les types et les statuts ont été chargé dans la BDD interne
         //Si la clef n'existe pas ou si elle existe mais que la valeur est fausse
@@ -52,18 +51,25 @@ public class BVAppli extends Application {
                 realm.beginTransaction();
                 // On ajoute tous les types disponibles
                 Type indefini = realm.createObject(Type.class);
+                indefini.setId((int)realm.where(Type.class).max("id") + 1);
                 indefini.setNom("Indéfini");
                 Type grandFormat = realm.createObject(Type.class);
+                grandFormat.setId((int)realm.where(Type.class).max("id") + 1);
                 grandFormat.setNom("Grand Format");
                 Type poche = realm.createObject(Type.class);
+                poche.setId((int)realm.where(Type.class).max("id") + 1);
                 poche.setNom("Poche");
                 Type bd = realm.createObject(Type.class);
+                bd.setId((int)realm.where(Type.class).max("id") + 1);
                 bd.setNom("Bande dessinée");
                 Type comics = realm.createObject(Type.class);
+                comics.setId((int)realm.where(Type.class).max("id") + 1);
                 comics.setNom("Comics");
                 Type manga = realm.createObject(Type.class);
+                manga.setId((int) realm.where(Type.class).max("id") + 1);
                 manga.setNom("Manga");
                 Type presse = realm.createObject(Type.class);
+                presse.setId((int)realm.where(Type.class).max("id") + 1);
                 presse.setNom("Presse");
 
                 //On ajoute tous les status disponibles
@@ -90,7 +96,6 @@ public class BVAppli extends Application {
         }
         else
             Toast.makeText(getApplicationContext(), "données déjà dl", Toast.LENGTH_LONG).show();
-
     }
 
     public static BVAppli getInstance() {

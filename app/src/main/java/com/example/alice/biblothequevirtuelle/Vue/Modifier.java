@@ -4,41 +4,24 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.example.alice.biblothequevirtuelle.Appli.BVAppli;
 import com.example.alice.biblothequevirtuelle.R;
 import com.example.alice.biblothequevirtuelle.Realm.Livre;
-import com.example.alice.biblothequevirtuelle.Realm.Statut;
 import com.example.alice.biblothequevirtuelle.Realm.Type;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
-import io.realm.exceptions.RealmException;
 
 public class Modifier extends AppCompatActivity {
 
-    private String ean;
     private Realm realm;
     private Livre livre;
 
@@ -48,11 +31,29 @@ public class Modifier extends AppCompatActivity {
         setContentView(R.layout.modifier_layout);
 
         Intent reception = getIntent();
-        ean = reception.getStringExtra("livreSelectionné");
 
-        realm = Realm.getInstance(BVAppli.getInstance());
+        realm = Realm.getDefaultInstance();
 
-        /*Génération de la liste déroulante contenant les types*/
+        generationSpinnerType();
+
+        String precedent = reception.getStringExtra("précédent");
+        String retourId = reception.getStringExtra("livreSelectionné");
+        int idLivre = Integer.parseInt(retourId);
+        livre = realm.where(Livre.class).equalTo("id", idLivre).findFirst();
+
+        autoCompletionFiche(livre);
+
+        Button bAjout = (Button) findViewById(R.id.bAjout);
+        bAjout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                modification(livre);
+            }
+        });
+    }
+
+    private void generationSpinnerType() {
+    /*Génération de la liste déroulante contenant les types*/
         final Spinner sType = (Spinner) findViewById(R.id.sType);
 
         RealmResults listeType = realm.where(Type.class).findAll();
@@ -65,42 +66,16 @@ public class Modifier extends AppCompatActivity {
         ArrayAdapter<String> dataAdapterR = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, types);
         dataAdapterR.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sType.setAdapter(dataAdapterR);
-
-        sType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                TextView tvType = (TextView) findViewById(R.id.tvTypeHidden);
-                tvType.setText(String.valueOf(sType.getSelectedItem()));
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                sType.setSelection(0);
-                TextView tvType = (TextView) findViewById(R.id.tvTypeHidden);
-                tvType.setText(String.valueOf(sType.getSelectedItem()));
-
-            }
-        });
-
-        if(ean != null)
-        {
-            livre = realm.where(Livre.class).equalTo("ean", ean, false).findFirst();
-        }
-
-        Button bAjout = (Button) findViewById(R.id.bAjout);
-        bAjout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                modification(livre);
-            }
-        });
     }
 
     private void modification(Livre livre)
     {
-        final EditText etTitre = (EditText) findViewById(R.id.etTitre);
+
+        Toast.makeText(this, "Click modif", Toast.LENGTH_SHORT).show();
+        /*final EditText etTitre = (EditText) findViewById(R.id.etTitre);
         final EditText etAuteur = (EditText) findViewById(R.id.etAuteur);
         final EditText etEditeur = (EditText) findViewById(R.id.etEditeur);
-        final TextView tvType = (TextView) findViewById(R.id.tvTypeHidden);
+        final Spinner sType = (Spinner) findViewById(R.id.sType);
         final EditText etEan = (EditText) findViewById(R.id.etISBN);
         final EditText etCateg = (EditText) findViewById(R.id.etCategorie);
         final EditText etDate = (EditText) findViewById(R.id.etDatePub);
@@ -115,7 +90,7 @@ public class Modifier extends AppCompatActivity {
         final String titre = etTitre.getText().toString();
         final String auteur = etAuteur.getText().toString();
         final String editeur = etEditeur.getText().toString();
-        final String type = tvType.getText().toString();
+        final int type = sType.getSelectedItemPosition();
         final String isbn = etEan.getText().toString();
         final String categ = etCateg.getText().toString();
         final String date = etDate.getText().toString();
@@ -156,7 +131,7 @@ public class Modifier extends AppCompatActivity {
                         rl.setLangue(langue);
                         rl.setResume(resume);
                         rl.setCategorie(categ);
-                        rl.setType(realm.where(Type.class).equalTo("nom", type).findFirst());
+                        rl.setType(realm.where(Type.class).equalTo("id", type).findFirst());
                         //------------------ recupérer la liste dans rlivre puis faire add((realm.where... pour les deux
                         rl.getStatut().add(0,(realm.where(Statut.class).equalTo("intitule", finstatutLu).findFirst()));
                         rl.getStatut().add(1,(realm.where(Statut.class).equalTo("intitule", finstatutPret).findFirst()));
@@ -170,7 +145,7 @@ public class Modifier extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Erreur lors de l'ajout", Toast.LENGTH_LONG).show();
             }
         } else
-            Toast.makeText(getApplicationContext(), "Il manque un champ obligatoire !", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Il manque un champ obligatoire !", Toast.LENGTH_LONG).show();*/
     }
 
     private void autoCompletionFiche(Livre l)
@@ -178,17 +153,16 @@ public class Modifier extends AppCompatActivity {
         final EditText etTitre = (EditText) findViewById(R.id.etTitre);
         final EditText etAuteur = (EditText) findViewById(R.id.etAuteur);
         final EditText etEditeur = (EditText) findViewById(R.id.etEditeur);
-        final TextView tvType = (TextView) findViewById(R.id.tvTypeHidden);
         final EditText etEan = (EditText) findViewById(R.id.etISBN);
         final EditText etCateg = (EditText) findViewById(R.id.etCategorie);
         final EditText etDate = (EditText) findViewById(R.id.etDatePub);
         final EditText etLangue = (EditText) findViewById(R.id.etLangue);
         final EditText etResume = (EditText) findViewById(R.id.etResume);
-        final RadioButton rbLu =(RadioButton) findViewById(R.id.rbLu);
+        /*final RadioButton rbLu =(RadioButton) findViewById(R.id.rbLu);
         final RadioButton rbNonLu =(RadioButton) findViewById(R.id.rbNonLu);
         final RadioButton rbEnCours=(RadioButton) findViewById(R.id.rbEnCours);
         final RadioButton rbNonPret=(RadioButton) findViewById(R.id.rbNonPrete);
-        final RadioButton rbPret=(RadioButton) findViewById(R.id.rbPrete);
+        final RadioButton rbPret=(RadioButton) findViewById(R.id.rbPrete);*/
 
         etTitre.setText(l.getTitre());
         etAuteur.setText(l.getAuteur());
@@ -199,99 +173,7 @@ public class Modifier extends AppCompatActivity {
         etLangue.setText(l.getLangue());
         etResume.setText(l.getResume());
 
-
-    }
-
-    private Livre lectureJSON(String reponse) throws JSONException
-    {
-        JSONObject reponseJson = new JSONObject(reponse);
-        if(reponseJson.has("items"))
-        {
-            JSONArray tabLivreJson = reponseJson.getJSONArray("items");
-            JSONObject livreJson = tabLivreJson.getJSONObject(0);
-            JSONObject infoLivreJson = livreJson.getJSONObject("volumeInfo");
-
-            String titre = null;
-            String auteur = null;
-            String editeur = null;
-            String dateEdi = null;
-            String resume = null;
-            String langue = null;
-
-            TextView tvCache = (TextView) findViewById(R.id.tvTypeHidden);
-
-            if (infoLivreJson.has("title")) {
-                titre = infoLivreJson.getString("title");
-                EditText etTitre = (EditText) findViewById(R.id.etTitre);
-                etTitre.setText(titre);
-            }
-
-            EditText etEan = (EditText) findViewById(R.id.etISBN);
-            etEan.setText(ean);
-
-            if (infoLivreJson.has("authors")) {
-                auteur = infoLivreJson.getJSONArray("authors").getString(0);
-                EditText etAuteur = (EditText) findViewById(R.id.etAuteur);
-                etAuteur.setText(auteur);
-            }
-
-            if (infoLivreJson.has("publisher")) {
-                editeur = infoLivreJson.getString("publisher");
-                EditText etEdit = (EditText) findViewById(R.id.etEditeur);
-                etEdit.setText(editeur);
-            }
-            if (infoLivreJson.has("publisherDate")) {
-                dateEdi = infoLivreJson.getString("publisherDate");
-                EditText etDate = (EditText) findViewById(R.id.etDatePub);
-                etDate.setText(dateEdi);
-            }
-
-            if (infoLivreJson.has("resume")) {
-                resume = infoLivreJson.getString("resume");
-                EditText etResume = (EditText) findViewById(R.id.etResume);
-                etResume.setText(resume);
-            }
-            if (infoLivreJson.has("language")) {
-                langue = infoLivreJson.getString("language");
-                EditText etLangue = (EditText) findViewById(R.id.etLangue);
-                etLangue.setText(langue);
-            }
-            try {
-                return new Livre(ean, titre, auteur, editeur, dateEdi, resume, langue, realm.where(Type.class).equalTo("nom", tvCache.getText().toString()).findFirst());
-            }catch (RealmException re)
-            {
-                System.err.println(re.toString());
-                Toast.makeText(getApplicationContext(), "Erreur lors de l'ajout", Toast.LENGTH_LONG).show();
-            }
-        }
-        else
-            Toast.makeText(getApplicationContext(), "Nous n'avons pas d'informations sur ce livre.", Toast.LENGTH_LONG).show();
-
-        return null;
-    }
-
-    private void appelGoogleBooksApi(String ean)
-    {
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://www.googleapis.com/books/v1/volumes?q=isbn:"+ean;
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            lectureJSON(response);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), "Une erreur s'est produite.", Toast.LENGTH_SHORT).show();
-                    }
-                }
-        );
-        queue.add(stringRequest);
+        final Spinner sType = (Spinner) findViewById(R.id.sType);
+        sType.setSelection(l.getType().getId());
     }
 }

@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -20,7 +22,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.alice.biblothequevirtuelle.Appli.BVAppli;
 import com.example.alice.biblothequevirtuelle.R;
 import com.example.alice.biblothequevirtuelle.Realm.Livre;
 
@@ -31,6 +32,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import io.realm.Case;
 import io.realm.Realm;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
@@ -46,19 +48,48 @@ public class Recherche extends AppCompatActivity {
     boolean dsMaBibli;
     Realm realm;
 
+    public class listeLivreClickHandler implements AdapterView.OnItemClickListener {
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            Intent intent;
+
+            if(dsMaBibli)
+            {
+                intent = new Intent(parent.getContext(), Modifier.class);
+                intent.putExtra("livreSelectrionné", ((TextView) view.findViewById(R.id.tvIdHidden)).getText().toString());
+            }
+            else {
+                intent = new Intent(parent.getContext(), Ajouter.class);
+                intent.putExtra("précédent", "Recherche");
+                intent.putExtra("ean", ((TextView) view.findViewById(R.id.tvCelluleIsbn)).getText().toString());
+                intent.putExtra("titre", ((TextView) view.findViewById(R.id.tvCelluleTitre)).getText().toString());
+                intent.putExtra("auteur", ((TextView) view.findViewById(R.id.tvCelluleAuteur)).getText().toString());
+                intent.putExtra("editeur", ((TextView) view.findViewById(R.id.tvEditeurHidden)).getText().toString());
+                intent.putExtra("dateEdi", ((TextView) view.findViewById(R.id.tvDateEdiHidden)).getText().toString());
+                intent.putExtra("resume", ((TextView) view.findViewById(R.id.tvResumeHidden)).getText().toString());
+                intent.putExtra("langue", ((TextView) view.findViewById(R.id.tvLangueHidden)).getText().toString());
+            }
+
+            startActivity(intent);
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recherche_layout);
 
-        realm = Realm.getInstance(BVAppli.getInstance());
+        realm = Realm.getDefaultInstance();
 
         adapter = new SimpleAdapter(this, donnees, R.layout.livre_liste_layout,
-                new String[]{"isbn", "titre", "auteur"},
-                new int[]{R.id.tvCelluleIsbn, R.id.tvCelluleTitre, R.id.tvCelluleAuteur});
+                new String[]{"isbn", "titre", "auteur", "editeur", "dateEdi", "resume", "langue", "id"},
+                new int[]{R.id.tvCelluleIsbn, R.id.tvCelluleTitre, R.id.tvCelluleAuteur, R.id.tvEditeurHidden, R.id.tvDateEdiHidden, R.id.tvResumeHidden, R.id.tvLangueHidden, R.id.tvIdHidden});
         listLivres = (ListView) findViewById(R.id.listView_Recherche);
         listLivres.setAdapter(adapter);
+        listLivres.setOnItemClickListener(new listeLivreClickHandler());
 
         Button bMaBlibli = (Button) findViewById(R.id.bRechercheInterne);
         bMaBlibli.setOnClickListener(new View.OnClickListener() {
@@ -80,11 +111,16 @@ public class Recherche extends AppCompatActivity {
     }
 
 
-    public void addItem(String isbn, String titre, String auteur) {
+   public void addItem(String id, String isbn, String titre, String auteur, String editeur, String dateEdi, String resume, String langue) {
         HashMap<String,String> item = new HashMap<String,String>();
+        item.put("id", id);
         item.put("isbn", isbn);
         item.put("titre", titre);
         item.put("auteur", auteur);
+        item.put("editeur", editeur);
+        item.put("dateEdi", dateEdi);
+        item.put("resume", resume);
+        item.put("langue", langue);
         donnees.add(item);
     }
 
@@ -110,15 +146,15 @@ public class Recherche extends AppCompatActivity {
 
                     RealmQuery<Livre> rr = realm.where(Livre.class);
                     if (!isbn.equals("")) {
-                        rr = rr.contains("ean", isbn, RealmQuery.CASE_INSENSITIVE);
+                        rr = rr.contains("ean", isbn, Case.INSENSITIVE);
                     }
 
                     if (!titre.equals("")) {
-                        rr = rr.contains("titre", titre, RealmQuery.CASE_INSENSITIVE);
+                        rr = rr.contains("titre", titre, Case.INSENSITIVE);
                     }
 
                     if (!auteur.equals("")) {
-                        rr.contains("auteur", auteur, RealmQuery.CASE_INSENSITIVE);
+                        rr.contains("auteur", auteur, Case.INSENSITIVE);
                     }
 
                     donnees.clear();
@@ -128,13 +164,11 @@ public class Recherche extends AppCompatActivity {
                         Toast.makeText(this.getBaseContext(), "Oups aucune correspondance...", Toast.LENGTH_LONG).show();
                     } else {
                         for (Livre lv : rrLivre) {
-                            addItem(lv.getEan(), lv.getTitre(), lv.getAuteur());
+                            addItem(String.valueOf(lv.getId()), lv.getEan(), lv.getTitre(), lv.getAuteur(), lv.getEditeur(), lv.getDatePub(), lv.getResume(), lv.getLangue());
                         }
                     }
 
                     adapter.notifyDataSetChanged();
-                    rr = null;
-
 
                 } catch (Exception e) {
                     Log.e("Main : ", e.toString());
@@ -215,19 +249,37 @@ public class Recherche extends AppCompatActivity {
 
                     String titre = null;
                     String auteur = null;
+                    String editeur = null;
+                    String dateEdi = null;
+                    String resume = null;
+                    String langue = null;
+
+                    EditText etEan = (EditText) findViewById(R.id.etISBN);
+                    etEan.setText(ean);
 
                     if (infoLivreJson.has("title")) {
                         titre = infoLivreJson.getString("title");
                     }
 
-                    EditText etEan = (EditText) findViewById(R.id.etISBN);
-                    etEan.setText(ean);
-
                     if (infoLivreJson.has("authors")) {
                         auteur = infoLivreJson.getJSONArray("authors").getString(0);
                     }
 
-                    addItem(ean, titre, auteur);
+                    if (infoLivreJson.has("publisher")) {
+                        editeur = infoLivreJson.getString("publisher");
+                    }
+                    if (infoLivreJson.has("publisherDate")) {
+                        dateEdi = infoLivreJson.getString("publisherDate");
+                    }
+
+                    if (infoLivreJson.has("resume")) {
+                        resume = infoLivreJson.getString("resume");
+                    }
+                    if (infoLivreJson.has("language")) {
+                        langue = infoLivreJson.getString("language");
+                    }
+
+                    addItem(null, ean, titre, auteur, editeur, dateEdi, resume, langue);
                 }
             }
         }
