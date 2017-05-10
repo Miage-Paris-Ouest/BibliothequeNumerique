@@ -31,6 +31,7 @@ public class RLivreTest {
         livreTest.setCategorie("categorie");
         statut.add(0,s1);
         statut.add(1,s2);
+        livreTest.setStatut(statut);
 
         assertEquals(livreTest.getEan(),"ean");
         assertEquals(livreTest.getTitre(),"titre");
@@ -41,6 +42,7 @@ public class RLivreTest {
         assertEquals(livreTest.getLangue(),"langue");
         assertEquals(livreTest.getType(),typeTest);
         assertEquals(livreTest.getCategorie(),"categorie");
+        assertEquals(livreTest.getStatut(),statut);
 
         RLivre livreTest2 = new RLivre("ean2","titre2","auteur2","editeur2","datePub2","resume2","langue2",typeTest2,"categorie2",statut);
         typeTest3.setNom(typeTest2.getNom());
