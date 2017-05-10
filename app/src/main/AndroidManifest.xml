@@ -24,17 +24,17 @@
             android:name="DOMAINE_PACKAGE_NAME"
             android:value="com.example.alice" />
 
-        <activity android:name=".Vue.Accueil">
+        <activity android:name=".Vue.Accueil" android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Vue.Ajouter" />
-        <activity android:name=".Vue.Recherche" />
-        <activity android:name=".Vue.MesLivres"></activity>
-        <activity android:name=".Vue.Modifier"></activity>
+        <activity android:name=".Vue.Ajouter" android:configChanges="orientation|screenSize"/>
+        <activity android:name=".Vue.Recherche" android:configChanges="orientation|screenSize"/>
+        <activity android:name=".Vue.MesLivres" android:configChanges="orientation|screenSize"></activity>
+        <activity android:name=".Vue.Modifier" android:configChanges="orientation|screenSize"></activity>
     </application>
 
 </manifest>
