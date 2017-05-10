@@ -22,7 +22,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.alice.biblothequevirtuelle.Appli.BVAppli;
 import com.example.alice.biblothequevirtuelle.R;
-import com.example.alice.biblothequevirtuelle.Realm.RLivre;
+import com.example.alice.biblothequevirtuelle.Realm.Livre;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,7 +54,7 @@ public class Recherche extends AppCompatActivity {
 
         realm = Realm.getInstance(BVAppli.getInstance());
 
-        adapter = new SimpleAdapter(this, donnees, R.layout.item,
+        adapter = new SimpleAdapter(this, donnees, R.layout.livre_liste_layout,
                 new String[]{"isbn", "titre", "auteur"},
                 new int[]{R.id.cellule_isbn, R.id.cellule_titre, R.id.cellule_auteur});
         listLivres = (ListView) findViewById(R.id.listView_Recherche);
@@ -108,7 +108,7 @@ public class Recherche extends AppCompatActivity {
             else {
                 try {
 
-                    RealmQuery<RLivre> rr = realm.where(RLivre.class);
+                    RealmQuery<Livre> rr = realm.where(Livre.class);
                     if (!isbn.equals("")) {
                         rr = rr.contains("ean", isbn, RealmQuery.CASE_INSENSITIVE);
                     }
@@ -123,11 +123,11 @@ public class Recherche extends AppCompatActivity {
 
                     donnees.clear();
 
-                    RealmResults<RLivre> rrLivre = rr.findAll();
+                    RealmResults<Livre> rrLivre = rr.findAll();
                     if (rrLivre.isEmpty()) {
                         Toast.makeText(this.getBaseContext(), "Oups aucune correspondance...", Toast.LENGTH_LONG).show();
                     } else {
-                        for (RLivre lv : rrLivre) {
+                        for (Livre lv : rrLivre) {
                             addItem(lv.getEan(), lv.getTitre(), lv.getAuteur());
                         }
                     }
@@ -250,4 +250,9 @@ public class Recherche extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        realm.close();
+    }
 }

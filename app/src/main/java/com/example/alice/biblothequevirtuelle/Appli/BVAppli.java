@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.widget.Toast;
 
 import com.example.alice.biblothequevirtuelle.Realm.Auteur;
-import com.example.alice.biblothequevirtuelle.Realm.RLivre;
+import com.example.alice.biblothequevirtuelle.Realm.Livre;
 import com.example.alice.biblothequevirtuelle.Realm.Statut;
 import com.example.alice.biblothequevirtuelle.Realm.Type;
 
@@ -19,13 +19,14 @@ import io.realm.exceptions.RealmException;
  */
 
 public class BVAppli extends Application {
-    private SharedPreferences sharedPreferences;
     private static final String PREFS = "PREFS";
     private static final String INSTAL_OK = "INSTAL_OK";
     private static BVAppli instance;
 
+    private static Realm realm;
+
     // Create the module
-    @RealmModule(classes = { RLivre.class, Auteur.class, Type.class, Statut.class })
+    @RealmModule(classes = { Livre.class, Auteur.class, Type.class, Statut.class })
     private class MyModule {
     }
 
@@ -40,12 +41,16 @@ public class BVAppli extends Application {
                 .setModules(new MyModule())
                 .build();
         Realm.setDefaultConfiguration(realmConfiguration);
-        sharedPreferences = getBaseContext().getSharedPreferences(PREFS, MODE_PRIVATE);
+        Realm realm = Realm.getInstance(getInstance());
+
+        SharedPreferences sharedPreferences = getBaseContext().getSharedPreferences(PREFS, MODE_PRIVATE);
+        boolean test2 = sharedPreferences.contains(INSTAL_OK);
+        boolean test = sharedPreferences.getBoolean(INSTAL_OK, false);
         //objectif : sauvegarder une seule fois si les types et les statuts ont été chargé dans la BDD interne
         //Si la clef n'existe pas ou si elle existe mais que la valeur est fausse
-        if ((!sharedPreferences.contains(INSTAL_OK)) || (sharedPreferences.contains(INSTAL_OK) && sharedPreferences.getBoolean(INSTAL_OK, false)))
+        if ((!sharedPreferences.contains(INSTAL_OK)) || (sharedPreferences.contains(INSTAL_OK) && (sharedPreferences.getBoolean(INSTAL_OK, false)== false)))
         {
-            Realm realm = Realm.getInstance(BVAppli.getInstance());
+
             try {
                 realm.beginTransaction();
                 // On ajoute tous les types disponibles
@@ -79,6 +84,7 @@ public class BVAppli extends Application {
 
                 sharedPreferences.edit().putBoolean(INSTAL_OK, true).apply();
                 Toast.makeText(getApplicationContext(), "Données téléchargées", Toast.LENGTH_LONG).show();
+                realm.close();
             }catch (RealmException re)
             {
                 Toast.makeText(getApplicationContext(), "Erreur lors du téléchargement des données", Toast.LENGTH_LONG).show();
@@ -91,11 +97,10 @@ public class BVAppli extends Application {
     }
 
     public static BVAppli getInstance() {
+
         return instance;
     }
-    public SharedPreferences getSharedPreferences() {
-        return sharedPreferences;
-    }
+
     @Override
     public void onLowMemory() {
         super.onLowMemory();
@@ -110,4 +115,6 @@ public class BVAppli extends Application {
     public void onTerminate() {
         super.onTerminate();
     }
+
+
 }

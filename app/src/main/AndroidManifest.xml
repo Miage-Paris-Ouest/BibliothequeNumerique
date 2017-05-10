@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="com.example.alice.biblothequevirtuelle.Appli.BVAppli"
+        android:name=".Appli.BVAppli"
         android:allowBackup="true"
         android:icon="@mipmap/logo"
         android:label="@string/app_name"
@@ -27,11 +27,13 @@
         <activity android:name=".Vue.Accueil">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".Vue.Ajouter" />
         <activity android:name=".Vue.Recherche" />
+        <activity android:name=".Vue.MesLivres"></activity>
     </application>
 
 </manifest>

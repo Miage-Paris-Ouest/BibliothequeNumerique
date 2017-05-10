@@ -12,23 +12,13 @@ import io.realm.annotations.RealmClass;
 public class Auteur extends RealmObject
 {
     @PrimaryKey
-    private String id;
     private String pseudo;
 
     public Auteur() {
     }
 
-    public Auteur(String id, String pseudo) {
-        this.id = id;
+    public Auteur(String pseudo) {
         this.pseudo = pseudo;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getPseudo() {
