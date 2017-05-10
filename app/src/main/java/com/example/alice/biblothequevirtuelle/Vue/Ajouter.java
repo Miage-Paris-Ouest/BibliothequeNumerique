@@ -161,8 +161,14 @@ public class Ajouter extends AppCompatActivity {
                 realm.executeTransaction(new Realm.Transaction() {
                                              @Override
                                              public void execute(Realm realm) {
-                                                 Livre rl = realm.createObject(Livre.class);
-                                                 rl.setId((int)realm.where(Livre.class).max("id") + 1);
+
+                                                 Number dernierID = realm.where(Livre.class).max("id") ;
+                                                 int id;
+                                                 if (dernierID != null)
+                                                     id = (int)realm.where(Livre.class).max("id") +1;
+                                                 else
+                                                     id = 0;
+                                                 Livre rl = realm.createObject(Livre.class, id);
                                                  rl.setEan(isbn);
                                                  rl.setTitre(titre);
                                                  rl.setAuteur(auteur);

@@ -19,6 +19,7 @@ import java.util.Iterator;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.exceptions.RealmException;
 
 public class Modifier extends AppCompatActivity {
 
@@ -72,7 +73,7 @@ public class Modifier extends AppCompatActivity {
     {
 
         Toast.makeText(this, "Click modif", Toast.LENGTH_SHORT).show();
-        /*final EditText etTitre = (EditText) findViewById(R.id.etTitre);
+        final EditText etTitre = (EditText) findViewById(R.id.etTitre);
         final EditText etAuteur = (EditText) findViewById(R.id.etAuteur);
         final EditText etEditeur = (EditText) findViewById(R.id.etEditeur);
         final Spinner sType = (Spinner) findViewById(R.id.sType);
@@ -81,11 +82,11 @@ public class Modifier extends AppCompatActivity {
         final EditText etDate = (EditText) findViewById(R.id.etDatePub);
         final EditText etLangue = (EditText) findViewById(R.id.etLangue);
         final EditText etResume = (EditText) findViewById(R.id.etResume);
-        final RadioButton rbLu =(RadioButton) findViewById(R.id.rbLu);
+        /*final RadioButton rbLu =(RadioButton) findViewById(R.id.rbLu);
         final RadioButton rbNonLu =(RadioButton) findViewById(R.id.rbNonLu);
         final RadioButton rbEnCours=(RadioButton) findViewById(R.id.rbEnCours);
         final RadioButton rbNonPret=(RadioButton) findViewById(R.id.rbNonPrete);
-        final RadioButton rbPret=(RadioButton) findViewById(R.id.rbPrete);
+        final RadioButton rbPret=(RadioButton) findViewById(R.id.rbPrete);*/
 
         final String titre = etTitre.getText().toString();
         final String auteur = etAuteur.getText().toString();
@@ -97,7 +98,7 @@ public class Modifier extends AppCompatActivity {
         final String langue = etLangue.getText().toString();
         final String resume = etResume.getText().toString();
 
-        // récupère l'élément coché grace a l'id trouvé ci dessus
+        /*// récupère l'élément coché grace a l'id trouvé ci dessus
         String statutLu="";
         String statutPret="";
 
@@ -114,7 +115,7 @@ public class Modifier extends AppCompatActivity {
             statutPret="Non Preté";
 
         final String finstatutLu=statutLu;
-        final String finstatutPret=statutPret;
+        final String finstatutPret=statutPret;*/
 
         if (!titre.equals("") && !auteur.equals("") && !isbn.equals("")) {
             try {
@@ -122,30 +123,34 @@ public class Modifier extends AppCompatActivity {
                 realm.executeTransaction(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
-                        Livre rl = realm.createObject(Livre.class);
-                        rl.setEan(ean);
-                        rl.setTitre(titre);
-                        rl.setAuteur(auteur);
-                        rl.setEditeur(editeur);
-                        rl.setDatePub(date);
-                        rl.setLangue(langue);
-                        rl.setResume(resume);
-                        rl.setCategorie(categ);
-                        rl.setType(realm.where(Type.class).equalTo("id", type).findFirst());
-                        //------------------ recupérer la liste dans rlivre puis faire add((realm.where... pour les deux
-                        rl.getStatut().add(0,(realm.where(Statut.class).equalTo("intitule", finstatutLu).findFirst()));
-                        rl.getStatut().add(1,(realm.where(Statut.class).equalTo("intitule", finstatutPret).findFirst()));
+
+                        modifierLivre(isbn, titre, auteur, editeur, date, langue, resume, categ, type);
                     }
                 });
 
-                Toast.makeText(getApplicationContext(), "Ajout réussi !", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Modification réussis !", Toast.LENGTH_LONG).show();
 
             } catch (RealmException re) {
                 System.err.println(re.toString());
-                Toast.makeText(getApplicationContext(), "Erreur lors de l'ajout", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Erreur lors de la modification", Toast.LENGTH_LONG).show();
             }
         } else
-            Toast.makeText(getApplicationContext(), "Il manque un champ obligatoire !", Toast.LENGTH_LONG).show();*/
+            Toast.makeText(getApplicationContext(), "Il manque un champ obligatoire !", Toast.LENGTH_LONG).show();
+    }
+
+    private void modifierLivre(String isbn, String titre, String auteur, String editeur, String date, String langue, String resume, String categ, int type) {
+        livre.setEan(isbn);
+        livre.setTitre(titre);
+        livre.setAuteur(auteur);
+        livre.setEditeur(editeur);
+        livre.setDatePub(date);
+        livre.setLangue(langue);
+        livre.setResume(resume);
+        livre.setCategorie(categ);
+        livre.setType(realm.where(Type.class).equalTo("id", type).findFirst());
+        /*//------------------ recupérer la liste dans rlivre puis faire add((realm.where... pour les deux
+        livre.getStatut().add(0,(realm.where(Statut.class).equalTo("intitule", finstatutLu).findFirst()));
+        livre.getStatut().add(1,(realm.where(Statut.class).equalTo("intitule", finstatutPret).findFirst()));*/
     }
 
     private void autoCompletionFiche(Livre l)

@@ -44,45 +44,45 @@ public class BVAppli extends Application {
         SharedPreferences sharedPreferences = getBaseContext().getSharedPreferences(PREFS, MODE_PRIVATE);
         //objectif : sauvegarder une seule fois si les types et les statuts ont été chargé dans la BDD interne
         //Si la clef n'existe pas ou si elle existe mais que la valeur est fausse
-        if ((!sharedPreferences.contains(INSTAL_OK)) || (sharedPreferences.contains(INSTAL_OK) && (sharedPreferences.getBoolean(INSTAL_OK, false)== false)))
+        if ((!sharedPreferences.contains(INSTAL_OK)) || (sharedPreferences.contains(INSTAL_OK) && (!sharedPreferences.getBoolean(INSTAL_OK, false))))
         {
 
             try {
                 realm.beginTransaction();
+                Number maxId = realm.where(Type.class).max("id");
+                int premierId;
+                if(maxId != null)
+                    premierId = (int) maxId;
+                else
+                    premierId = 0;
                 // On ajoute tous les types disponibles
-                Type indefini = realm.createObject(Type.class);
-                indefini.setId((int)realm.where(Type.class).max("id") + 1);
+                Type indefini = realm.createObject(Type.class, premierId);
                 indefini.setNom("Indéfini");
-                Type grandFormat = realm.createObject(Type.class);
-                grandFormat.setId((int)realm.where(Type.class).max("id") + 1);
+                premierId++;
+                Type grandFormat = realm.createObject(Type.class, premierId);
                 grandFormat.setNom("Grand Format");
-                Type poche = realm.createObject(Type.class);
-                poche.setId((int)realm.where(Type.class).max("id") + 1);
+                premierId++;
+                Type poche = realm.createObject(Type.class, premierId);
                 poche.setNom("Poche");
-                Type bd = realm.createObject(Type.class);
-                bd.setId((int)realm.where(Type.class).max("id") + 1);
+                premierId++;
+                Type bd = realm.createObject(Type.class, premierId);
                 bd.setNom("Bande dessinée");
-                Type comics = realm.createObject(Type.class);
-                comics.setId((int)realm.where(Type.class).max("id") + 1);
+                premierId++;
+                Type comics = realm.createObject(Type.class, premierId);
                 comics.setNom("Comics");
-                Type manga = realm.createObject(Type.class);
-                manga.setId((int) realm.where(Type.class).max("id") + 1);
+                premierId++;
+                Type manga = realm.createObject(Type.class, premierId);
                 manga.setNom("Manga");
-                Type presse = realm.createObject(Type.class);
-                presse.setId((int)realm.where(Type.class).max("id") + 1);
+                premierId++;
+                Type presse = realm.createObject(Type.class, premierId);
                 presse.setNom("Presse");
 
                 //On ajoute tous les status disponibles
-                Statut aLire = realm.createObject(Statut.class);
-                aLire.setIntitule("A Lire");
-                Statut enCours = realm.createObject(Statut.class);
-                enCours.setIntitule("En Cours");
-                Statut lu = realm.createObject(Statut.class);
-                lu.setIntitule("Lu");
-                Statut prete = realm.createObject(Statut.class);
-                prete.setIntitule("Preté");
-                Statut nonprete = realm.createObject(Statut.class);
-                nonprete.setIntitule("Non Preté");
+                realm.createObject(Statut.class, "A Lire");
+                realm.createObject(Statut.class, "En Cours");
+                realm.createObject(Statut.class, "Lu");
+                realm.createObject(Statut.class, "Preté");
+                realm.createObject(Statut.class, "Non Preté");
                 realm.commitTransaction();
 
                 sharedPreferences.edit().putBoolean(INSTAL_OK, true).apply();
