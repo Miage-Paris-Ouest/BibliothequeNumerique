@@ -21,6 +21,8 @@ public class CreationCompte extends AppCompatActivity {
 
 
     private Button bValiderInscription;
+    private Button btnResetPassword;
+    private Button btnSignIn;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
 
@@ -38,22 +40,34 @@ public class CreationCompte extends AppCompatActivity {
         bValiderInscription = (Button) findViewById(R.id.bValiderInscription);
         etMailInscription = (EditText) findViewById(R.id.etMailInscription);
         etMdpInscription1 = (EditText) findViewById(R.id.etMdpInscription1);
+        btnResetPassword = (Button) findViewById(R.id.btnResetPassword);
+        btnSignIn = (Button) findViewById(R.id.btnSignIn);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
 
-        /*btnResetPassword.setOnClickListener(new View.OnClickListener() {
+       /* btnResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SignupActivity.this, ResetPasswordActivity.class));
-            }
-        });*/
+                SimpleLogin authClient = new SimpleLogin(myRef, getApplicationContex());
+                authClient.sendPasswordResetEmail("email@example.com", new SimpleLoginCompletionHandler() {
+                    public void completed(FirebaseSimpleLoginError error, boolean success) {
+                        if(error != null) {
+                            // There was an error processing this request
+                        }
+                        else if(success) {
+                            // Password reset email sent successfully
+                        }
+                    }
+                });
+            }*/
+        //});
 
-        /*btnSignIn.setOnClickListener(new View.OnClickListener() {
+        btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
-        });*/
+        });
 
         bValiderInscription.setOnClickListener(new View.OnClickListener() {
             @Override
