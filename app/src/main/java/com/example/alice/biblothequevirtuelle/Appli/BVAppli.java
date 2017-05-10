@@ -5,11 +5,11 @@ import android.content.SharedPreferences;
 import android.widget.Toast;
 
 import com.example.alice.biblothequevirtuelle.Realm.Livre;
-import com.example.alice.biblothequevirtuelle.Realm.Statut;
 import com.example.alice.biblothequevirtuelle.Realm.Type;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
 import io.realm.annotations.RealmModule;
 import io.realm.exceptions.RealmException;
 
@@ -25,7 +25,7 @@ public class BVAppli extends Application {
     private static Realm realm;
 
     // Create the module
-    @RealmModule(classes = { Livre.class, Type.class, Statut.class })
+    @RealmModule(classes = { Livre.class, Type.class, })
     private class MyModule {
     }
 
@@ -50,39 +50,35 @@ public class BVAppli extends Application {
             try {
                 realm.beginTransaction();
                 Number maxId = realm.where(Type.class).max("id");
-                int premierId;
+                int idType;
                 if(maxId != null)
-                    premierId = (int) maxId;
+                    idType = (int) maxId;
                 else
-                    premierId = 0;
+                    idType = 0;
                 // On ajoute tous les types disponibles
-                Type indefini = realm.createObject(Type.class, premierId);
+                Type indefini = realm.createObject(Type.class, idType);
                 indefini.setNom("Indéfini");
-                premierId++;
-                Type grandFormat = realm.createObject(Type.class, premierId);
+                idType++;
+                Type grandFormat = realm.createObject(Type.class, idType);
                 grandFormat.setNom("Grand Format");
-                premierId++;
-                Type poche = realm.createObject(Type.class, premierId);
+                idType++;
+                Type poche = realm.createObject(Type.class, idType);
                 poche.setNom("Poche");
-                premierId++;
-                Type bd = realm.createObject(Type.class, premierId);
+                idType++;
+                Type bd = realm.createObject(Type.class, idType);
                 bd.setNom("Bande dessinée");
-                premierId++;
-                Type comics = realm.createObject(Type.class, premierId);
+                idType++;
+                Type comics = realm.createObject(Type.class, idType);
                 comics.setNom("Comics");
-                premierId++;
-                Type manga = realm.createObject(Type.class, premierId);
+                idType++;
+                Type manga = realm.createObject(Type.class, idType);
                 manga.setNom("Manga");
-                premierId++;
-                Type presse = realm.createObject(Type.class, premierId);
+                idType++;
+                Type presse = realm.createObject(Type.class, idType);
                 presse.setNom("Presse");
 
-                //On ajoute tous les status disponibles
-                realm.createObject(Statut.class, "A Lire");
-                realm.createObject(Statut.class, "En Cours");
-                realm.createObject(Statut.class, "Lu");
-                realm.createObject(Statut.class, "Preté");
-                realm.createObject(Statut.class, "Non Preté");
+                RealmResults listeType = realm.where(Type.class).findAll();
+
                 realm.commitTransaction();
 
                 sharedPreferences.edit().putBoolean(INSTAL_OK, true).apply();

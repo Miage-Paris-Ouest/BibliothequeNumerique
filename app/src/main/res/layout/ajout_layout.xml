@@ -161,21 +161,6 @@
             android:hint="@string/langue"
             android:inputType="textPersonName" />
 
-        <EditText
-            android:id="@+id/etAvis"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/avis"
-            android:inputType="textPersonName" />
-
-        <RatingBar
-            android:id="@+id/rbNote"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:elevation="1dp"
-            android:numStars="5" />
-
         <Button
             android:id="@+id/bAjout"
             android:layout_width="match_parent"

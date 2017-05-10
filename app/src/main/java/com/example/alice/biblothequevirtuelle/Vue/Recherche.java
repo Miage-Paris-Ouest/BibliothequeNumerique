@@ -58,7 +58,8 @@ public class Recherche extends AppCompatActivity {
             if(dsMaBibli)
             {
                 intent = new Intent(parent.getContext(), Modifier.class);
-                intent.putExtra("livreSelectrionné", ((TextView) view.findViewById(R.id.tvIdHidden)).getText().toString());
+                TextView tv = (TextView) view.findViewById(R.id.tvIdHidden);
+                intent.putExtra("livreSelectionné", ((TextView) view.findViewById(R.id.tvIdHidden)).getText().toString());
             }
             else {
                 intent = new Intent(parent.getContext(), Ajouter.class);

@@ -26,9 +26,10 @@ public class Livre extends RealmObject
     private String langue;
     private Type type; // grand format, poche, BD, ....
     private String categorie; // à définir
-    private RealmList<Statut> statut; // position:0 => lu ou nonlu ou encours, position : 1 => pret ou nonpret
+    private int statut; // 0 : pas lu, 1 : en cours, 2 : lu
+    private boolean pret; // false : non, true : oui
 
-    public Livre(String ean, String titre, String auteur, String editeur, String datePub, String resume, String langue, Type type, String categorie, RealmList<Statut> statut) {
+    public Livre(String ean, String titre, String auteur, String editeur, String datePub, String resume, String langue, Type type, String categorie, int statut, boolean pret) {
         this.ean = ean;
         this.titre = titre;
         this.auteur = auteur;
@@ -39,6 +40,7 @@ public class Livre extends RealmObject
         this.type = type;
         this.categorie = categorie;
         this.statut = statut;
+        this.pret = pret;
     }
 
     public Livre(String ean, String titre, String auteur, String editeur, String datePub, String resume, String langue) {
@@ -137,19 +139,27 @@ public class Livre extends RealmObject
         this.type = type;
     }
 
-    public RealmList<Statut> getStatut() {
-        return statut;
-    }
-
-    public void setStatut(RealmList<Statut> statut) {
-        this.statut = statut;
-    }
-
     public String getCategorie() {
         return categorie;
     }
 
     public void setCategorie(String categorie) {
         this.categorie = categorie;
+    }
+
+    public int getStatut() {
+        return statut;
+    }
+
+    public void setStatut(int statut) {
+        this.statut = statut;
+    }
+
+    public boolean isPret() {
+        return pret;
+    }
+
+    public void setPret(boolean pret) {
+        this.pret = pret;
     }
 }

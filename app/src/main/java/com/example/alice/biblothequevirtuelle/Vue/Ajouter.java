@@ -1,7 +1,10 @@
 package com.example.alice.biblothequevirtuelle.Vue;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.IntegerRes;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -19,7 +22,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.alice.biblothequevirtuelle.R;
 import com.example.alice.biblothequevirtuelle.Realm.Livre;
-import com.example.alice.biblothequevirtuelle.Realm.Statut;
 import com.example.alice.biblothequevirtuelle.Realm.Type;
 
 import org.json.JSONArray;
@@ -28,6 +30,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -49,7 +53,6 @@ public class Ajouter extends AppCompatActivity {
         realm = Realm.getDefaultInstance();
         // Spinner
         final Spinner sType = (Spinner) findViewById(R.id.sType);
-
         RealmResults listeType = realm.where(Type.class).findAll();
         ArrayList<String> types = new ArrayList<>();
         Iterator iterator = listeType.iterator();
@@ -60,6 +63,13 @@ public class Ajouter extends AppCompatActivity {
         ArrayAdapter<String> dataAdapterR = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, types);
         dataAdapterR.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sType.setAdapter(dataAdapterR);
+        sType.setSelection(0);
+
+        //Coche par defaut
+        RadioButton rbStatut = (RadioButton) findViewById(R.id.rbNonLu);
+        rbStatut.setChecked(true);
+        RadioButton rbPret = (RadioButton) findViewById(R.id.rbNonPrete);
+        rbPret.setChecked(true);
 
         // si le intent vient de la recherche manuelle
         if(reception.getStringExtra("précédent") != null && reception.getStringExtra("précédent").equals("Recherche"))
@@ -111,20 +121,21 @@ public class Ajouter extends AppCompatActivity {
     }
 
     private void ajouter() {
-        final EditText etTitre = (EditText) findViewById(R.id.etTitre);
-        final EditText etAuteur = (EditText) findViewById(R.id.etAuteur);
-        final EditText etEditeur = (EditText) findViewById(R.id.etEditeur);
-        final Spinner sType = (Spinner) findViewById(R.id.sType);
-        final EditText etEan = (EditText) findViewById(R.id.etISBN);
-        final EditText etCateg = (EditText) findViewById(R.id.etCategorie);
-        final EditText etDate = (EditText) findViewById(R.id.etDatePub);
-        final EditText etLangue = (EditText) findViewById(R.id.etLangue);
-        final EditText etResume = (EditText) findViewById(R.id.etResume);
-        final RadioButton rbLu =(RadioButton) findViewById(R.id.rbLu);
-        final RadioButton rbNonLu =(RadioButton) findViewById(R.id.rbNonLu);
-        final RadioButton rbEnCours=(RadioButton) findViewById(R.id.rbEnCours);
-        final RadioButton rbNonPret=(RadioButton) findViewById(R.id.rbNonPrete);
-        final RadioButton rbPret=(RadioButton) findViewById(R.id.rbPrete);
+        EditText etTitre = (EditText) findViewById(R.id.etTitre);
+        EditText etAuteur = (EditText) findViewById(R.id.etAuteur);
+        EditText etEditeur = (EditText) findViewById(R.id.etEditeur);
+        Spinner sType = (Spinner) findViewById(R.id.sType);
+        EditText etEan = (EditText) findViewById(R.id.etISBN);
+        EditText etCateg = (EditText) findViewById(R.id.etCategorie);
+        EditText etDate = (EditText) findViewById(R.id.etDatePub);
+        EditText etLangue = (EditText) findViewById(R.id.etLangue);
+        EditText etResume = (EditText) findViewById(R.id.etResume);
+
+        RadioButton rbLu =(RadioButton) findViewById(R.id.rbLu);
+        RadioButton rbNonLu =(RadioButton) findViewById(R.id.rbNonLu);
+        RadioButton rbEnCours=(RadioButton) findViewById(R.id.rbEnCours);
+        RadioButton rbNonPret=(RadioButton) findViewById(R.id.rbNonPrete);
+        RadioButton rbPret=(RadioButton) findViewById(R.id.rbPrete);
 
         final String titre = etTitre.getText().toString();
         final String auteur = etAuteur.getText().toString();
@@ -136,62 +147,84 @@ public class Ajouter extends AppCompatActivity {
         final String langue = etLangue.getText().toString();
         final String resume = etResume.getText().toString();
 
-        // récupère l'élément coché grace a l'id trouvé ci dessus
-        String statutLu="";
-        String statutPret="";
+        int statut = 0;
+        boolean pret = false;
 
-        if(rbLu.isChecked())
-            statutLu="Lu";
-        else if(rbNonLu.isChecked())
-            statutLu="En Cours";
+        if(rbNonLu.isChecked())
+            statut = 0;
         else if(rbEnCours.isChecked())
-            statutLu="A Lire";
+            statut = 1;
+        else if(rbLu.isChecked())
+            statut = 2;
+
 
         if(rbPret.isChecked())
-            statutPret="Preté";
+            pret = true;
         else if(rbNonPret.isChecked())
-            statutPret="Non Preté";
+            pret = false;
 
-        final String finstatutLu=statutLu;
-        final String finstatutPret=statutPret;
+        Pattern regexp = Pattern.compile("^[0-9]*");
+        Matcher verif = regexp.matcher(isbn);
 
-        if (!titre.equals("") && !auteur.equals("") && !isbn.equals("")) {
-            try {
+        if(!verif.matches()) {
 
-                realm.executeTransaction(new Realm.Transaction() {
-                                             @Override
-                                             public void execute(Realm realm) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(Ajouter.this);
+            builder.setTitle("Attention ! Vous n'avez pas entrez d'ISBN ou ce dernier n'est pas correct");
+            builder.setMessage("La recherche par scanner ne pourra être faite. Voulez-vous continuer ?");
 
-                                                 Number dernierID = realm.where(Livre.class).max("id") ;
-                                                 int id;
-                                                 if (dernierID != null)
-                                                     id = (int)realm.where(Livre.class).max("id") +1;
-                                                 else
-                                                     id = 0;
-                                                 Livre rl = realm.createObject(Livre.class, id);
-                                                 rl.setEan(isbn);
-                                                 rl.setTitre(titre);
-                                                 rl.setAuteur(auteur);
-                                                 rl.setEditeur(editeur);
-                                                 rl.setDatePub(date);
-                                                 rl.setLangue(langue);
-                                                 rl.setResume(resume);
-                                                 rl.setCategorie(categ);
-                                                 rl.setType(realm.where(Type.class).equalTo("id", type).findFirst());
-                                                 //------------------ recupérer la liste dans rlivre puis faire add((realm.where... pour les deux
-                                                 rl.getStatut().add(0,(realm.where(Statut.class).equalTo("intitule", finstatutLu).findFirst()));
-                                                 rl.getStatut().add(1,(realm.where(Statut.class).equalTo("intitule", finstatutPret).findFirst()));
-                                             }
-                                         });
+            final int finalStatut = statut;
+            final boolean finalPret = pret;
+            builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    ajouterLivre(titre, auteur, editeur, type, isbn, categ, date, langue, resume, finalStatut, finalPret);
+                }
+            });
+            builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                }
+            });
+            builder.show();
+        }
+        else
+        {
+            ajouterLivre(titre, auteur, editeur, type, isbn, categ, date, langue, resume, statut, pret);
+        }
+    }
 
-                Toast.makeText(getApplicationContext(), "Ajout réussi !", Toast.LENGTH_LONG).show();
+    private void ajouterLivre(final String titre, final String auteur, final String editeur, final int type, final String isbn, final String categ, final String date, final String langue, final String resume, final int statut, final boolean pret) {
+        try {
 
-            } catch (RealmException re) {
-                System.err.println(re.toString());
-                Toast.makeText(getApplicationContext(), "Erreur lors de l'ajout", Toast.LENGTH_LONG).show();
-            }
-        } else
-            Toast.makeText(getApplicationContext(), "Il manque un champ obligatoire !", Toast.LENGTH_LONG).show();
+            realm.executeTransaction(new Realm.Transaction() {
+                                         @Override
+                                         public void execute(Realm realm) {
+
+                                             Number dernierID = realm.where(Livre.class).max("id") ;
+                                             int id;
+                                             if (dernierID != null)
+                                                 id = dernierID.intValue() + 1;
+                                             else
+                                                 id = 0;
+                                             Livre rl = realm.createObject(Livre.class, id);
+                                             rl.setEan(isbn);
+                                             rl.setTitre(titre);
+                                             rl.setAuteur(auteur);
+                                             rl.setEditeur(editeur);
+                                             rl.setDatePub(date);
+                                             rl.setLangue(langue);
+                                             rl.setResume(resume);
+                                             rl.setCategorie(categ);
+                                             rl.setType(realm.where(Type.class).equalTo("id", type).findFirst());
+                                             rl.setStatut(statut);
+                                             rl.setPret(pret);
+                                         }
+                                     });
+
+            Toast.makeText(getApplicationContext(), "Ajout réussi !", Toast.LENGTH_LONG).show();
+
+        } catch (RealmException re) {
+            System.err.println(re.toString());
+            Toast.makeText(getApplicationContext(), "Erreur lors de l'ajout", Toast.LENGTH_LONG).show();
+        }
     }
 
     private Livre lectureJSON(String reponse) throws JSONException

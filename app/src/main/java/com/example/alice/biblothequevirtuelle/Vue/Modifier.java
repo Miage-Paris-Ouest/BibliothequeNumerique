@@ -1,12 +1,17 @@
 package com.example.alice.biblothequevirtuelle.Vue;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -15,7 +20,10 @@ import com.example.alice.biblothequevirtuelle.Realm.Livre;
 import com.example.alice.biblothequevirtuelle.Realm.Type;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -37,7 +45,6 @@ public class Modifier extends AppCompatActivity {
 
         generationSpinnerType();
 
-        String precedent = reception.getStringExtra("précédent");
         String retourId = reception.getStringExtra("livreSelectionné");
         int idLivre = Integer.parseInt(retourId);
         livre = realm.where(Livre.class).equalTo("id", idLivre).findFirst();
@@ -48,7 +55,7 @@ public class Modifier extends AppCompatActivity {
         bAjout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                modification(livre);
+                modification();
             }
         });
     }
@@ -67,12 +74,11 @@ public class Modifier extends AppCompatActivity {
         ArrayAdapter<String> dataAdapterR = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, types);
         dataAdapterR.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sType.setAdapter(dataAdapterR);
+        sType.setSelection(0);
     }
 
-    private void modification(Livre livre)
+    private void modification()
     {
-
-        Toast.makeText(this, "Click modif", Toast.LENGTH_SHORT).show();
         final EditText etTitre = (EditText) findViewById(R.id.etTitre);
         final EditText etAuteur = (EditText) findViewById(R.id.etAuteur);
         final EditText etEditeur = (EditText) findViewById(R.id.etEditeur);
@@ -82,11 +88,11 @@ public class Modifier extends AppCompatActivity {
         final EditText etDate = (EditText) findViewById(R.id.etDatePub);
         final EditText etLangue = (EditText) findViewById(R.id.etLangue);
         final EditText etResume = (EditText) findViewById(R.id.etResume);
-        /*final RadioButton rbLu =(RadioButton) findViewById(R.id.rbLu);
+        final RadioButton rbLu =(RadioButton) findViewById(R.id.rbLu);
         final RadioButton rbNonLu =(RadioButton) findViewById(R.id.rbNonLu);
         final RadioButton rbEnCours=(RadioButton) findViewById(R.id.rbEnCours);
         final RadioButton rbNonPret=(RadioButton) findViewById(R.id.rbNonPrete);
-        final RadioButton rbPret=(RadioButton) findViewById(R.id.rbPrete);*/
+        final RadioButton rbPret=(RadioButton) findViewById(R.id.rbPrete);
 
         final String titre = etTitre.getText().toString();
         final String auteur = etAuteur.getText().toString();
@@ -98,76 +104,95 @@ public class Modifier extends AppCompatActivity {
         final String langue = etLangue.getText().toString();
         final String resume = etResume.getText().toString();
 
-        /*// récupère l'élément coché grace a l'id trouvé ci dessus
-        String statutLu="";
-        String statutPret="";
+        int statut = 0;
+        boolean pret = false;
 
-        if(rbLu.isChecked())
-            statutLu="Lu";
-        else if(rbNonLu.isChecked())
-            statutLu="En Cours";
+        if(rbNonLu.isChecked())
+            statut = 0;
         else if(rbEnCours.isChecked())
-            statutLu="A Lire";
+            statut = 1;
+        else if(rbLu.isChecked())
+            statut = 2;
+
 
         if(rbPret.isChecked())
-            statutPret="Preté";
+            pret = true;
         else if(rbNonPret.isChecked())
-            statutPret="Non Preté";
+            pret = false;
 
-        final String finstatutLu=statutLu;
-        final String finstatutPret=statutPret;*/
+        final int finalStatut = statut;
+        final boolean finalPret = pret;
 
-        if (!titre.equals("") && !auteur.equals("") && !isbn.equals("")) {
-            try {
+        Pattern regexp = Pattern.compile("^[0-9]*");
+        Matcher verif = regexp.matcher(isbn);
 
-                realm.executeTransaction(new Realm.Transaction() {
-                    @Override
-                    public void execute(Realm realm) {
+        if(!verif.matches()) {
 
-                        modifierLivre(isbn, titre, auteur, editeur, date, langue, resume, categ, type);
-                    }
-                });
+            AlertDialog.Builder builder = new AlertDialog.Builder(Modifier.this);
+            builder.setTitle("Attention ! Vous n'avez pas entrez d'ISBN ou ce dernier n'est pas correct");
+            builder.setMessage("La recherche par scanner ne pourra être faite. Voulez-vous continuer ?");
 
-                Toast.makeText(getApplicationContext(), "Modification réussis !", Toast.LENGTH_LONG).show();
-
-            } catch (RealmException re) {
-                System.err.println(re.toString());
-                Toast.makeText(getApplicationContext(), "Erreur lors de la modification", Toast.LENGTH_LONG).show();
-            }
-        } else
-            Toast.makeText(getApplicationContext(), "Il manque un champ obligatoire !", Toast.LENGTH_LONG).show();
+            builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    modifierLivre(isbn, titre, auteur, editeur, date, langue, resume, categ, type, finalStatut, finalPret);
+                }
+            });
+            builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                }
+            });
+            builder.show();
+        }
+        else
+        {
+            modifierLivre(isbn, titre, auteur, editeur, date, langue, resume, categ, type, statut, pret);
+        }
     }
 
-    private void modifierLivre(String isbn, String titre, String auteur, String editeur, String date, String langue, String resume, String categ, int type) {
-        livre.setEan(isbn);
-        livre.setTitre(titre);
-        livre.setAuteur(auteur);
-        livre.setEditeur(editeur);
-        livre.setDatePub(date);
-        livre.setLangue(langue);
-        livre.setResume(resume);
-        livre.setCategorie(categ);
-        livre.setType(realm.where(Type.class).equalTo("id", type).findFirst());
-        /*//------------------ recupérer la liste dans rlivre puis faire add((realm.where... pour les deux
-        livre.getStatut().add(0,(realm.where(Statut.class).equalTo("intitule", finstatutLu).findFirst()));
-        livre.getStatut().add(1,(realm.where(Statut.class).equalTo("intitule", finstatutPret).findFirst()));*/
+    private void modifierLivre(final String isbn, final String titre, final String auteur, final String editeur, final String date, final String langue, final String resume, final String categ, final int type, final int statut, final boolean pret) {
+        try {
+            realm.executeTransaction(new Realm.Transaction() {
+
+                @Override
+                public void execute(Realm realm) {
+
+                    livre.setEan(isbn);
+                    livre.setTitre(titre);
+                    livre.setAuteur(auteur);
+                    livre.setEditeur(editeur);
+                    livre.setDatePub(date);
+                    livre.setLangue(langue);
+                    livre.setResume(resume);
+                    livre.setCategorie(categ);
+                    livre.setType(realm.where(Type.class).equalTo("id", type).findFirst());
+                    livre.setStatut(statut);
+                    livre.setPret(pret);
+                }
+            });
+
+            Toast.makeText(getApplicationContext(), "Modifications réussies !", Toast.LENGTH_LONG).show();
+        } catch (RealmException re) {
+            System.err.println(re.toString());
+            Toast.makeText(getApplicationContext(), "Erreur lors de la modification", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void autoCompletionFiche(Livre l)
     {
-        final EditText etTitre = (EditText) findViewById(R.id.etTitre);
-        final EditText etAuteur = (EditText) findViewById(R.id.etAuteur);
-        final EditText etEditeur = (EditText) findViewById(R.id.etEditeur);
-        final EditText etEan = (EditText) findViewById(R.id.etISBN);
-        final EditText etCateg = (EditText) findViewById(R.id.etCategorie);
-        final EditText etDate = (EditText) findViewById(R.id.etDatePub);
-        final EditText etLangue = (EditText) findViewById(R.id.etLangue);
-        final EditText etResume = (EditText) findViewById(R.id.etResume);
-        /*final RadioButton rbLu =(RadioButton) findViewById(R.id.rbLu);
-        final RadioButton rbNonLu =(RadioButton) findViewById(R.id.rbNonLu);
-        final RadioButton rbEnCours=(RadioButton) findViewById(R.id.rbEnCours);
-        final RadioButton rbNonPret=(RadioButton) findViewById(R.id.rbNonPrete);
-        final RadioButton rbPret=(RadioButton) findViewById(R.id.rbPrete);*/
+        EditText etTitre = (EditText) findViewById(R.id.etTitre);
+        EditText etAuteur = (EditText) findViewById(R.id.etAuteur);
+        EditText etEditeur = (EditText) findViewById(R.id.etEditeur);
+        EditText etEan = (EditText) findViewById(R.id.etISBN);
+        EditText etCateg = (EditText) findViewById(R.id.etCategorie);
+        EditText etDate = (EditText) findViewById(R.id.etDatePub);
+        EditText etLangue = (EditText) findViewById(R.id.etLangue);
+        EditText etResume = (EditText) findViewById(R.id.etResume);
+
+        RadioButton rbLu =(RadioButton) findViewById(R.id.rbLu);
+        RadioButton rbNonLu =(RadioButton) findViewById(R.id.rbNonLu);
+        RadioButton rbEnCours=(RadioButton) findViewById(R.id.rbEnCours);
+        RadioButton rbNonPret=(RadioButton) findViewById(R.id.rbNonPrete);
+        RadioButton rbPret=(RadioButton) findViewById(R.id.rbPrete);
 
         etTitre.setText(l.getTitre());
         etAuteur.setText(l.getAuteur());
@@ -177,6 +202,27 @@ public class Modifier extends AppCompatActivity {
         etDate.setText(l.getDatePub());
         etLangue.setText(l.getLangue());
         etResume.setText(l.getResume());
+
+        int statut = l.getStatut();
+        switch (statut){
+            case 0 :
+                rbNonLu.setChecked(true);
+                break;
+            case 1 :
+                rbEnCours.setChecked(true);
+                break;
+            case 2 :
+                rbLu.setChecked(true);
+                break;
+            default :
+                rbNonLu.setChecked(true);
+        }
+
+        boolean pret = l.isPret();
+        if(pret)
+            rbPret.setChecked(true);
+        else
+            rbNonPret.setChecked(true);
 
         final Spinner sType = (Spinner) findViewById(R.id.sType);
         sType.setSelection(l.getType().getId());

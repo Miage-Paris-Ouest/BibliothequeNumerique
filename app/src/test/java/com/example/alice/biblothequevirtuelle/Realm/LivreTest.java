@@ -14,9 +14,6 @@ public class LivreTest {
     Type typeTest = new Type();
     Type typeTest2 = new Type("nom2");
     Type typeTest3 = new Type();
-    RealmList<Statut> statut= new RealmList<Statut>();
-    Statut s1=new Statut("A Lire");
-    Statut s2=new Statut("Preté");
 
     @Test
     public void testRLivreType() throws Exception {
@@ -29,9 +26,8 @@ public class LivreTest {
         livreTest.setLangue("langue");
         livreTest.setType(typeTest);
         livreTest.setCategorie("categorie");
-        statut.add(0,s1);
-        statut.add(1,s2);
-        livreTest.setStatut(statut);
+        livreTest.setStatut(0); // pas lu
+        livreTest.setPret(false); // pas preté
 
         assertEquals(livreTest.getEan(),"ean");
         assertEquals(livreTest.getTitre(),"titre");
@@ -42,9 +38,10 @@ public class LivreTest {
         assertEquals(livreTest.getLangue(),"langue");
         assertEquals(livreTest.getType(),typeTest);
         assertEquals(livreTest.getCategorie(),"categorie");
-        assertEquals(livreTest.getStatut(),statut);
+        assertEquals(livreTest.getStatut(),0);
+        assertEquals(livreTest.isPret(),false);
 
-        Livre livreTest2 = new Livre("ean2","titre2","auteur2","editeur2","datePub2","resume2","langue2",typeTest2,"categorie2",statut);
+        Livre livreTest2 = new Livre("ean2","titre2","auteur2","editeur2","datePub2","resume2","langue2",typeTest2,"categorie2", 0, false);
         typeTest3.setNom(typeTest2.getNom());
         Livre livreTest3 = new Livre("ean3","titre3","auteur3","editeur3","datePub3","resume3","langue3",typeTest3);
     }
