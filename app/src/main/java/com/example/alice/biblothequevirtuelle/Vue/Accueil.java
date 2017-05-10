@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.example.alice.biblothequevirtuelle.AppelService.Scanner;
 import com.example.alice.biblothequevirtuelle.Appli.BVAppli;
 import com.example.alice.biblothequevirtuelle.R;
-import com.example.alice.biblothequevirtuelle.Realm.RLivre;
+import com.example.alice.biblothequevirtuelle.Realm.Livre;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -143,10 +143,10 @@ public class Accueil extends AppCompatActivity
             }
             else
             {
-                RealmResults<RLivre> trouvaille;
+                RealmResults<Livre> trouvaille;
                 try
                 {
-                    trouvaille = realm.where(RLivre.class).equalTo("ean", ean).findAll();
+                    trouvaille = realm.where(Livre.class).equalTo("ean", ean).findAll();
                 }
                 catch(RealmException re)
                 {
@@ -173,7 +173,7 @@ public class Accueil extends AppCompatActivity
                 }
                 else
                 {
-                    final RLivre livre = trouvaille.first();
+                    final Livre livre = trouvaille.first();
                     builder.setTitle("Vous avez déjà ce livre ! ("+trouvaille.get(0).getTitre()+")");
                     builder.setMessage("Que voulez vous faire ?");
                     builder.setPositiveButton("Supprimer", new DialogInterface.OnClickListener() {

@@ -30,4 +30,5 @@
     <string name="o_voulez_vous_chercher">Où voulez vous chercher ?</string>
     <string name="inscription">Inscription</string>
     <string name="connexion">Connexion</string>
+    <string name="mes_livres">Mes Livres</string>
 </resources>

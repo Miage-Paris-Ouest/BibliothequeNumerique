@@ -13,7 +13,7 @@ import io.realm.annotations.RealmClass;
 TODO Faire une classe auteur et modifier la classe RLivre pour l'implémenter
  */
 @RealmClass
-public class RLivre extends RealmObject
+public class Livre extends RealmObject
 {
     @PrimaryKey
     private String ean;
@@ -27,7 +27,7 @@ public class RLivre extends RealmObject
     private String categorie; // à définir
     private RealmList<Statut> statut; // position:0 => lu ou nonlu ou encours, position : 1 => pret ou nonpret
 
-    public RLivre(String ean, String titre, String auteur, String editeur, String datePub, String resume, String langue, Type type, String categorie, RealmList<Statut> statut) {
+    public Livre(String ean, String titre, String auteur, String editeur, String datePub, String resume, String langue, Type type, String categorie, RealmList<Statut> statut) {
         this.ean = ean;
         this.titre = titre;
         this.auteur = auteur;
@@ -40,10 +40,10 @@ public class RLivre extends RealmObject
         this.statut = statut;
     }
 
-    public RLivre() {
+    public Livre() {
     }
 
-    public RLivre(String ean, String titre, String auteur, String editeur, String datePub, String resume, String langue, Type type) {
+    public Livre(String ean, String titre, String auteur, String editeur, String datePub, String resume, String langue, Type type) {
         this.ean = ean;
         this.titre = titre;
         this.auteur = auteur;
@@ -52,7 +52,6 @@ public class RLivre extends RealmObject
         this.resume = resume;
         this.langue = langue;
         this.type = type;
-        this.statut = statut;
     }
 
     public String getEan() {

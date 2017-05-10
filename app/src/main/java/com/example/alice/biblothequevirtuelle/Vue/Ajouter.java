@@ -9,7 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,7 +21,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.alice.biblothequevirtuelle.Appli.BVAppli;
 import com.example.alice.biblothequevirtuelle.R;
-import com.example.alice.biblothequevirtuelle.Realm.RLivre;
+import com.example.alice.biblothequevirtuelle.Realm.Livre;
 import com.example.alice.biblothequevirtuelle.Realm.Statut;
 import com.example.alice.biblothequevirtuelle.Realm.Type;
 
@@ -34,7 +33,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import io.realm.Realm;
-import io.realm.RealmList;
 import io.realm.RealmResults;
 import io.realm.exceptions.RealmException;
 
@@ -143,7 +141,7 @@ public class Ajouter extends AppCompatActivity {
                         realm.executeTransaction(new Realm.Transaction() {
                                                      @Override
                                                      public void execute(Realm realm) {
-                                                         RLivre rl = realm.createObject(RLivre.class);
+                                                         Livre rl = realm.createObject(Livre.class);
                                                          rl.setEan(ean);
                                                          rl.setTitre(titre);
                                                          rl.setAuteur(auteur);
@@ -171,7 +169,7 @@ public class Ajouter extends AppCompatActivity {
         });
     }
 
-    private RLivre lectureJSON(String reponse) throws JSONException
+    private Livre lectureJSON(String reponse) throws JSONException
     {
         JSONObject reponseJson = new JSONObject(reponse);
         if(reponseJson.has("items"))
@@ -226,7 +224,7 @@ public class Ajouter extends AppCompatActivity {
                 etLangue.setText(langue);
             }
             try {
-                return new RLivre(ean, titre, auteur, editeur, dateEdi, resume, langue, realm.where(Type.class).equalTo("nom", tvCache.getText().toString()).findFirst());
+                return new Livre(ean, titre, auteur, editeur, dateEdi, resume, langue, realm.where(Type.class).equalTo("nom", tvCache.getText().toString()).findFirst());
             }catch (RealmException re)
             {
                 System.err.println(re.toString());
