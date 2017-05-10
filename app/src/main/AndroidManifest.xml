@@ -34,6 +34,7 @@
         <activity android:name=".Vue.Ajouter" />
         <activity android:name=".Vue.Recherche" />
         <activity android:name=".Vue.MesLivres"></activity>
+        <activity android:name=".Vue.Modifier"></activity>
     </application>
 
 </manifest>
