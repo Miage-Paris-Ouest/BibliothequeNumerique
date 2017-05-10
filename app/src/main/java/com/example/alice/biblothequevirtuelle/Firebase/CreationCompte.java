@@ -40,8 +40,8 @@ public class CreationCompte extends AppCompatActivity {
         bValiderInscription = (Button) findViewById(R.id.bValiderInscription);
         etMailInscription = (EditText) findViewById(R.id.etMailInscription);
         etMdpInscription1 = (EditText) findViewById(R.id.etMdpInscription1);
-        btnResetPassword = (Button) findViewById(R.id.btnResetPassword);
-        btnSignIn = (Button) findViewById(R.id.btnSignIn);
+       // btnResetPassword = (Button) findViewById(R.id.btnResetPassword);
+        //btnSignIn = (Button) findViewById(R.id.btnSignIn);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
 
@@ -62,12 +62,12 @@ public class CreationCompte extends AppCompatActivity {
             }*/
         //});
 
-        btnSignIn.setOnClickListener(new View.OnClickListener() {
+       /* btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
-        });
+        });*/
 
         bValiderInscription.setOnClickListener(new View.OnClickListener() {
             @Override
