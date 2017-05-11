@@ -1,14 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/ivLogo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="21dp"
+        android:layout_alignParentTop="true"
+        app:srcCompat="@drawable/logo" />
+
+    <ImageView
+        android:id="@+id/ivBiblioAccueil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/ivLogo"
+        android:layout_marginTop="21dp"
+        android:adjustViewBounds="true"
+        android:cropToPadding="true"
+        app:srcCompat="@drawable/biblioaccueil" />
 
     <EditText
         android:id="@+id/etAdresseMail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Adresse Mail"
+        android:layout_marginTop="21dp"
+        android:hint="E-mail"
         android:inputType="textPersonName" />
 
     <EditText
@@ -24,12 +50,32 @@
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
         android:layout_marginTop="15dp"
         android:background="@color/btnBackground"
         android:text="Valider"
         android:textColor="@color/textColor" />
 
 
+    <Button
+        android:id="@+id/bResetPassword"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:background="@color/btnBackground"
+        android:text="Oublie du mot de passe ?"
+        android:textColor="@color/textColor" />
+
+    <Button
+        android:id="@+id/bSignUp"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:background="@color/btnBackground"
+        android:text="Vous n'êtes pas membre ? Enregistrez-vous !"
+        android:textColor="@color/textColor" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -37,15 +83,4 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <Button
-        android:id="@+id/bResetPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Forgot your password ?" />
-
-    <Button
-        android:id="@+id/bSignUp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Not a member ? Get registered !" />
 </LinearLayout>
