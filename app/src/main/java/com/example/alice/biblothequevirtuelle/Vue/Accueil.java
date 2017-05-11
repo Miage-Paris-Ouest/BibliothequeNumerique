@@ -10,14 +10,21 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.alice.biblothequevirtuelle.AppelService.Scanner;
+import com.example.alice.biblothequevirtuelle.Appli.BVAppli;
 import com.example.alice.biblothequevirtuelle.Firebase.Authentification;
 import com.example.alice.biblothequevirtuelle.R;
+import com.example.alice.biblothequevirtuelle.Realm.CollectionP;
 import com.example.alice.biblothequevirtuelle.Realm.Livre;
+import com.example.alice.biblothequevirtuelle.Realm.Utilisateur;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import io.realm.Realm;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 import io.realm.exceptions.RealmException;
 
@@ -47,7 +54,25 @@ public class Accueil extends AppCompatActivity
             }
         });
 
+        //création utilisateur
+        //get firebase user
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        //get reference
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+
+        //build child
+        Utilisateur util = new Utilisateur(user.getEmail(),user.getUid());
+        util.setListeCollections(new RealmList<CollectionP>(new CollectionP("test")));
+        ref.child("Utilisateurs").child(user.getUid()).setValue(util);
+
+        //verif methode AjoutUtilisateurFirebaseARealm
+        //BVAppli bva=new BVAppli();
+        //bva.AjoutUtilisateurFirebaseARealm("cqIIVi2xhmR9d6AQRXLQXYtRTk93", getApplicationContext());
+
+
         Button bMesLivres = (Button) findViewById(R.id.bLivres);
+
         bMesLivres.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,20 +101,6 @@ public class Accueil extends AppCompatActivity
                 }
             });
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     public void search(View v){
         Intent intent = new Intent(this, Rechercher.class);

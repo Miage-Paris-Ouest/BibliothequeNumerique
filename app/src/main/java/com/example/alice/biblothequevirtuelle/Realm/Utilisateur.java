@@ -29,6 +29,7 @@ public class Utilisateur extends RealmObject
         this.bibliotheque = new RealmList<>();
         this.whishlist = new RealmList<>();
         this.listeCollections = new RealmList<>();
+        this.pseudo="";
     }
 
     public Utilisateur(String mail, String firebaseID, String pseudo, RealmList<Livre> wishlist, RealmList<CollectionP> listeCollections, boolean dejaConnecte) {
