@@ -72,6 +72,14 @@
             android:hint="@string/resume"
             android:inputType="textPersonName" />
 
+        <CheckBox
+            android:id="@+id/cbWhishList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@drawable/checkboxperso"
+            android:checked="false"
+            android:text="@string/dans_la_wishlist" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -106,14 +114,7 @@
             android:orientation="horizontal"
             android:weightSum="1"
             android:id="@+id/rgLu">
-            <TextView
-                android:id="@+id/tvStatutLuLabel"
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:text="Etat d'avancement:"
-                android:textSize="18sp"
-                android:layout_weight="0.81" />
+
             <RadioButton android:id="@+id/rbLu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -126,30 +127,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="En cours" />
-        </RadioGroup>
 
-        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="1"
-            android:id="@+id/rgPret">>
-            <TextView
-                android:id="@+id/tvStatutPreteLabel"
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:text="Actuellement prêté:"
-                android:textSize="18sp"
-                android:layout_weight="0.81" />
-            <RadioButton android:id="@+id/rbPrete"
+            <CheckBox
+                android:id="@+id/cbPret"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Oui" />
-            <RadioButton android:id="@+id/rbNonPrete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Non" />
+                android:layout_weight="1"
+                android:text="Actuellement prêté" />
         </RadioGroup>
 
         <EditText

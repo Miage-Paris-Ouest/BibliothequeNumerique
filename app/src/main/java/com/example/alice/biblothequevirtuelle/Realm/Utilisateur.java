@@ -14,6 +14,7 @@ public class Utilisateur extends RealmObject
     private String firebaseID;
     private String mail;
     private String pseudo;
+    private RealmList<Livre> bibliotheque;
     private RealmList<Livre> whishlist;
     private RealmList<CollectionP> listeCollections;
     private boolean dejaConnecte;
@@ -25,6 +26,7 @@ public class Utilisateur extends RealmObject
         this.mail = mail;
         this.firebaseID = firebaseID;
         this.dejaConnecte = false;
+        this.bibliotheque = new RealmList<>();
         this.whishlist = new RealmList<>();
         this.listeCollections = new RealmList<>();
     }
@@ -34,6 +36,16 @@ public class Utilisateur extends RealmObject
         this.firebaseID = firebaseID;
         this.pseudo = pseudo;
         this.whishlist = wishlist;
+        this.listeCollections = listeCollections;
+        this.dejaConnecte = dejaConnecte;
+    }
+
+    public Utilisateur(String firebaseID, String mail, String pseudo, RealmList<Livre> bibliotheque, RealmList<Livre> whishlist, RealmList<CollectionP> listeCollections, boolean dejaConnecte) {
+        this.firebaseID = firebaseID;
+        this.mail = mail;
+        this.pseudo = pseudo;
+        this.bibliotheque = bibliotheque;
+        this.whishlist = whishlist;
         this.listeCollections = listeCollections;
         this.dejaConnecte = dejaConnecte;
     }
@@ -62,6 +74,23 @@ public class Utilisateur extends RealmObject
         this.pseudo = pseudo;
     }
 
+    public RealmList<Livre> getBibliotheque() {
+        return bibliotheque;
+    }
+
+    public void setBibliotheque(RealmList<Livre> bibliotheque) {
+        this.bibliotheque = bibliotheque;
+    }
+
+    public void ajouterLivreBibliotheque(Livre l)
+    {
+        this.bibliotheque.add(l);
+    }
+
+    public void supprimerLivreBibliotheque(Livre l)
+    {
+        this.bibliotheque.remove(l);
+    }
     public RealmList<Livre> getWhishlist() {
         return whishlist;
     }

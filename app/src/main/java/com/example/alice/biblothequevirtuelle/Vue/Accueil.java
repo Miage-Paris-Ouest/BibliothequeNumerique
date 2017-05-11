@@ -3,7 +3,6 @@ package com.example.alice.biblothequevirtuelle.Vue;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -12,11 +11,9 @@ import android.widget.Toast;
 
 import com.example.alice.biblothequevirtuelle.AppelService.Scanner;
 import com.example.alice.biblothequevirtuelle.Firebase.Authentification;
-import com.example.alice.biblothequevirtuelle.Firebase.ResetPasswordActivity;
 import com.example.alice.biblothequevirtuelle.R;
 import com.example.alice.biblothequevirtuelle.Realm.Livre;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -30,7 +27,6 @@ public class Accueil extends AppCompatActivity
     private Scanner scan;
     private static String ean;
     private Realm realm;
-    private Button bdeconnexion;
     private FirebaseAuth auth;
 
     @Override
@@ -51,9 +47,7 @@ public class Accueil extends AppCompatActivity
             }
         });
 
-        bdeconnexion = (Button) findViewById(R.id.bdeconnexion);
         Button bMesLivres = (Button) findViewById(R.id.bLivres);
-
         bMesLivres.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,8 +55,17 @@ public class Accueil extends AppCompatActivity
             }
         });
 
+        Button bWhishlist = (Button) findViewById(R.id.bWishlist);
+        bWhishlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =  new Intent(Accueil.this, WhishList.class);
+                startActivity(intent);
+            }
+        });
 
 
+        Button bdeconnexion = (Button) findViewById(R.id.bdeconnexion);
         bdeconnexion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,7 +92,7 @@ public class Accueil extends AppCompatActivity
 
 
     public void search(View v){
-        Intent intent = new Intent(this, Recherche.class);
+        Intent intent = new Intent(this, Rechercher.class);
         startActivity(intent);
     }
 
@@ -118,7 +121,7 @@ public class Accueil extends AppCompatActivity
             });
             builder.setNeutralButton("Recherche manuelle",new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    Intent intent = new Intent(getApplicationContext(), Recherche.class);
+                    Intent intent = new Intent(getApplicationContext(), Rechercher.class);
                     startActivity(intent);
                 }
             });
@@ -146,7 +149,7 @@ public class Accueil extends AppCompatActivity
                 });
                 builder.setNeutralButton("Recherche manuelle",new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Intent intent = new Intent(getApplicationContext(), Recherche.class);
+                        Intent intent = new Intent(getApplicationContext(), Rechercher.class);
                         startActivity(intent);
                     }
                 });
@@ -175,7 +178,7 @@ public class Accueil extends AppCompatActivity
                 });
                 builder.setNeutralButton("Recherche manuelle",new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Intent intent = new Intent(getApplicationContext(), Recherche.class);
+                        Intent intent = new Intent(getApplicationContext(), Rechercher.class);
                         startActivity(intent);
                     }
                 });

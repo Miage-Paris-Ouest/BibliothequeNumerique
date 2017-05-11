@@ -41,7 +41,7 @@ import io.realm.RealmResults;
  * Created by Kiki on 28/03/2017.
  */
 
-public class Recherche extends AppCompatActivity {
+public class Rechercher extends AppCompatActivity {
     ArrayList<HashMap<String, String>> donnees = new ArrayList<>();
     SimpleAdapter adapter;
     ListView listLivres;
@@ -286,7 +286,7 @@ public class Recherche extends AppCompatActivity {
         }
         else
         {
-            AlertDialog.Builder builder = new AlertDialog.Builder(Recherche.this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(Rechercher.this);
             
             builder.setTitle("Aucun résultat");
             builder.setMessage("Voulez vous l'ajouter à la main ?");

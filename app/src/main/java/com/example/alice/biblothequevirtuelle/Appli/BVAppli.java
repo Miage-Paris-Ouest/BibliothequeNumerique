@@ -4,10 +4,10 @@ import android.app.Application;
 import android.content.SharedPreferences;
 import android.widget.Toast;
 
+import com.example.alice.biblothequevirtuelle.Realm.CollectionP;
 import com.example.alice.biblothequevirtuelle.Realm.Livre;
 import com.example.alice.biblothequevirtuelle.Realm.Type;
 import com.example.alice.biblothequevirtuelle.Realm.Utilisateur;
-import com.example.alice.biblothequevirtuelle.Realm.CollectionP;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -96,6 +96,8 @@ public class BVAppli extends Application {
         }
         else
             Toast.makeText(getApplicationContext(), "données déjà dl", Toast.LENGTH_LONG).show();
+
+        utilisateur = new Utilisateur("mailtest", "firebaseIDtest");
     }
 
     public static BVAppli getInstance() {

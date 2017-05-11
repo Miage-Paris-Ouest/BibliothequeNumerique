@@ -3,12 +3,12 @@ package com.example.alice.biblothequevirtuelle.Vue;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.IntegerRes;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
@@ -20,9 +20,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.alice.biblothequevirtuelle.Appli.BVAppli;
 import com.example.alice.biblothequevirtuelle.R;
 import com.example.alice.biblothequevirtuelle.Realm.Livre;
 import com.example.alice.biblothequevirtuelle.Realm.Type;
+import com.example.alice.biblothequevirtuelle.Realm.Utilisateur;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,6 +43,7 @@ public class Ajouter extends AppCompatActivity {
 
     private String ean;
     private Realm realm;
+    private Utilisateur utilisateur;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,8 @@ public class Ajouter extends AppCompatActivity {
         ean = reception.getStringExtra("ean");
 
         realm = Realm.getDefaultInstance();
+        utilisateur = BVAppli.getUtilisateur();
+
         // Spinner
         final Spinner sType = (Spinner) findViewById(R.id.sType);
         RealmResults listeType = realm.where(Type.class).findAll();
@@ -64,12 +69,6 @@ public class Ajouter extends AppCompatActivity {
         dataAdapterR.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sType.setAdapter(dataAdapterR);
         sType.setSelection(0);
-
-        //Coche par defaut
-        RadioButton rbStatut = (RadioButton) findViewById(R.id.rbNonLu);
-        rbStatut.setChecked(true);
-        RadioButton rbPret = (RadioButton) findViewById(R.id.rbNonPrete);
-        rbPret.setChecked(true);
 
         // si le intent vient de la recherche manuelle
         if(reception.getStringExtra("précédent") != null && reception.getStringExtra("précédent").equals("Recherche"))
@@ -130,12 +129,11 @@ public class Ajouter extends AppCompatActivity {
         EditText etDate = (EditText) findViewById(R.id.etDatePub);
         EditText etLangue = (EditText) findViewById(R.id.etLangue);
         EditText etResume = (EditText) findViewById(R.id.etResume);
-
         RadioButton rbLu =(RadioButton) findViewById(R.id.rbLu);
         RadioButton rbNonLu =(RadioButton) findViewById(R.id.rbNonLu);
         RadioButton rbEnCours=(RadioButton) findViewById(R.id.rbEnCours);
-        RadioButton rbNonPret=(RadioButton) findViewById(R.id.rbNonPrete);
-        RadioButton rbPret=(RadioButton) findViewById(R.id.rbPrete);
+        CheckBox cbPret = (CheckBox) findViewById(R.id.cbPret);
+        CheckBox cbWhish = (CheckBox) findViewById(R.id.cbWhishList);
 
         final String titre = etTitre.getText().toString();
         final String auteur = etAuteur.getText().toString();
@@ -146,10 +144,10 @@ public class Ajouter extends AppCompatActivity {
         final String date = etDate.getText().toString();
         final String langue = etLangue.getText().toString();
         final String resume = etResume.getText().toString();
+        final boolean pret = cbPret.isChecked();
+        final boolean whishlist = cbWhish.isChecked();
 
         int statut = 0;
-        boolean pret = false;
-
         if(rbNonLu.isChecked())
             statut = 0;
         else if(rbEnCours.isChecked())
@@ -158,10 +156,6 @@ public class Ajouter extends AppCompatActivity {
             statut = 2;
 
 
-        if(rbPret.isChecked())
-            pret = true;
-        else if(rbNonPret.isChecked())
-            pret = false;
 
         Pattern regexp = Pattern.compile("^[0-9]*");
         Matcher verif = regexp.matcher(isbn);
@@ -173,10 +167,9 @@ public class Ajouter extends AppCompatActivity {
             builder.setMessage("La recherche par scanner ne pourra être faite. Voulez-vous continuer ?");
 
             final int finalStatut = statut;
-            final boolean finalPret = pret;
             builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    ajouterLivre(titre, auteur, editeur, type, isbn, categ, date, langue, resume, finalStatut, finalPret);
+                    ajouterLivre(titre, auteur, editeur, type, isbn, categ, date, langue, resume, finalStatut, pret, whishlist);
                 }
             });
             builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
@@ -187,11 +180,11 @@ public class Ajouter extends AppCompatActivity {
         }
         else
         {
-            ajouterLivre(titre, auteur, editeur, type, isbn, categ, date, langue, resume, statut, pret);
+            ajouterLivre(titre, auteur, editeur, type, isbn, categ, date, langue, resume, statut, pret, whishlist);
         }
     }
 
-    private void ajouterLivre(final String titre, final String auteur, final String editeur, final int type, final String isbn, final String categ, final String date, final String langue, final String resume, final int statut, final boolean pret) {
+    private void ajouterLivre(final String titre, final String auteur, final String editeur, final int type, final String isbn, final String categ, final String date, final String langue, final String resume, final int statut, final boolean pret, final boolean whishlist) {
         try {
 
             realm.executeTransaction(new Realm.Transaction() {
@@ -216,8 +209,16 @@ public class Ajouter extends AppCompatActivity {
                                              rl.setType(realm.where(Type.class).equalTo("id", type).findFirst());
                                              rl.setStatut(statut);
                                              rl.setPret(pret);
+                                             rl.setWhishlist(whishlist);
+
+                                             if(whishlist)
+                                                 utilisateur.ajouterLivreWhishList(rl);
+                                             else
+                                                 utilisateur.ajouterLivreBibliotheque(rl);
                                          }
                                      });
+
+
 
             Toast.makeText(getApplicationContext(), "Ajout réussi !", Toast.LENGTH_LONG).show();
 

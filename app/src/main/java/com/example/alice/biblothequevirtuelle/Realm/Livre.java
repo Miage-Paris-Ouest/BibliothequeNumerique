@@ -27,6 +27,7 @@ public class Livre extends RealmObject
     private String categorie; // à définir
     private int statut; // 0 : pas lu, 1 : en cours, 2 : lu
     private boolean pret; // false : non, true : oui
+    private boolean whishlist; // true : dans la whishlist
 
     public Livre(int id, String ean, String titre, String auteur, String editeur, String datePub, String resume, String langue, Type type, String categorie, int statut, boolean pret) {
         this.id = id;
@@ -162,5 +163,13 @@ public class Livre extends RealmObject
 
     public void setPret(boolean pret) {
         this.pret = pret;
+    }
+
+    public boolean isWhishlist() {
+        return whishlist;
+    }
+
+    public void setWhishlist(boolean whishlist) {
+        this.whishlist = whishlist;
     }
 }

@@ -8,10 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.RadioButton;
-import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -20,7 +19,6 @@ import com.example.alice.biblothequevirtuelle.Realm.Livre;
 import com.example.alice.biblothequevirtuelle.Realm.Type;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -91,8 +89,8 @@ public class Modifier extends AppCompatActivity {
         final RadioButton rbLu =(RadioButton) findViewById(R.id.rbLu);
         final RadioButton rbNonLu =(RadioButton) findViewById(R.id.rbNonLu);
         final RadioButton rbEnCours=(RadioButton) findViewById(R.id.rbEnCours);
-        final RadioButton rbNonPret=(RadioButton) findViewById(R.id.rbNonPrete);
-        final RadioButton rbPret=(RadioButton) findViewById(R.id.rbPrete);
+        CheckBox cbPret = (CheckBox) findViewById(R.id.cbPret);
+        CheckBox cbWhish = (CheckBox) findViewById(R.id.cbWhishList);
 
         final String titre = etTitre.getText().toString();
         final String auteur = etAuteur.getText().toString();
@@ -103,9 +101,10 @@ public class Modifier extends AppCompatActivity {
         final String date = etDate.getText().toString();
         final String langue = etLangue.getText().toString();
         final String resume = etResume.getText().toString();
+        final boolean pret = cbPret.isChecked();
+        final boolean whishlist = cbWhish.isChecked();
 
         int statut = 0;
-        boolean pret = false;
 
         if(rbNonLu.isChecked())
             statut = 0;
@@ -114,14 +113,7 @@ public class Modifier extends AppCompatActivity {
         else if(rbLu.isChecked())
             statut = 2;
 
-
-        if(rbPret.isChecked())
-            pret = true;
-        else if(rbNonPret.isChecked())
-            pret = false;
-
         final int finalStatut = statut;
-        final boolean finalPret = pret;
 
         Pattern regexp = Pattern.compile("^[0-9]*");
         Matcher verif = regexp.matcher(isbn);
@@ -134,7 +126,7 @@ public class Modifier extends AppCompatActivity {
 
             builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    modifierLivre(isbn, titre, auteur, editeur, date, langue, resume, categ, type, finalStatut, finalPret);
+                    modifierLivre(isbn, titre, auteur, editeur, date, langue, resume, categ, type, finalStatut, pret, whishlist);
                 }
             });
             builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
@@ -145,17 +137,16 @@ public class Modifier extends AppCompatActivity {
         }
         else
         {
-            modifierLivre(isbn, titre, auteur, editeur, date, langue, resume, categ, type, statut, pret);
+            modifierLivre(isbn, titre, auteur, editeur, date, langue, resume, categ, type, statut, pret, whishlist);
         }
     }
 
-    private void modifierLivre(final String isbn, final String titre, final String auteur, final String editeur, final String date, final String langue, final String resume, final String categ, final int type, final int statut, final boolean pret) {
+    private void modifierLivre(final String isbn, final String titre, final String auteur, final String editeur, final String date, final String langue, final String resume, final String categ, final int type, final int statut, final boolean pret, final boolean whishlist) {
         try {
             realm.executeTransaction(new Realm.Transaction() {
 
                 @Override
                 public void execute(Realm realm) {
-
                     livre.setEan(isbn);
                     livre.setTitre(titre);
                     livre.setAuteur(auteur);
@@ -167,6 +158,7 @@ public class Modifier extends AppCompatActivity {
                     livre.setType(realm.where(Type.class).equalTo("id", type).findFirst());
                     livre.setStatut(statut);
                     livre.setPret(pret);
+                    livre.setWhishlist(whishlist);
                 }
             });
 
@@ -191,8 +183,9 @@ public class Modifier extends AppCompatActivity {
         RadioButton rbLu =(RadioButton) findViewById(R.id.rbLu);
         RadioButton rbNonLu =(RadioButton) findViewById(R.id.rbNonLu);
         RadioButton rbEnCours=(RadioButton) findViewById(R.id.rbEnCours);
-        RadioButton rbNonPret=(RadioButton) findViewById(R.id.rbNonPrete);
-        RadioButton rbPret=(RadioButton) findViewById(R.id.rbPrete);
+
+        CheckBox cbPret = (CheckBox) findViewById(R.id.cbPret);
+        CheckBox cbWhish = (CheckBox) findViewById(R.id.cbWhishList);
 
         etTitre.setText(l.getTitre());
         etAuteur.setText(l.getAuteur());
@@ -202,6 +195,8 @@ public class Modifier extends AppCompatActivity {
         etDate.setText(l.getDatePub());
         etLangue.setText(l.getLangue());
         etResume.setText(l.getResume());
+        cbPret.setChecked(l.isPret());
+        cbWhish.setChecked(l.isWhishlist());
 
         int statut = l.getStatut();
         switch (statut){
@@ -217,12 +212,6 @@ public class Modifier extends AppCompatActivity {
             default :
                 rbNonLu.setChecked(true);
         }
-
-        boolean pret = l.isPret();
-        if(pret)
-            rbPret.setChecked(true);
-        else
-            rbNonPret.setChecked(true);
 
         final Spinner sType = (Spinner) findViewById(R.id.sType);
         sType.setSelection(l.getType().getId());
