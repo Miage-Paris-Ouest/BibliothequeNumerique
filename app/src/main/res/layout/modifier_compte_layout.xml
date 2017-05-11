@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.alice.biblothequevirtuelle.Vue.MesLivres">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/etNom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:ems="10"
+                android:hint="Nom"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/etPrenom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/etNom"
+                android:layout_alignStart="@+id/etNom"
+                android:layout_below="@+id/etNom"
+                android:ems="10"
+                android:hint="Prénom"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/etMail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/etPseudo"
+                android:ems="10"
+                android:hint="E-mail"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/etDateNaissance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/etMail"
+                android:ems="10"
+                android:hint="Date de naissance"
+                android:inputType="date" />
+
+            <EditText
+                android:id="@+id/etPseudo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/etPrenom"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignStart="@+id/etPrenom"
+                android:layout_below="@+id/etPrenom"
+                android:ems="10"
+                android:hint="Pseudo"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/etMdpModif"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/etDateNaissance"
+                android:ems="10"
+                android:hint="Mot de passe"
+                android:inputType="textPassword" />
+
+            <EditText
+                android:id="@+id/etConfirmationMdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/etMdpModif"
+                android:ems="10"
+                android:hint="Confirmation mot de passe"
+                android:inputType="textPassword" />
+
+            <CheckBox
+                android:id="@+id/checkBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/etConfirmationMdp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="19dp"
+                android:text="Je veux que mon profil soit publique" />
+
+            <Button
+                android:id="@+id/bValiderModif"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/checkBox"
+                android:layout_marginTop="26dp"
+                android:background="@color/btnBackground"
+                android:text="Valider"
+                android:textColor="@color/textColor" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

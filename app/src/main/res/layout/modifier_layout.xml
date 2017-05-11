@@ -76,12 +76,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
+            android:layout_marginBottom="5dp"
 
             <TextView
                 android:id="@+id/tvLabelType"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
                 android:ems="10"
+                android:paddingLeft="3dp"
                 android:text="Type"
                 android:textSize="18sp" />
 
@@ -99,14 +102,17 @@
             android:orientation="horizontal"
             android:weightSum="1"
             android:id="@+id/rgLu">
+
             <TextView
-                android:id="@+id/tvStatutLuLabel"
+                android:id="@+id/textView2"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.81"
                 android:ems="10"
+                android:paddingLeft="3dp"
                 android:text="Etat d'avancement:"
-                android:textSize="18sp"
-                android:layout_weight="0.81" />
+                android:textSize="18sp" />
+
             <RadioButton android:id="@+id/rbLu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -127,14 +133,16 @@
             android:orientation="horizontal"
             android:weightSum="1"
             android:id="@+id/rgPret">>
+
             <TextView
                 android:id="@+id/tvStatutPreteLabel"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.81"
                 android:ems="10"
+                android:paddingLeft="3dp"
                 android:text="Actuellement prêté:"
-                android:textSize="18sp"
-                android:layout_weight="0.81" />
+                android:textSize="18sp" />
             <RadioButton android:id="@+id/rbPrete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -161,6 +169,13 @@
             android:hint="@string/langue"
             android:inputType="textPersonName" />
 
+        <RatingBar
+            android:id="@+id/rbNote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="1dp"
+            android:numStars="5" />
+
         <EditText
             android:id="@+id/etAvis"
             android:layout_width="match_parent"
@@ -169,12 +184,58 @@
             android:hint="@string/avis"
             android:inputType="textPersonName" />
 
-        <RatingBar
-            android:id="@+id/rbNote"
+        <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                android:id="@+id/tvLabelCollection"
+                android:layout_width="119dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:ems="10"
+                android:paddingLeft="3dp"
+                android:text="Collection"
+                android:textSize="18sp" />
+
+            <Spinner
+                android:id="@+id/sCollection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:elevation="1dp"
-            android:numStars="5" />
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:layout_marginBottom="15dp"
+            android:id="@+id/rgWishlist">>
+
+            <TextView
+                android:id="@+id/tvStatutWishlist"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="0.81"
+                android:ems="10"
+                android:paddingLeft="3dp"
+                android:text="Ajouter dans ma Wishlist:"
+                android:textSize="18sp" />
+
+            <RadioButton android:id="@+id/rbWishlist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Oui" />
+            <RadioButton android:id="@+id/rbNonWishlist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Non" />
+        </RadioGroup>
 
         <Button
             android:id="@+id/bAjout"

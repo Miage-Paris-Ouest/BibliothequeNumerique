@@ -8,115 +8,134 @@
     tools:context="com.example.alice.biblothequevirtuelle.Vue.Accueil"
     android:background="@color/fond"
     android:paddingTop="10dp">
-
-    <ImageView
-        android:id="@+id/ivLogo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/button_Rech"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="5dp"
-        android:contentDescription="@string/logoappli"
-        app:srcCompat="@drawable/logo" />
-
-    <Button
-        android:id="@+id/bCollections"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/bLivres"
-        android:layout_marginBottom="2dp"
-        android:text="@string/collections"
-        style="?android:attr/borderlessButtonStyle"
-        android:background="@color/btnBackground"
-        android:textColor="@color/textColor"/>
-
-    <Button
-        android:id="@+id/bWishlist"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/bCollections"
-        android:layout_marginBottom="2dp"
-        android:text="@string/Wishlist"
-        style="?android:attr/borderlessButtonStyle"
-        android:background="@color/btnBackground"
-        android:textColor="@color/textColor" />
-
-    <Button
-        android:id="@+id/button_Rech"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="search"
-        android:text="Search" />
-
-    <Button
-        android:id="@+id/bdeconnexion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/bCompte"
-        android:text="@string/deconnexion"
-        android:background="@color/btnBackgroundDeco"
-        android:textColor="@color/textColor"
-        style="?android:attr/borderlessButtonStyle"/>
-
-    <Button
-        android:id="@+id/bCompte"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/bWishlist"
-        android:layout_marginBottom="2dp"
-        android:text="@string/compte"
-        style="?android:attr/borderlessButtonStyle"
-        android:background="@color/btnBackground"
-        android:textColor="@color/textColor" />
-
-    <Button
-        android:id="@+id/bScanner"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/ivLogo"
-        android:layout_marginBottom="2dp"
-        android:background="@color/btnBackground"
-        android:onClick="onClickAjouter"
-        android:text="@string/scanner"
-        android:textColor="@color/textColor" />
-
-    <Button
-        android:id="@+id/bLivres"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/bScanner"
-        android:layout_marginBottom="2dp"
-        android:onClick="onClickVerif"
-        android:text="@string/livres"
-        style="?android:attr/borderlessButtonStyle"
-        android:textAppearance="@style/TextAppearance.AppCompat.Button"
-        android:background="@color/btnBackground"
-        android:textColor="@color/textColor"/>
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="1">
+            <ImageView
+                android:id="@+id/ivLogo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/logoappli"
+                app:srcCompat="@drawable/logo"
+                android:layout_marginBottom="10dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
 
+            <Button
+                android:id="@+id/bScanner"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/ivLogo"
+                android:layout_marginBottom="2dp"
+                android:background="@color/btnBackground"
+                android:onClick="onClickAjouter"
+                android:text="@string/scanner"
+                android:textColor="@color/textColor" />
+
+            <Button
+                android:id="@+id/button_Rech"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/bScanner"
+                android:layout_marginBottom="2dp"
+                android:background="@color/btnBackground"
+                android:onClick="search"
+                android:text="Rechercher"
+                android:textColor="@color/textColor" />
+
+            <Button
+                android:id="@+id/bLivres"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/button_Rech"
+                android:layout_marginBottom="2dp"
+                android:background="@color/btnBackground"
+                android:onClick="onClickVerif"
+                android:text="@string/livres"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button"
+                android:textColor="@color/textColor" />
+
+            <Button
+                android:id="@+id/bCollections"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/collections"
+                style="?android:attr/borderlessButtonStyle"
+                android:background="@color/btnBackground"
+                android:textColor="@color/textColor"
+                android:layout_below="@+id/bLivres"
+                android:layout_alignParentLeft="true"
+                android:layout_marginBottom="2dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <Button
+                android:id="@+id/bWishlist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/bCollections"
+                android:layout_marginBottom="2dp"
+                android:text="@string/Wishlist"
+                style="?android:attr/borderlessButtonStyle"
+                android:background="@color/btnBackground"
+                android:textColor="@color/textColor" />
+
+            <Button
+                android:id="@+id/bCompte"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/bWishlist"
+                android:layout_marginBottom="2dp"
+                android:background="@color/btnBackground"
+                android:text="@string/compte"
+                android:textColor="@color/textColor" />
+
+            <Button
+                android:id="@+id/bdeconnexion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/bCompte"
+                android:text="@string/deconnexion"
+                android:background="@color/btnBackgroundDeco"
+                android:textColor="@color/textColor"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_weight="0.60" />
+
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>
