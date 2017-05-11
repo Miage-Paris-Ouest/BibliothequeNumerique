@@ -18,6 +18,9 @@ public class Utilisateur extends RealmObject
     private RealmList<CollectionP> listeCollections;
     private boolean dejaConnecte;
 
+    public Utilisateur() {
+    }
+
     public Utilisateur(String mail, String firebaseID) {
         this.mail = mail;
         this.firebaseID = firebaseID;

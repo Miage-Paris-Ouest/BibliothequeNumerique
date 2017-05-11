@@ -6,6 +6,8 @@ import android.widget.Toast;
 
 import com.example.alice.biblothequevirtuelle.Realm.Livre;
 import com.example.alice.biblothequevirtuelle.Realm.Type;
+import com.example.alice.biblothequevirtuelle.Realm.Utilisateur;
+import com.example.alice.biblothequevirtuelle.Realm.CollectionP;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -21,11 +23,12 @@ public class BVAppli extends Application {
     private static final String PREFS = "PREFS";
     private static final String INSTAL_OK = "INSTAL_OK";
     private static BVAppli instance;
+    private static Utilisateur utilisateur;
 
     private static Realm realm;
 
     // Create the module
-    @RealmModule(classes = { Livre.class, Type.class, })
+    @RealmModule(classes = { Livre.class, Type.class, CollectionP.class, Utilisateur.class})
     private class MyModule {
     }
 
@@ -36,6 +39,7 @@ public class BVAppli extends Application {
         Realm.init(this);
         RealmConfiguration config = new RealmConfiguration.Builder()
                 .deleteRealmIfMigrationNeeded()
+                .modules(new MyModule())
                 .build();
         Realm.setDefaultConfiguration(config);
 
@@ -114,5 +118,11 @@ public class BVAppli extends Application {
         super.onTerminate();
     }
 
+    public static Utilisateur getUtilisateur() {
+        return utilisateur;
+    }
 
+    public static void setUtilisateur(Utilisateur utilisateur) {
+        BVAppli.utilisateur = utilisateur;
+    }
 }

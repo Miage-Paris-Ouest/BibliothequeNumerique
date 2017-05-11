@@ -8,13 +8,16 @@ import io.realm.annotations.PrimaryKey;
  * Created by alice on 11/05/2017.
  */
 
-class CollectionP extends RealmObject
+public class CollectionP extends RealmObject
 {
     @PrimaryKey
     private int id;
     private String nom;
     private RealmList<Livre> livres;
 
+
+    public CollectionP() {
+    }
 
     public CollectionP(String nom) {
         this.nom = nom;
