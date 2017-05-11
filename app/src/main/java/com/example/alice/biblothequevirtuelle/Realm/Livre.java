@@ -1,6 +1,5 @@
 package com.example.alice.biblothequevirtuelle.Realm;
 
-import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
@@ -29,7 +28,8 @@ public class Livre extends RealmObject
     private int statut; // 0 : pas lu, 1 : en cours, 2 : lu
     private boolean pret; // false : non, true : oui
 
-    public Livre(String ean, String titre, String auteur, String editeur, String datePub, String resume, String langue, Type type, String categorie, int statut, boolean pret) {
+    public Livre(int id, String ean, String titre, String auteur, String editeur, String datePub, String resume, String langue, Type type, String categorie, int statut, boolean pret) {
+        this.id = id;
         this.ean = ean;
         this.titre = titre;
         this.auteur = auteur;
@@ -43,7 +43,8 @@ public class Livre extends RealmObject
         this.pret = pret;
     }
 
-    public Livre(String ean, String titre, String auteur, String editeur, String datePub, String resume, String langue) {
+    public Livre(int id, String ean, String titre, String auteur, String editeur, String datePub, String resume, String langue) {
+        this.id = id;
         this.ean = ean;
         this.titre = titre;
         this.auteur = auteur;

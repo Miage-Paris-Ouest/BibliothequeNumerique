@@ -101,9 +101,7 @@ public class Utilisateur extends RealmObject
         this.listeCollections.add(new CollectionP(nom));
     }
 
-    public void supprimerCollection(int id)
-    {
-        CollectionP col = this.listeCollections.where().equalTo("id", id).findFirst();
+    public void supprimerCollection(CollectionP col) {
         this.listeCollections.remove(col);
     }
 }
