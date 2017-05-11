@@ -4,7 +4,14 @@ sudo: false
 #JDK
 jdk: oraclejdk8
 
+addons:
+  sonarqube:
+    organization: camleuregans-github
+install:
+- mvn dependency:go-offline
+
 script:
+- mvn verify site sonar:sonar -Dmaven.test.failure.ignore=true
 - ./gradlew clean build
 env:
   global:
