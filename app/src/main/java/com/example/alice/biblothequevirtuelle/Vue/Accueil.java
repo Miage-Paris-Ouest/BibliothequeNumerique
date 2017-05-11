@@ -3,6 +3,7 @@ package com.example.alice.biblothequevirtuelle.Vue;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -10,8 +11,12 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.alice.biblothequevirtuelle.AppelService.Scanner;
+import com.example.alice.biblothequevirtuelle.Firebase.Authentification;
+import com.example.alice.biblothequevirtuelle.Firebase.ResetPasswordActivity;
 import com.example.alice.biblothequevirtuelle.R;
 import com.example.alice.biblothequevirtuelle.Realm.Livre;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -25,11 +30,15 @@ public class Accueil extends AppCompatActivity
     private Scanner scan;
     private static String ean;
     private Realm realm;
+    private Button bdeconnexion;
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.accueil_layout);
+
+        auth = FirebaseAuth.getInstance().getInstance();
 
         scan = new Scanner(this);
         realm = Realm.getDefaultInstance();
@@ -42,14 +51,42 @@ public class Accueil extends AppCompatActivity
             }
         });
 
+        bdeconnexion = (Button) findViewById(R.id.bdeconnexion);
         Button bMesLivres = (Button) findViewById(R.id.bLivres);
+
         bMesLivres.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mesLivres(v);
             }
         });
+
+
+
+        bdeconnexion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Accueil.this, Authentification.class);
+                startActivity(intent);
+                auth.signOut();
+
+                }
+            });
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public void search(View v){
         Intent intent = new Intent(this, Recherche.class);

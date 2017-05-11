@@ -55,7 +55,9 @@ public class Authentification extends AppCompatActivity {
         bSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Authentification.this, CreationCompte.class));
+                //startActivity(new Intent(Authentification.this, CreationCompte.class));
+                Intent intent = new Intent(Authentification.this, CreationCompte.class);
+                startActivity(intent);
             }
         });
 
