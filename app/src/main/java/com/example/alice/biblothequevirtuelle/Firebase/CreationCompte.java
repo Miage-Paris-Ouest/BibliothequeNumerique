@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.alice.biblothequevirtuelle.R;
+import com.example.alice.biblothequevirtuelle.Vue.Accueil;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -22,7 +23,7 @@ public class CreationCompte extends AppCompatActivity {
 
     private Button bValiderInscription;
     private Button btnResetPassword;
-    private Button btnSignIn;
+    private Button bSignIn;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
 
@@ -41,7 +42,7 @@ public class CreationCompte extends AppCompatActivity {
         etMailInscription = (EditText) findViewById(R.id.etMailInscription);
         etMdpInscription1 = (EditText) findViewById(R.id.etMdpInscription1);
        // btnResetPassword = (Button) findViewById(R.id.btnResetPassword);
-        //btnSignIn = (Button) findViewById(R.id.btnSignIn);
+        bSignIn = (Button) findViewById(R.id.bSignIn);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
 
@@ -62,12 +63,15 @@ public class CreationCompte extends AppCompatActivity {
             }*/
         //});
 
-       /* btnSignIn.setOnClickListener(new View.OnClickListener() {
+       bSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                //startActivity(new Intent(CreationCompte.this, Authentification.class));
+                Intent intent = new Intent(CreationCompte.this, Authentification.class);
+                startActivity(intent);
+
             }
-        });*/
+        });
 
         bValiderInscription.setOnClickListener(new View.OnClickListener() {
             @Override

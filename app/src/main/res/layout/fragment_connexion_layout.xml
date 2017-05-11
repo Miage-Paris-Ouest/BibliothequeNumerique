@@ -4,12 +4,12 @@
     android:layout_height="match_parent">
 
     <EditText
+        android:id="@+id/etAdresseMail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/etPseudoConnexion"
-        android:hint="Pseudo" />
+        android:hint="Adresse Mail"
+        android:inputType="textPersonName" />
 
     <EditText
         android:layout_width="match_parent"
@@ -28,4 +28,24 @@
         android:background="@color/btnBackground"
         android:text="Valider"
         android:textColor="@color/textColor" />
+
+
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/bResetPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Forgot your password ?" />
+
+    <Button
+        android:id="@+id/bSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Not a member ? Get registered !" />
 </LinearLayout>
