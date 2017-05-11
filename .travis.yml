@@ -4,8 +4,6 @@ sudo: false
 #JDK
 jdk: oraclejdk8
 
-install: true
-
 script:
 - ./gradlew clean build
 env:
