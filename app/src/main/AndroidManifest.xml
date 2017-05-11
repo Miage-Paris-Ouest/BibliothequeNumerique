@@ -35,7 +35,9 @@
         <activity android:name=".Vue.Recherche" />
         <activity android:name=".Vue.MesLivres"/>
         <activity android:name=".Firebase.CreationCompte"/>
-        <activity android:name=".Vue.Accueil">
+        <activity android:name=".Vue.Accueil"/>
+        <activity android:name=".Firebase.ResetPasswordActivity">
+
         </activity>
     </application>
 

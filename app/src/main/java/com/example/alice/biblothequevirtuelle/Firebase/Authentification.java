@@ -62,7 +62,9 @@ public class Authentification extends AppCompatActivity {
         bResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Authentification.this, ResetPasswordActivity.class));
+                //startActivity(new Intent(Authentification.this, ResetPasswordActivity.class));
+                Intent intent = new Intent(Authentification.this, ResetPasswordActivity.class);
+                startActivity(intent);
             }
         });
 
