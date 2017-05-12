@@ -63,7 +63,7 @@ before_install:
 #sdk_components:
 #- build-tools-19.0.3
 before_script:
-  - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
+  - echo no | android create avd --force -n test -t android-25 --abi armeabi-v7a
   - emulator -avd test -no-skin -no-audio -no-window &
   - adb wait-for-device
   - adb shell input keyevent 82 &
@@ -72,4 +72,4 @@ script:
 - ./gradlew clean build connectedAndroidTest
 on:
   branch: dev
-after_failure: "cat $TRAVIS_BUILD_DIR/app/build/outputs/lint-results-debug.xml"
+after_failure: "cat /app/build/outputs/lint-results-debug.xml"
