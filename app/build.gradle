@@ -28,15 +28,6 @@ android {
     }
 }
 
-/*jacocoTestReport {
-    reports {
-        xml.enabled = true
-        html.enabled = true
-    }
-}
-
-check.dependsOn jacocoTestReport*/
-
 //Pour éviter les erreurs de mauvaises versions
 configurations.all {
     resolutionStrategy {

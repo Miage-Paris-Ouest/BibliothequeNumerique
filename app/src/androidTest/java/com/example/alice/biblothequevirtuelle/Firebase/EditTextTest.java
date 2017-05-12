@@ -1,4 +1,5 @@
-package com.example.alice.biblothequevirtuelle.Vue;
+package com.example.alice.biblothequevirtuelle.Firebase;
+
 
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
@@ -15,18 +16,16 @@ import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
-/**
- * Created by Kiki on 10/05/2017.
- */
-
-//Tests fonctionnels pour Acceuil
 @RunWith(AndroidJUnit4.class)
-public class AjouterTestFonct {
+public class EditTextTest {
+
     @Rule
-    public ActivityTestRule<Ajouter> activityTestRule = new ActivityTestRule<>(Ajouter.class);
+    public ActivityTestRule<Authentification> mActivityTestRule = new ActivityTestRule<>(Authentification.class);
 
     @Test
-    public void validEditText() {
-        onView(ViewMatchers.withId(R.id.etISBN)).perform(typeText("test")).check(matches(withText("test")));
+    public void editTextTest() {
+        onView(ViewMatchers.withId(R.id.etAdresseMail)).perform(typeText("test")).check(matches(withText("test")));
+
     }
+
 }
