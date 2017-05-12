@@ -60,31 +60,15 @@ before_script:
 #  - adb shell input keyevent 82 &
 
 script:
-# Create two emulator avds.
-  - echo no | android create avd --force -n test1 -t ${ANDROID_TARGET1} --abi ${ANDROID_ABI1}
-  - echo no | android create avd --force -n test2 -t ${ANDROID_TARGET2} --abi ${ANDROID_ABI1}
-
-    # Start the first emulator.
-  - emulator -avd test1 -no-skin -no-audio -no-window &
-    # Wait for the second emulator to start.
-  - sh scripts/wait-for-first-emulator.sh
-
-    # Just to check whether the device is seen by ADB.
-  - "adb devices"
-
-    # Start the second emulator.
-  - emulator -avd test2 -no-skin -no-audio -no-window &
-    # Wait for the second emulator to start.
-  - sh scripts/wait-for-second-emulator.sh
-
-    # Just to check whether the device is seen by ADB.
-  - "adb devices"
-
-    # Unlock the emulators.
-  - adb -s emulator-5554 shell input keyevent 82
-  - adb -s emulator-5556 shell input keyevent 82
-
-  - ./gradlew clean build connectedAndroidTest -PdisablePreDex --stacktrace
+  - echo "Travis branch is $TRAVIS_BRANCH"    #Print out which branch it is 
+  - echo "Travis branch is in pull request $TRAVIS_PULL+REQUEST"
+  - ./gradlew assembleDebug -PdisablePreDex
+  - ./gradlew assembleAndroidTest -PdisablePreDex
+  - android-wait-for-emulator
+  - adb devices
+  - adb shell input keyevent 82 &amp;
+  - ./gradlew check -PdisablePreDex --continue --stacktrace
+  - .buildscript/launchInstrumentationTests.sh
 
 before_install:
     - bash .travis-android-license-bugfix.sh
