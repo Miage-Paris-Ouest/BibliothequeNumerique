@@ -31,7 +31,7 @@ cache:
     - $HOME/.gradle/wrapper     #Cache the gradle
 
 android:
-    update_sdk: true  #Check for the updates each time you run the build.
+    update_sdk: true  #Check for the updates each time you run the build
     components:
         - platform-tools
         - tools
