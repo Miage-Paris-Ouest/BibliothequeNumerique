@@ -59,16 +59,17 @@ licenses:
 before_script:
    - chmod +x gradlew      #Grant permissions
    - android list targets
-   - echo no | android create avd --force --name test --target $ANDROID_TARGET --abi $ANDROID_ABI    #Create AVD for given api
-   - emulator -avd test -no-skin -no-audio -no-window &    #Start emulator
-   - android-wait-for-emulator
-   - adb shell input keyevent 82 &
+#  - adb shell input keyevent 82 &
 
 script:
     - echo "Travis branch is $TRAVIS_BRANCH"    #Print out which branch it is
     - echo "Travis branch is in pull request $TRAVIS_PULL+REQUEST"    #Print out pull request number
-    - ./gradlew clean build
-    - ./gradlew connectedAndroidTest
+    - ./gradlew build jacocoTestReport assembleAndroidTest
+    - echo no | android create avd --force --name test --target $ANDROID_TARGET --abi $ANDROID_ABI    #Create AVD for given api
+    - emulator -avd test -no-skin -no-audio -no-window &    #Start emulator
+    - android-wait-for-emulator
+    - adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
+    - ./gradlew connectedCheck
 #   - android-wait-for-emulator             #Run wait for the emulator script.
 #   - adb devices                           #Display list of devices
 #   - adb shell input keyevent 82 &
@@ -81,6 +82,9 @@ before_install:
     - bash .travis-android-license-bugfix.sh
 
 after_failure: "cat $TRAVIS_BUILD_DIR/app/build/outputs/lint-results-debug.xml"
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
 
 on:
   branch: dev
