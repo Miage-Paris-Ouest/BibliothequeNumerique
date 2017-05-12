@@ -24,7 +24,7 @@ before_cache:
     - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
 
 cache:
-  directories:      #Cache all dirs under .gradle folder
+  directories:                  #Cache all dirs under .gradle folder
     - $HOME/.gradle/daemon      #Cache daemon logs
     - $HOME/.gradle/native      #Cache library downloaded from the gradle dependency
     - $HOME/.gradle/wrapper     #Cache the gradle
@@ -57,20 +57,14 @@ licenses:
 before_script:
    - chmod +x gradlew      #Grant permissions
    - android list targets
-#  - adb shell input keyevent 82 &
 
 script:
   - echo "Travis branch is $TRAVIS_BRANCH"    #Print out which branch it is 
   - echo "Travis branch is in pull request $TRAVIS_PULL+REQUEST"
   - ./gradlew build jacocoTestReport assembleAndroidTest
-  #- echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
   - ./gradlew assembleDebug -PdisablePreDex
   - ./gradlew assembleAndroidTest -PdisablePreDex
-  #- android-wait-for-emulator
-  #- adb devices
-  #- adb shell input keyevent 82 &amp;
   - ./gradlew check -PdisablePreDex --continue --stacktrace
-  #- ./gradlew connectedCheck
 
 before_install:
     - bash .travis-android-license-bugfix.sh
