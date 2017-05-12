@@ -68,6 +68,7 @@ script:
     - echo no | android create avd --force --name test --target $ANDROID_TARGET --abi $ANDROID_ABI    #Create AVD for given api
     - emulator -avd test -no-skin -no-audio -no-window &    #Start emulator
     - android-wait-for-emulator
+    - adb devices
     - adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
     - ./gradlew connectedAndroidTest
     - ./gradlew test jacocoTestReport
