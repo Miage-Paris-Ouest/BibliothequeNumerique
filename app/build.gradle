@@ -1,8 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'jacoco-android'
 apply plugin: 'realm-android'
-apply plugin: 'jacoco'
-apply from: '../jacoco.gradle'
 
 android {
     compileSdkVersion 24
@@ -16,9 +13,6 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
-        debug{
-            testCoverageEnabled = true
-        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -26,10 +20,6 @@ android {
     }
     lintOptions {
         abortOnError false
-    }
-    productFlavors{
-        free {}
-        paid {}
     }
 }
 

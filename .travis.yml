@@ -59,7 +59,7 @@ before_script:
    - android list targets
 
 script:
-  - echo "Travis branch is $TRAVIS_BRANCH"    #Print out which branch it is 
+  - echo "Travis branch is $TRAVIS_BRANCH"    #Print out which branch it is
   - echo "Travis branch is in pull request $TRAVIS_PULL+REQUEST"
   - ./gradlew build jacocoTestReport assembleAndroidTest
   - ./gradlew assembleDebug -PdisablePreDex
