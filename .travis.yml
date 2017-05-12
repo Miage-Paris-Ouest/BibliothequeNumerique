@@ -1,14 +1,8 @@
 language: android
-sudo: false
 #JDK
 jdk: oraclejdk8
-env:
-  global:
-    - ANDROID_API=24
-    - EMULATOR_API=25
-    - ANDROID_BUILD_TOOLS=25.0.0
-    # install timeout in minutes (2 minutes by default)
-    - ADB_INSTALL_TIMEOUT=8
+sudo: false
+
 notifications:
   email:
     recipients:
@@ -18,58 +12,76 @@ notifications:
       - coralinebouri@gmail.com
     on_success: change
     on_failure: change
+
+env:
+  matrix:
+    - ANDROID_TARGET=android-18 ANDROID_ABI=armeabi-v7a
+    - ANDROID_TARGET=android-24 ANDROID_ABI=armeabi-v7a
+    - ANDROID_TARGET=android-24 ANDROID_ABI=x86
+  global:
+    - ADB_INSTALL_TIMEOUT=10    #Time out to 10 mins
+
+before_cache:
+    - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+
+cache:
+  directories:      #Cache all dirs under .gradle folder
+    - $HOME/.gradle/daemon      #Cache daemon logs
+    - $HOME/.gradle/native      #Cache library downloaded from the gradle dependency
+    - $HOME/.gradle/wrapper     #Cache the gradle
+
 android:
-  components:
-    # Uncomment the lines below if you want to
-    # use the latest revision of Android SDK Tools
-    # - platform-tools
-    # - tools
-    # The BuildTools version used by your project
-    - build-tools-$ANDROID_BUILD_TOOLS
+    update_sdk: true  #Check for the updates each time you run the build.
+    components:
+        - platform-tools
+        - tools
+        - build-tools-25.0.0
+        - android-24
 
-    # The SDK version used to compile your project
-    - android-$ANDROID_API
-    - android-$EMULATOR_API_LEVEL
+        # Additional components
+        - extra-google-google_play_services
+        - extra-google-m2repository
+        - extra-android-m2repository
 
-    # Additional components
-    - extra-google-google_play_services
-    - extra-google-m2repository
-    - extra-android-m2repository # for design library
-    - addon-google_apis-google-19 # google play services
+        #system images for emulator
+        - sys-img-x86-android-24
+        - sys-img-armeabi-v7a-android-18
+        - sys-img-armeabi-v7a-android-22
+        - sys-img-armeabi-v7a-android-24
 
-    # Specify at least one system image,
-    # if you need to run emulator(s) during your tests
-    - sys-img-x86-android-$ANDROID_API_LEVEL
-    - sys-img-x86-android-$EMULATOR_API_LEVEL
-    - sys-img-armeabi-v7a-android-22
 licenses:
     - 'android-sdk-preview-license-.+'
     - 'android-sdk-preview-license'
     - 'android-sdk-license-.+'
     - 'android-sdk-license'
     - 'google-gdk-license-.+'
-before_install:
-- chmod +x gradlew
-- bash .travis-android-license-bugfix.sh
-# Emulator Management: Create, Start and Wait
-#before_script:
-#- echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
-#- emulator -avd test -no-audio -no-window &
-#- android-wait-for-emulator
-#- adb shell input keyevent 82 &
-#script:
-#- "./gradlew clean build connectedCheck -PdisablePreDex --stacktrace"
 
-#sdk_components:
-#- build-tools-19.0.3
 before_script:
-  - echo no | android create avd --force -n test -t android-25 --abi armeabi-v7a
-  - emulator -avd test -no-skin -no-audio -no-window &
-  - adb wait-for-device
-  - adb shell input keyevent 82 &
+    - chmod +x gradlew      #Grant permissions
+    - android list targets
+    - echo no | android create avd --force --name test --target $ANDROID_TARGET --abi $ANDROID_ABI    #Create AVD for given api
+    - emulator -avd test -no-skin -no-audio -no-window &    #Start emulator
+
 script:
+    - echo "Travis branch is $TRAVIS_BRANCH"    #Print out which branch it is
+    - echo "Travis branch is in pull request $TRAVIS_PULL+REQUEST"    #Print out pull request number
+    - android-wait-for-emulator             #Run wait for the emulator script.
+    - adb devices                           #Display list of devices
+    - adb shell input keyevent 82 &
+    - ./gradlew connectedCheck -PdisablePreDex --stacktrace
+#- ./gradlew connectedAndroidTest -PdisablePreDex --stacktrace
+#  - adb wait-for-device
+
+before_install:
+    - bash .travis-android-license-bugfix.sh
+    - pip install --user codecov    #Install codecov
+
+after_success:
+    - codecov                       #Run codecov
 #- ./gradlew clean build
-- ./gradlew clean build connectedAndroidTest
+#- ./gradlew clean build connectedAndroidTest
+
+after_failure: "cat $TRAVIS_BUILD_DIR/app/build/outputs/lint-results-debug.xml"
+
 on:
   branch: dev
-after_failure: "cat /app/build/outputs/lint-results-debug.xml"
