@@ -49,9 +49,12 @@ public class UtilisateurTest {
         util0.setFirebaseID("idFirebase0");
         util0.setMail("Mail0");
         util0.setPseudo("Pseudo0");
-        util0.setWhishlist(listeLivre0);
+        util0.setBibliotheque(listeLivre0);
+        util0.setWhishlist(listeLivre1);
         util0.setListeCollections(listeCollection0);
         util0.setDejaConnecte(true);
+        util0.ajouterLivreBibliotheque(livreTest3);
+        util0.supprimerLivreBibliotheque(livreTest1);
 
         listeLivre1.add(livreTest3);
 
@@ -60,11 +63,13 @@ public class UtilisateurTest {
 
         Utilisateur util1 = new Utilisateur("Mail1","idFirebase1","Pseudo1",listeLivre1,listeCollection1,false);
         Utilisateur util2 = new Utilisateur("Mail2","idFirebase2");
+        Utilisateur util3 = new Utilisateur("idFirebase3","Mail3","Pseudo3",listeLivre0,listeLivre1,listeCollection1,true);
 
         util1.ajouterLivreWhishList(livreTest2);
         util1.supprimerLivreWhishList(livreTest1);
         util2.creerCollection("listeCollection2");
         util1.supprimerCollection(collection3);
+
 
         assertNotEquals(collection0.getId(),collection2.getId());
         assertNotEquals(collection0.getNom(),collection1.getNom());
@@ -73,7 +78,8 @@ public class UtilisateurTest {
         assertNotEquals(util0.getMail(),util1.getMail());
         assertNotEquals(util0.getFirebaseID(),util2.getFirebaseID());
         assertNotEquals(util0.getPseudo(),util1.getPseudo());
-        assertEquals(util0.getWhishlist(),listeLivre0);
+        assertNotEquals(util0.getBibliotheque(),util1.getBibliotheque());
+        assertEquals(util0.getWhishlist(),listeLivre1);
         assertEquals(util0.getListeCollections(),listeCollection0);
         assertEquals(util0.isDejaConnecte(),true);
     }

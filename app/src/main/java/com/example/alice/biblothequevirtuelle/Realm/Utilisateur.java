@@ -92,6 +92,7 @@ public class Utilisateur extends RealmObject
     {
         this.bibliotheque.remove(l);
     }
+
     public RealmList<Livre> getWhishlist() {
         return whishlist;
     }

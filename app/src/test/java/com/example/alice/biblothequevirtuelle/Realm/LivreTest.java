@@ -32,6 +32,7 @@ public class LivreTest {
         livreTest.setCategorie("categorie");
         livreTest.setStatut(0); // pas lu
         livreTest.setPret(false); // pas preté
+        livreTest.setWhishlist(true);
 
         livreTest1 = new Livre(1,"ean1","titre1","auteur1","editeur1","datePub1","resume1","langue1");
 
@@ -46,8 +47,8 @@ public class LivreTest {
         assertEquals(livreTest.getCategorie(),"categorie");
         assertEquals(livreTest.getStatut(),0);
         assertEquals(livreTest.isPret(),false);
-
         assertNotEquals(livreTest.getId(),livreTest1.getId());
+        assertNotEquals(livreTest.isWhishlist(),false);
 
         Livre livreTest2 = new Livre(2,"ean2","titre2","auteur2","editeur2","datePub2","resume2","langue2",typeTest2,"categorie2", 0, false);
         typeTest3.setNom(typeTest2.getNom());
