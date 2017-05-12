@@ -70,9 +70,7 @@ script:
     - android-wait-for-emulator
     - adb devices
     - adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
-    - ./gradlew connectedAndroidTest
-    - ./gradlew test jacocoTestReport
-    - ./gradlew connectedCheck
+    - ./gradlew connectedAndroidTest jacocoTestReport connectedCheck
 #   - android-wait-for-emulator             #Run wait for the emulator script.
 #   - adb devices                           #Display list of devices
 #   - adb shell input keyevent 82 &
@@ -87,7 +85,8 @@ before_install:
 after_failure: "cat $TRAVIS_BUILD_DIR/app/build/outputs/lint-results-debug.xml"
 
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
-
+  - ./gradlew jacocoFullReport
+  - pip install --user codecov
+  - codecov
 on:
   branch: dev
