@@ -69,6 +69,7 @@ script:
     - adb devices                           #Display list of devices
     - adb shell input keyevent 82 &
     - ./gradlew connectedAndroidTest -PdisablePreDex --stacktrace
+    - ./gradlew clean build connectedAndroidTest
 #- ./gradlew connectedCheck -PdisablePreDex --stacktrace
 #  - adb wait-for-device
 
@@ -79,7 +80,7 @@ before_install:
 after_success:
     - codecov                       #Run codecov
 #- ./gradlew clean build
-#- ./gradlew clean build connectedAndroidTest
+
 
 after_failure: "cat $TRAVIS_BUILD_DIR/app/build/outputs/lint-results-debug.xml"
 
