@@ -1,34 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.alice.biblothequevirtuelle.Vue.MesLivres">
+    android:layout_height="match_parent">
+
 
     <TextView
-        android:id="@+id/tvMaWishlist"
+        android:id="@+id/tvMaCollection"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
-        android:text="Ma Wishlist"
+        android:text=""
         android:textAlignment="center"
         android:textSize="30sp"
-        android:textStyle="bold"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
-
+        android:textStyle="bold"/>
+    
     <ListView
-        android:id="@+id/lvMaWishlist"
+        android:id="@+id/lvMesLivresCollection"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvMaWishlist"
+        android:layout_below="@+id/tvMaCollection"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_editor_absoluteY="24dp" />
+        android:layout_marginTop="10dp"
+        app:layout_constraintRight_toRightOf="parent"/>
 
 </RelativeLayout>

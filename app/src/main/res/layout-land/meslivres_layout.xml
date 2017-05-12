@@ -10,23 +10,25 @@
         android:id="@+id/tvMeslivres"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
         android:text="@string/mes_livres"
         android:textAlignment="center"
         android:textSize="30sp"
         android:textStyle="bold"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        tools:layout_editor_absoluteY="0dp" />
 
     <ListView
         android:id="@+id/lvMeslivres"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvMeslivres"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
-        tools:layout_editor_absoluteY="24dp" />
+        tools:layout_editor_absoluteY="24dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

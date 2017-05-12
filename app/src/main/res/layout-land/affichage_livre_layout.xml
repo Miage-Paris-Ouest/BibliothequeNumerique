@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="161dp">
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/couverture"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentBottom="true" />
+
+                <TextView
+                    android:id="@+id/tvDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/tvEditeur"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignStart="@+id/tvEditeur"
+                    android:layout_below="@+id/tvCelluleEditeur"
+                    android:text="Date"
+                    android:textColor="@color/textColor"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvCelluleAuteur"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/tvAuteur"
+                    android:layout_marginBottom="5dp"
+                    android:layout_toRightOf="@+id/imageView3"
+                    android:layout_toEndOf="@+id/imageView3" />
+
+                <TextView
+                    android:id="@+id/tvCelluleEditeur"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/tvEditeur"
+                    android:layout_marginBottom="5dp"
+                    android:layout_toRightOf="@+id/imageView3"
+                    android:layout_toEndOf="@+id/imageView3" />
+
+                <TextView
+                    android:id="@+id/tvAuteur"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/tvCelluleLivre"
+                    android:text="Auteur"
+                    android:textColor="@color/textColor"
+                    android:textStyle="bold"
+                    android:layout_toRightOf="@+id/imageView3"
+                    android:layout_toEndOf="@+id/imageView3" />
+
+                <TextView
+                    android:id="@+id/tvEditeur"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/tvAuteur"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignStart="@+id/tvAuteur"
+                    android:layout_below="@+id/tvCelluleAuteur"
+                    android:text="Editeur"
+                    android:textColor="@color/textColor"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvCelluleLivre"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvLivre"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_toRightOf="@+id/imageView3"
+                    android:layout_toEndOf="@+id/imageView3" />
+
+                <TextView
+                    android:id="@+id/tvLivre"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp"
+                    android:text="Titre du livre"
+                    android:textColor="@color/textColor"
+                    android:textStyle="bold"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_toRightOf="@+id/imageView3"
+                    android:layout_toEndOf="@+id/imageView3" />
+
+                <TextView
+                    android:id="@+id/tvCelluleDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/tvDate"
+                    android:layout_marginBottom="5dp"
+                    android:layout_toRightOf="@+id/imageView3"
+                    android:layout_toEndOf="@+id/imageView3" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tvEtat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="15dp"
+                android:text="Etat"
+                android:textColor="@color/textColor"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvCelluleEtat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:paddingLeft="15dp"
+                android:layout_below="@+id/tvEtat" />
+
+            <TextView
+                android:id="@+id/tvPret"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:paddingLeft="15dp"
+                android:text="Prêt"
+                android:textColor="@color/textColor"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvCellulePret"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:paddingLeft="15dp"
+                android:layout_below="@+id/tvPret" />
+
+            <TextView
+                android:id="@+id/tvResume"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:paddingLeft="15dp"
+                android:text="Résumé"
+                android:textColor="@color/textColor"
+                android:textStyle="bold" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="7.57">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvCelluleResume"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/tvPret"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="82.80"
+                        android:paddingLeft="15dp" />
+                </LinearLayout>
+            </ScrollView>
+
+            <TextView
+                android:id="@+id/tvType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:paddingLeft="15dp"
+                android:text="Type"
+                android:textColor="@color/textColor"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvCelluleType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/tvPret"
+                android:layout_marginBottom="5dp"
+                android:paddingLeft="15dp" />
+
+            <TextView
+                android:id="@+id/tvCategorie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:paddingLeft="15dp"
+                android:text="Catégorie"
+                android:textColor="@color/textColor"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvCelluleCategorie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/tvPret"
+                android:layout_marginBottom="5dp"
+                android:paddingLeft="15dp" />
+
+            <TextView
+                android:id="@+id/tvNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:paddingLeft="15dp"
+                android:text="Note"
+                android:textColor="@color/textColor"
+                android:textStyle="bold" />
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <Button
+                    android:id="@+id/bModifierLivre"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="0.64"
+                    android:background="@color/btnBackground"
+                    android:onClick="rechercher"
+                    android:text="Modifier livre"
+                    android:textColor="@color/textColor" />
+
+                <Button
+                    android:id="@+id/bSupprimerLivre"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="185dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:background="@color/btnBackground"
+                    android:onClick="rechercher"
+                    android:text="Supprimer Livre"
+                    android:textColor="@color/textColor"
+                    android:layout_weight="0.35" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+        
+    </ScrollView>
+
+</RelativeLayout>

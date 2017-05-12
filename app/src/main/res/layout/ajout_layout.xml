@@ -11,148 +11,199 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/ivCouverture"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:contentDescription="@string/couverture"
-            app:srcCompat="@drawable/logo" />
-
-        <EditText
-            android:id="@+id/etISBN"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/isbn"
-            android:inputType="textPersonName" />
-
-        <EditText
-            android:id="@+id/etTitre"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/titre"
-            android:inputType="textPersonName" />
-
-        <EditText
-            android:id="@+id/etAuteur"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/auteur"
-            android:inputType="textPersonName" />
-
-        <EditText
-            android:id="@+id/etEditeur"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/editeur"
-            android:inputType="textPersonName" />
-
-        <EditText
-            android:id="@+id/etDatePub"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/date_de_publication"
-            android:inputType="" />
-
-        <EditText
-            android:id="@+id/etResume"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/resume"
-            android:inputType="textPersonName" />
-
-        <CheckBox
-            android:id="@+id/cbWhishList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:button="@drawable/checkboxperso"
-            android:checked="false"
-            android:text="@string/dans_la_wishlist" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvLabelType"
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:text="Type"
-                android:textSize="18sp" />
-
-            <Spinner
-                android:id="@+id/sType"
+            <ImageView
+                android:id="@+id/ivCouverture"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_marginTop="5dp"
+                android:contentDescription="@string/couverture"
+                app:srcCompat="@drawable/logo" />
 
-        </LinearLayout>
+            <EditText
+                android:id="@+id/etISBN"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/isbn"
+                android:inputType="textPersonName" />
 
-        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="1"
-            android:id="@+id/rgLu">
+            <EditText
+                android:id="@+id/etTitre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/titre"
+                android:inputType="textPersonName" />
 
-            <RadioButton android:id="@+id/rbLu"
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/etAuteur"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Lu" />
-            <RadioButton android:id="@+id/rbNonLu"
-                android:layout_width="wrap_content"
+                android:ems="10"
+                android:hint="@string/auteur"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/etEditeur"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Non lu" />
-            <RadioButton android:id="@+id/rbEnCours"
-                android:layout_width="wrap_content"
+                android:ems="10"
+                android:hint="@string/editeur"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/etDatePub"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="En cours" />
+                android:ems="10"
+                android:hint="@string/date_de_publication"
+                android:inputType="" />
+
+            <EditText
+                android:id="@+id/etResume"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/resume"
+                android:inputType="textPersonName" />
 
             <CheckBox
-                android:id="@+id/cbPret"
-                android:layout_width="wrap_content"
+                android:id="@+id/cbWhishList"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Actuellement prêté" />
-        </RadioGroup>
+                android:button="@drawable/checkboxperso"
+                android:checked="false"
+                android:text="@string/dans_la_wishlist" />
 
-        <EditText
-            android:id="@+id/etCategorie"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/categorie"
-            android:inputType="textPersonName" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/etLangue"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/langue"
-            android:inputType="textPersonName" />
+                <TextView
+                    android:id="@+id/tvLabelType"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:ems="10"
+                    android:text="Type"
+                    android:textSize="18sp" />
 
-        <Button
-            android:id="@+id/bAjout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/ajouter"
-            style="?android:attr/borderlessButtonStyle"
-            android:background="@color/btnBackground"
-            android:textColor="@color/textColor"/>
+                <Spinner
+                    android:id="@+id/sType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/rgLu"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <RadioButton
+                    android:id="@+id/rbLu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lu" />
+
+                <RadioButton
+                    android:id="@+id/rbNonLu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Non lu" />
+
+                <RadioButton
+                    android:id="@+id/rbEnCours"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="En cours" />
+
+                <CheckBox
+                    android:id="@+id/cbPret"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Actuellement prêté" />
+            </RadioGroup>
+
+            <EditText
+                android:id="@+id/etCategorie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/categorie"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/etLangue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/langue"
+                android:inputType="textPersonName" />
+
+            <RatingBar
+                android:id="@+id/rbNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="1dp"
+                android:numStars="5" />
+
+            <EditText
+                android:id="@+id/etAvis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/avis"
+                android:inputType="textPersonName" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvLabelCollection"
+                    android:layout_width="119dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:ems="10"
+                    android:paddingLeft="3dp"
+                    android:text="Collection"
+                    android:textSize="18sp" />
+
+                <Spinner
+                    android:id="@+id/sCollection"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/bAjout"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/btnBackground"
+                android:text="@string/ajouter"
+                android:textColor="@color/textColor" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
