@@ -60,4 +60,10 @@
         android:background="@color/btnBackground"
         android:text="Vous n'êtes pas membre ? Enregistrez-vous !"
         android:textColor="@color/textColor" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>
