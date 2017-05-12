@@ -19,7 +19,7 @@ env:
     - ANDROID_TARGET=android-24 ANDROID_ABI=armeabi-v7a
     - ANDROID_TARGET=android-24 ANDROID_ABI=x86
   global:
-    - ADB_INSTALL_TIMEOUT=10    #Time out to 10 mins
+    - ADB_INSTALL_TIMEOUT=8    #Time out to 8 mins
 
 before_cache:
     - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -68,8 +68,8 @@ script:
     - android-wait-for-emulator             #Run wait for the emulator script.
     - adb devices                           #Display list of devices
     - adb shell input keyevent 82 &
-    - ./gradlew connectedCheck -PdisablePreDex --stacktrace
-#- ./gradlew connectedAndroidTest -PdisablePreDex --stacktrace
+    - ./gradlew connectedAndroidTest -PdisablePreDex --stacktrace
+#- ./gradlew connectedCheck -PdisablePreDex --stacktrace
 #  - adb wait-for-device
 
 before_install:
