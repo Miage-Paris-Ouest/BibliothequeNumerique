@@ -72,3 +72,4 @@ script:
 - ./gradlew clean build connectedAndroidTest
 on:
   branch: dev
+after_failure: "cat $TRAVIS_BUILD_DIR/app/build/outputs/lint-results-debug.xml"
