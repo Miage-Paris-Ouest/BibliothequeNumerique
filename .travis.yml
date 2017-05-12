@@ -76,10 +76,6 @@ script:
 
 before_install:
     - bash .travis-android-license-bugfix.sh
-    - pip install --user codecov    #Install codecov
-
-after_success:
-    - codecov                       #Run codecov
 
 after_failure: "cat $TRAVIS_BUILD_DIR/app/build/outputs/lint-results-debug.xml"
 
