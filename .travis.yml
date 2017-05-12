@@ -70,7 +70,7 @@ script:
   #- adb devices
   #- adb shell input keyevent 82 &amp;
   - ./gradlew check -PdisablePreDex --continue --stacktrace
-  - ./gradlew connectedCheck
+  #- ./gradlew connectedCheck
 
 before_install:
     - bash .travis-android-license-bugfix.sh
