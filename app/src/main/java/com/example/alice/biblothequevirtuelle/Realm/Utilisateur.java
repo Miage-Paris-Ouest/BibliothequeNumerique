@@ -29,6 +29,7 @@ public class Utilisateur extends RealmObject
         this.bibliotheque = new RealmList<>();
         this.whishlist = new RealmList<>();
         this.listeCollections = new RealmList<>();
+        creerCollection("Ma première collection");
         this.pseudo="";
     }
 

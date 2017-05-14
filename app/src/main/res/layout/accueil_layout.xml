@@ -67,7 +67,7 @@
                 android:layout_below="@+id/bScanner"
                 android:layout_marginBottom="2dp"
                 android:background="@color/btnBackground"
-                android:onClick="search"
+                android:onClick="rechercher"
                 android:text="Rechercher"
                 android:textColor="@color/textColor" />
 

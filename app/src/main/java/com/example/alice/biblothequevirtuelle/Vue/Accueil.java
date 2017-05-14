@@ -13,18 +13,13 @@ import com.example.alice.biblothequevirtuelle.AppelService.Scanner;
 import com.example.alice.biblothequevirtuelle.Appli.BVAppli;
 import com.example.alice.biblothequevirtuelle.Firebase.Authentification;
 import com.example.alice.biblothequevirtuelle.R;
-import com.example.alice.biblothequevirtuelle.Realm.CollectionP;
 import com.example.alice.biblothequevirtuelle.Realm.Livre;
 import com.example.alice.biblothequevirtuelle.Realm.Utilisateur;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import io.realm.Realm;
-import io.realm.RealmList;
 import io.realm.RealmResults;
 import io.realm.exceptions.RealmException;
 
@@ -35,16 +30,21 @@ public class Accueil extends AppCompatActivity
     private static String ean;
     private Realm realm;
     private FirebaseAuth auth;
+    private Utilisateur utilisateur;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.accueil_layout);
 
-        auth = FirebaseAuth.getInstance().getInstance();
+
+        Realm.init(this);
 
         scan = new Scanner(this);
         realm = Realm.getDefaultInstance();
+        auth = FirebaseAuth.getInstance();
+
+        utilisateur = realm.where(Utilisateur.class).equalTo("firebaseID", BVAppli.getUtilisateurFirebaseID()).findFirst();
 
         Button bScan = (Button) findViewById(R.id.bScanner);
         bScan.setOnClickListener(new View.OnClickListener() {
@@ -53,23 +53,6 @@ public class Accueil extends AppCompatActivity
                 scan.scanner();
             }
         });
-
-        //création utilisateur
-        //get firebase user
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        //get reference
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-
-        //build child
-        Utilisateur util = new Utilisateur(user.getEmail(),user.getUid());
-        util.setListeCollections(new RealmList<CollectionP>(new CollectionP("test")));
-        ref.child("Utilisateurs").child(user.getUid()).setValue(util);
-
-        //verif methode AjoutUtilisateurFirebaseARealm
-        //BVAppli bva=new BVAppli();
-        //bva.AjoutUtilisateurFirebaseARealm("cqIIVi2xhmR9d6AQRXLQXYtRTk93", getApplicationContext());
-
 
         Button bMesLivres = (Button) findViewById(R.id.bLivres);
 
@@ -84,7 +67,7 @@ public class Accueil extends AppCompatActivity
         bWhishlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =  new Intent(Accueil.this, WhishList.class);
+                Intent intent =  new Intent(Accueil.this, WishList.class);
                 startActivity(intent);
             }
         });
@@ -94,15 +77,23 @@ public class Accueil extends AppCompatActivity
         bdeconnexion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                realm = Realm.getDefaultInstance();
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        BVAppli.getUtilisateur().setDejaConnecte(false);
+                    }
+                });
+                realm.close();
+                auth.signOut();
                 Intent intent = new Intent(Accueil.this, Authentification.class);
                 startActivity(intent);
-                auth.signOut();
 
                 }
             });
     }
 
-    public void search(View v){
+    public void rechercher(View v){
         Intent intent = new Intent(this, Rechercher.class);
         startActivity(intent);
     }
@@ -209,6 +200,7 @@ public class Accueil extends AppCompatActivity
             else
             {
                 RealmResults<Livre> trouvaille;
+
                 try
                 {
                     trouvaille = realm.where(Livre.class).equalTo("ean", ean).findAll();

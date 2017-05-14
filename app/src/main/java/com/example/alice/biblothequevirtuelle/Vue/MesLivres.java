@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -29,14 +31,15 @@ public class MesLivres extends AppCompatActivity {
     ListView listLivres;
     Realm realm;
 
-    public class listeLivreClickHandler implements AdapterView.OnItemClickListener {
+    private class listeLivreClickHandler implements AdapterView.OnItemClickListener {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Toast.makeText(getApplicationContext(), "clic liste", Toast.LENGTH_SHORT).show();
 
             TextView tvId = (TextView) view.findViewById(R.id.tvIdHidden);
             String idLivre = tvId.getText().toString();
-            Intent intent = new Intent(parent.getContext(), Modifier.class);
+            Intent intent = new Intent(getApplicationContext(), Modifier.class);
             intent.putExtra("livreSelectionné", idLivre);
             intent.putExtra("précédent", "MesLivres");
             startActivity(intent);
@@ -57,8 +60,14 @@ public class MesLivres extends AppCompatActivity {
         listLivres = (ListView) findViewById(R.id.lvMeslivres);
         listLivres.setAdapter(adapter);
         listLivres.setOnItemClickListener(new listeLivreClickHandler());
+    }
 
-        RealmResults<Livre> realmResults = realm.where(Livre.class).findAll();
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        RealmResults<Livre> realmResults = realm.where(Livre.class).equalTo("whishlist", false).findAll();
+        donnees.clear();
         if (realmResults.isEmpty()) {
             Toast.makeText(this.getBaseContext(), "Votre bibliothèque est vide ! ", Toast.LENGTH_LONG).show();
         } else {
@@ -76,6 +85,7 @@ public class MesLivres extends AppCompatActivity {
         item.put("titre", titre);
         item.put("auteur", auteur);
         item.put("id", id);
+
         donnees.add(item);
     }
 

@@ -4,20 +4,17 @@
     <string name="verifier">Vérifier</string>
     <string name="image_biblio">Image Bibliothèque</string>
     <string name="logoappli">logoAppli</string>
-    <string name="auteur">Auteur*</string>
-    <string name="auteur2">Auteur</string>
+    <string name="auteur">Auteur</string>
     <string name="avis">Avis</string>
     <string name="categorie">Catégorie</string>
     <string name="date_de_publication">Date de publication</string>
     <string name="editeur">Editeur</string>
-    <string name="isbn">ISBN*</string>
-    <string name="isbn2">ISBN</string>
+    <string name="isbn">ISBN</string>
     <string name="langue">Langue</string>
     <string name="resume">Résumé</string>
     <string name="scanner">Scanner</string>
     <string name="type">Type</string>
-    <string name="titre">Titre*</string>
-    <string name="titre2">Titre</string>
+    <string name="titre">Titre</string>
     <string name="couverture">Couverture</string>
     <string name="livres">Mes livres</string>
     <string name="collections">Mes collections</string>
@@ -37,4 +34,5 @@
     <string name="non_lu">Non lu</string>
     <string name="en_cours">En cours</string>
     <string name="actuellement_pr_t">Actuellement prêté</string>
+    <string name="dans_ma_wishlist">Dans ma wishlist</string>
 </resources>

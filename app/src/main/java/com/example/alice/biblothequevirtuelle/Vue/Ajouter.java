@@ -9,8 +9,10 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -43,7 +45,7 @@ public class Ajouter extends AppCompatActivity {
 
     private String ean;
     private Realm realm;
-    private Utilisateur utilisateur;
+    private String utilFirebaseID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +55,9 @@ public class Ajouter extends AppCompatActivity {
         Intent reception = getIntent();
         ean = reception.getStringExtra("ean");
 
+        Realm.init(this);
         realm = Realm.getDefaultInstance();
-        utilisateur = BVAppli.getUtilisateur();
+        utilFirebaseID = BVAppli.getUtilisateurFirebaseID();
 
         // Spinner
         final Spinner sType = (Spinner) findViewById(R.id.sType);
@@ -92,11 +95,33 @@ public class Ajouter extends AppCompatActivity {
             if (etEan.getText().toString().equals(""))//si l'api google na pas trouvé d'info on empli l'edittext ean avec l'ean que le scanner a trouvé
                 etEan.setText(ean);
         }
+
+
         Button bAjout = (Button) findViewById(R.id.bAjout);
         bAjout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ajouter();
+            }
+        });
+
+        CheckBox cbWish = (CheckBox) findViewById( R.id.cbWhishList);
+        cbWish.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+            {
+                final RadioGroup rg = (RadioGroup) findViewById(R.id.rgLu);
+                final CheckBox cbPret = (CheckBox) findViewById(R.id.cbPret);
+                final RadioButton rbNonLu = (RadioButton) findViewById(R.id.rbNonLu);
+                if ( isChecked ) {
+                    rg.setVisibility(View.GONE);
+                    rbNonLu.setChecked(true);
+                    cbPret.setChecked(false);
+                }
+                else
+                    rg.setVisibility(View.VISIBLE);
+
             }
         });
     }
@@ -211,10 +236,18 @@ public class Ajouter extends AppCompatActivity {
                                              rl.setPret(pret);
                                              rl.setWhishlist(whishlist);
 
-                                             if(whishlist)
-                                                 utilisateur.ajouterLivreWhishList(rl);
-                                             else
-                                                 utilisateur.ajouterLivreBibliotheque(rl);
+                                             if(whishlist) {
+
+                                                 Utilisateur util = realm.where(Utilisateur.class).equalTo("firebaseID", utilFirebaseID).findFirst();
+                                                 util.getWhishlist().add(rl);
+                                                 //utilisateur.getWhishlist().add(rl);
+                                                 //utilisateur.ajouterLivreWhishList(rl);
+                                             }
+                                             else {
+                                                 Utilisateur util = realm.where(Utilisateur.class).equalTo("firebaseID", utilFirebaseID).findFirst();
+                                                 util.getBibliotheque().add(rl);
+                                                 //utilisateur.ajouterLivreBibliotheque(rl);
+                                             }
                                          }
                                      });
 
@@ -306,5 +339,11 @@ public class Ajouter extends AppCompatActivity {
                 }
         );
         queue.add(stringRequest);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        realm.close();
     }
 }

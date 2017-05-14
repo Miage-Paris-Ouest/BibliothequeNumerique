@@ -1,6 +1,7 @@
 package com.example.alice.biblothequevirtuelle.Firebase;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -11,12 +12,16 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.alice.biblothequevirtuelle.Appli.BVAppli;
 import com.example.alice.biblothequevirtuelle.R;
+import com.example.alice.biblothequevirtuelle.Realm.Utilisateur;
 import com.example.alice.biblothequevirtuelle.Vue.Accueil;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+import io.realm.Realm;
 
 /**
  * Created by Audrey on 10/05/2017.
@@ -28,12 +33,14 @@ public class Authentification extends AppCompatActivity {
     private FirebaseAuth auth;
     private ProgressBar progressBar;
     private Button bSignUp, bResetPassword, bValiderInscription;
+    private Realm realm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         auth = FirebaseAuth.getInstance();
+        realm = Realm.getDefaultInstance();
 
         if (auth.getCurrentUser() != null) {
             startActivity(new Intent(Authentification.this, CreationCompte.class));
@@ -49,12 +56,9 @@ public class Authentification extends AppCompatActivity {
         bResetPassword = (Button) findViewById(R.id.bResetPassword);
         bValiderInscription = (Button) findViewById(R.id.bValiderInscription);
 
-        auth = FirebaseAuth.getInstance();
-
         bSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //startActivity(new Intent(Authentification.this, CreationCompte.class));
                 Intent intent = new Intent(Authentification.this, CreationCompte.class);
                 startActivity(intent);
             }
@@ -92,10 +96,13 @@ public class Authentification extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 progressBar.setVisibility(View.GONE);
                                 if (!task.isSuccessful()) {
+                                    System.out.println("Erreur authentification : "+task.getException());
                                     Toast.makeText(Authentification.this, "Authentication failed." + task.getException(),
                                             Toast.LENGTH_SHORT).show();
                                 }
                                 else {
+                                    BVAppli.setUtilisateurFromFirebase(task.getResult().getUser(), true);
+                                    BVAppli.setUtilisateurFirebaseID(task.getResult().getUser().getUid());
                                     startActivity(new Intent(Authentification.this, Accueil.class));
                                 }
 

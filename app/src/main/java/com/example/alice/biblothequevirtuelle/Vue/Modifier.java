@@ -9,8 +9,10 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -54,6 +56,26 @@ public class Modifier extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 modification();
+            }
+        });
+
+        CheckBox cbWish = (CheckBox) findViewById( R.id.cbWhishList);
+        cbWish.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+            {
+                final RadioGroup rg = (RadioGroup) findViewById(R.id.rgLu);
+                final CheckBox cbPret = (CheckBox) findViewById(R.id.cbPret);
+                final RadioButton rbNonLu = (RadioButton) findViewById(R.id.rbNonLu);
+                if ( isChecked ) {
+                    rg.setVisibility(View.GONE);
+                    rbNonLu.setChecked(true);
+                    cbPret.setChecked(false);
+                }
+                else
+                    rg.setVisibility(View.VISIBLE);
+
             }
         });
     }

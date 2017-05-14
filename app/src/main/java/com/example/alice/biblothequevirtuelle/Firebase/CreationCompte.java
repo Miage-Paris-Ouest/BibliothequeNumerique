@@ -5,17 +5,28 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.alice.biblothequevirtuelle.Appli.BVAppli;
 import com.example.alice.biblothequevirtuelle.R;
+import com.example.alice.biblothequevirtuelle.Realm.CollectionP;
+import com.example.alice.biblothequevirtuelle.Realm.Utilisateur;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import io.realm.Realm;
+import io.realm.RealmList;
+import io.realm.UtilisateurRealmProxyInterface;
 
 public class CreationCompte extends AppCompatActivity {
 
@@ -44,9 +55,8 @@ public class CreationCompte extends AppCompatActivity {
        bSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CreationCompte.this, Authentification.class);
+                Intent intent = new Intent(getApplicationContext(), Authentification.class);
                 startActivity(intent);
-
             }
         });
 
@@ -73,20 +83,31 @@ public class CreationCompte extends AppCompatActivity {
                 }
 
                 progressBar.setVisibility(View.VISIBLE);
-                // Création de l'utilisateur
+                // Création de l'utilisateur dans la partie authentification de Firebase
                 auth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(CreationCompte.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                Toast.makeText(CreationCompte.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
                                 progressBar.setVisibility(View.GONE);
                                 if (!task.isSuccessful()) {
-                                    Toast.makeText(CreationCompte.this, "Authentication failed." + task.getException(),
-                                            Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(CreationCompte.this, "Problème lors de l'inscription", Toast.LENGTH_LONG).show();
+                                    System.out.println("Erreur inscription = "+task.getException());
                                 }
                                 else {
-                                    startActivity(new Intent(CreationCompte.this, Authentification.class));
-                                    finish();
+                                    Toast.makeText(CreationCompte.this, "Inscription réussi, veuillez vous authentifier !", Toast.LENGTH_LONG).show();
+
+                                    //création utilisateur dans la partie BDD de Firebase
+                                    // On récupère l'utilisateur créé à l'instant par FirebaseAuth
+                                    FirebaseUser user = task.getResult().getUser();
+                                    //On réucpère une référence vers notre BDD Firebase
+                                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+
+                                    // On créé l'utilisateur Realm
+                                    Utilisateur util = new Utilisateur(user.getEmail(),user.getUid());
+                                    BVAppli.setUtilisateur(util);
+                                    // On l'ajoute à la table "Utilisateurs" de notre BDD Firebase
+                                    // Dans la référence de notre BDD, on prend la table Utilisateurs puis on ajoute l'utilisateur créer précédemment
+                                    ref.child(String.valueOf(R.string.tableUtilisateur)).child(user.getUid()).setValue(util);
                                 }
                             }
                         });

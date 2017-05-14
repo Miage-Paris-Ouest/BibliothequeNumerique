@@ -23,7 +23,7 @@ import io.realm.RealmResults;
  * Created by alice on 11/05/2017.
  */
 
-public class WhishList extends AppCompatActivity
+public class WishList extends AppCompatActivity
 {
     ArrayList<HashMap<String, String>> donnees = new ArrayList<>();
     SimpleAdapter adapter;
@@ -35,11 +35,13 @@ public class WhishList extends AppCompatActivity
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+            Toast.makeText(getApplicationContext(), "clic", Toast.LENGTH_SHORT).show();
+
             TextView tvId = (TextView) view.findViewById(R.id.tvIdHidden);
             String idLivre = tvId.getText().toString();
-            Intent intent = new Intent(parent.getContext(), Modifier.class);
+            Intent intent = new Intent(getApplicationContext(), Modifier.class);
             intent.putExtra("livreSelectionné", idLivre);
-            intent.putExtra("précédent", "WhishList");
+            intent.putExtra("précédent", "WishList");
             startActivity(intent);
         }
     }
@@ -58,17 +60,6 @@ public class WhishList extends AppCompatActivity
         listLivres = (ListView) findViewById(R.id.lvMaWishlist);
         listLivres.setAdapter(adapter);
         listLivres.setOnItemClickListener(new listeLivreClickHandler());
-
-       /* RealmResults<Livre> realmResults = realm.where(Livre.class).equalTo("whishlist", true).findAll();
-        if (realmResults.isEmpty()) {
-            Toast.makeText(this.getBaseContext(), "Votre WhishList est vide ! ", Toast.LENGTH_LONG).show();
-        } else {
-            for (Livre lv : realmResults) {
-                addItem(lv.getEan(), lv.getTitre(), lv.getAuteur(), String.valueOf(lv.getId()));
-            }
-        }
-
-        adapter.notifyDataSetChanged();*/
     }
 
     @Override
@@ -78,7 +69,7 @@ public class WhishList extends AppCompatActivity
         RealmResults<Livre> realmResults = realm.where(Livre.class).equalTo("whishlist", true).findAll();
         donnees.clear();
         if (realmResults.isEmpty()) {
-            Toast.makeText(this.getBaseContext(), "Votre WhishList est vide ! ", Toast.LENGTH_LONG).show();
+            Toast.makeText(this.getBaseContext(), "Votre WishList est vide ! ", Toast.LENGTH_LONG).show();
         } else {
             for (Livre lv : realmResults) {
                 addItem(lv.getEan(), lv.getTitre(), lv.getAuteur(), String.valueOf(lv.getId()));

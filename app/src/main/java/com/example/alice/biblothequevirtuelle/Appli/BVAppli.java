@@ -2,6 +2,7 @@ package com.example.alice.biblothequevirtuelle.Appli;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
@@ -35,11 +36,11 @@ import static android.content.ContentValues.TAG;
  */
 
 public class BVAppli extends Application {
-    private static final String PREFS = "PREFS";
+    public static final String PREFS = "PREFS";
     private static final String INSTAL_OK = "INSTAL_OK";
     private static BVAppli instance;
     private static Utilisateur utilisateur;
-    private DatabaseReference mDatabase;
+    private static String utilisateurFirebaseID;
 
     private static Realm realm;
 
@@ -52,6 +53,7 @@ public class BVAppli extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+
         Realm.init(this);
         RealmConfiguration config = new RealmConfiguration.Builder()
                 .deleteRealmIfMigrationNeeded()
@@ -68,42 +70,43 @@ public class BVAppli extends Application {
         {
 
             try {
-                realm.beginTransaction();
-                Number maxId = realm.where(Type.class).max("id");
-                int idType;
-                if(maxId != null)
-                    idType = (int) maxId;
-                else
-                    idType = 0;
-                // On ajoute tous les types disponibles
-                Type indefini = realm.createObject(Type.class, idType);
-                indefini.setNom("Indéfini");
-                idType++;
-                Type grandFormat = realm.createObject(Type.class, idType);
-                grandFormat.setNom("Grand Format");
-                idType++;
-                Type poche = realm.createObject(Type.class, idType);
-                poche.setNom("Poche");
-                idType++;
-                Type bd = realm.createObject(Type.class, idType);
-                bd.setNom("Bande dessinée");
-                idType++;
-                Type comics = realm.createObject(Type.class, idType);
-                comics.setNom("Comics");
-                idType++;
-                Type manga = realm.createObject(Type.class, idType);
-                manga.setNom("Manga");
-                idType++;
-                Type presse = realm.createObject(Type.class, idType);
-                presse.setNom("Presse");
 
-                RealmResults listeType = realm.where(Type.class).findAll();
-
-                realm.commitTransaction();
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        Number maxId = realm.where(Type.class).max("id");
+                        int idType;
+                        if(maxId != null)
+                            idType = (int) maxId;
+                        else
+                            idType = 0;
+                        // On ajoute tous les types disponibles
+                        Type indefini = realm.createObject(Type.class, idType);
+                        indefini.setNom("Indéfini");
+                        idType++;
+                        Type grandFormat = realm.createObject(Type.class, idType);
+                        grandFormat.setNom("Grand Format");
+                        idType++;
+                        Type poche = realm.createObject(Type.class, idType);
+                        poche.setNom("Poche");
+                        idType++;
+                        Type bd = realm.createObject(Type.class, idType);
+                        bd.setNom("Bande dessinée");
+                        idType++;
+                        Type comics = realm.createObject(Type.class, idType);
+                        comics.setNom("Comics");
+                        idType++;
+                        Type manga = realm.createObject(Type.class, idType);
+                        manga.setNom("Manga");
+                        idType++;
+                        Type presse = realm.createObject(Type.class, idType);
+                        presse.setNom("Presse");
+                    }
+                });
 
                 sharedPreferences.edit().putBoolean(INSTAL_OK, true).apply();
                 Toast.makeText(getApplicationContext(), "Données téléchargées", Toast.LENGTH_LONG).show();
-                realm.close();
+
             }catch (RealmException re)
             {
                 Toast.makeText(getApplicationContext(), "Erreur lors du téléchargement des données", Toast.LENGTH_LONG).show();
@@ -113,7 +116,29 @@ public class BVAppli extends Application {
         else
             Toast.makeText(getApplicationContext(), "données déjà dl", Toast.LENGTH_LONG).show();
 
-        utilisateur = new Utilisateur("mailtest", "firebaseIDtest");
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                utilisateur = realm.where(Utilisateur.class).findFirst();
+            }
+        });
+
+        Intent intent;
+        if(utilisateur != null && utilisateur.isDejaConnecte())
+        {
+            utilisateurFirebaseID = utilisateur.getFirebaseID();
+            intent=new Intent(getApplicationContext(), Accueil.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
+        else
+        {
+            intent=new Intent(getApplicationContext(), Authentification.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
+
+        realm.close();
     }
 
     public static BVAppli getInstance() {
@@ -140,11 +165,48 @@ public class BVAppli extends Application {
         return utilisateur;
     }
 
+    public static String getUtilisateurID() {
+        return utilisateur.getFirebaseID();
+    }
+
     public static void setUtilisateur(Utilisateur utilisateur) {
         BVAppli.utilisateur = utilisateur;
     }
 
-    public void AjoutUtilisateurFirebaseARealm(final String id, final Context context)
+    public static void setUtilisateurFromFirebase(final FirebaseUser fu, final boolean connexion)
+    {
+        realm = Realm.getDefaultInstance();
+        realm.executeTransaction(new Realm.Transaction() {
+                                     @Override
+                                     public void execute(Realm realm) {
+
+                                         RealmResults<Utilisateur> rrU = realm.where(Utilisateur.class).equalTo("firebaseID", fu.getUid()).findAll();
+
+                                         if(rrU.isEmpty()) {
+                                             BVAppli.utilisateur = realm.createObject(Utilisateur.class, fu.getUid());
+                                             BVAppli.utilisateur.setMail(fu.getEmail());
+                                             BVAppli.utilisateur.setDejaConnecte(connexion);
+                                             BVAppli.utilisateurFirebaseID = fu.getUid();
+                                         }
+                                         else
+                                         {
+                                            BVAppli.utilisateur = rrU.first();
+                                            BVAppli.utilisateur.setDejaConnecte(true);
+                                         }
+                                     }
+                                 });
+        realm.close();
+    }
+
+    public static String getUtilisateurFirebaseID() {
+        return utilisateurFirebaseID;
+    }
+
+    public static void setUtilisateurFirebaseID(String utilisateurFirebaseID) {
+        BVAppli.utilisateurFirebaseID = utilisateurFirebaseID;
+    }
+
+    /*public void AjoutUtilisateurFirebaseARealm(final String id, final Context context)
     {
 
         //get reference
@@ -174,6 +236,5 @@ public class BVAppli extends Application {
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
-    }
-
+    }*/
 }
