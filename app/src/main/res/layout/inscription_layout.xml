@@ -3,72 +3,85 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <ImageView
-        android:id="@+id/ivLogo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="21dp"
-        android:layout_alignParentTop="true"
-        app:srcCompat="@drawable/logo" />
 
-    <ImageView
-        android:id="@+id/ivBiblioAccueil"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/ivLogo"
-        android:layout_marginTop="21dp"
-        android:adjustViewBounds="true"
-        android:cropToPadding="true"
-        app:srcCompat="@drawable/biblioaccueil" />
+        android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/etMailInscription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="E-mail"
-        android:layout_marginTop="10dp"
-        android:inputType="textPersonName" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/etMdpInscription1"
-        android:hint="Mot de passe" />
+            <ImageView
+                android:id="@+id/ivLogo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="21dp"
+                app:srcCompat="@drawable/logo" />
 
-    <Button
-        android:id="@+id/bValiderInscription"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:background="@color/btnBackground"
-        android:onClick="ClickValider"
-        android:text="Valider"
-        android:textColor="@color/textColor" />
+            <ImageView
+                android:id="@+id/ivBiblioAccueil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/ivLogo"
+                android:layout_marginTop="21dp"
+                android:adjustViewBounds="true"
+                android:cropToPadding="true"
+                app:srcCompat="@drawable/biblioaccueil" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/etMailInscription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:hint="E-mail"
+                android:inputType="textPersonName" />
 
-    <Button
-        android:id="@+id/bSignIn"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Se connecter"
-        android:layout_marginTop="10dp"
-        android:textColor="@color/textColor"
-        android:background="@color/btnBackground"/>
+            <EditText
+                android:id="@+id/etMdpInscription1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Mot de passe"
+                android:inputType="textPassword" />
 
+            <Button
+                android:id="@+id/bValiderInscription"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@color/btnBackground"
+                android:onClick="ClickValider"
+                android:text="Valider"
+                android:textColor="@color/textColor" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/bSignIn"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/btnBackground"
+                android:text="Se connecter"
+                android:textColor="@color/textColor" />
+
+        </LinearLayout>
+
+    </ScrollView>
 </LinearLayout>
