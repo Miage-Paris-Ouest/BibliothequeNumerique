@@ -23,23 +23,53 @@
 
     <Button
         android:id="@+id/btnTriTitre"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onClickTriTitre"
         android:text="Trier par titre"
-        android:layout_below="@+id/tvMeslivres"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="25dp" />
+        android:layout_marginStart="29dp"
+        android:background="@color/btnBackground"
+        android:textColor="@color/textColor"
+        android:layout_marginTop="28dp"
+        android:layout_below="@+id/actvEditeur"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:id="@+id/btnTriAuteur"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onClickTriAuteur"
         android:text="Trier par auteur"
-        android:layout_below="@+id/tvMeslivres"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="23dp" />
+        android:layout_marginEnd="28dp"
+        android:background="@color/btnBackground"
+        android:textColor="@color/textColor"
+        android:layout_alignBaseline="@+id/btnTriTitre"
+        android:layout_alignBottom="@+id/btnTriTitre"
+        android:layout_alignParentEnd="true" />
+
+    <AutoCompleteTextView
+        android:id="@+id/actvAuteur"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:hint="@string/auteur"
+        android:layout_alignTop="@+id/tvMeslivres"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="34dp"
+        android:layout_toStartOf="@+id/btnChercherEditeur" />
+
+    <AutoCompleteTextView
+        android:id="@+id/actvEditeur"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:hint="@string/editeur"
+        android:layout_below="@+id/actvAuteur"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="14dp"
+        android:layout_toStartOf="@+id/btnChercherEditeur" />
 
     <ListView
         android:id="@+id/lvMeslivres"
@@ -49,6 +79,30 @@
         tools:layout_editor_absoluteY="24dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_below="@+id/btnTriTitre" />
+        android:layout_below="@+id/btnTriAuteur" />
+
+    <Button
+        android:id="@+id/btnChercherEditeur"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickhercherEditeur"
+        android:text="Filtrer"
+        android:background="@color/btnBackground"
+        android:textColor="@color/textColor"
+        android:layout_alignBottom="@+id/actvEditeur"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:id="@+id/btnChercherAuteur"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/actvEditeur"
+        android:layout_alignParentEnd="true"
+        android:text="Flitrer"
+        android:onClick="onClickTriChercherAuteur"
+        android:background="@color/btnBackground"
+        android:textColor="@color/textColor" />
 
 </RelativeLayout>
