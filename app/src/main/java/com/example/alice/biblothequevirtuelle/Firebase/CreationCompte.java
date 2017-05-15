@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,7 +13,6 @@ import android.widget.Toast;
 
 import com.example.alice.biblothequevirtuelle.Appli.BVAppli;
 import com.example.alice.biblothequevirtuelle.R;
-import com.example.alice.biblothequevirtuelle.Realm.CollectionP;
 import com.example.alice.biblothequevirtuelle.Realm.Utilisateur;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -23,10 +21,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import io.realm.Realm;
-import io.realm.RealmList;
-import io.realm.UtilisateurRealmProxyInterface;
 
 public class CreationCompte extends AppCompatActivity {
 
@@ -94,7 +88,7 @@ public class CreationCompte extends AppCompatActivity {
                                     System.out.println("Erreur inscription = "+task.getException());
                                 }
                                 else {
-                                    Toast.makeText(CreationCompte.this, "Inscription réussi, veuillez vous authentifier !", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(CreationCompte.this, "Inscription réussie, veuillez vous authentifier !", Toast.LENGTH_LONG).show();
 
                                     //création utilisateur dans la partie BDD de Firebase
                                     // On récupère l'utilisateur créé à l'instant par FirebaseAuth
