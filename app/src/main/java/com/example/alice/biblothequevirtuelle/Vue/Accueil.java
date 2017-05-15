@@ -113,8 +113,8 @@ public class Accueil extends AppCompatActivity
         AlertDialog.Builder builder = new AlertDialog.Builder(Accueil.this);
 
         if (resultCode == 0) {
-            builder.setTitle("Aucune données scannées !");
-            builder.setMessage("Voulez vous scanner un autre livre ?");
+            builder.setTitle("Aucune données scannée !");
+            builder.setMessage("Voulez-vous scanner un autre livre ?");
             builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     ean = null;
@@ -142,7 +142,7 @@ public class Accueil extends AppCompatActivity
             if(!type.equals("ean_13"))
             {
                 builder.setTitle("Mauvais format");
-                builder.setMessage("Voulez vous scanner un autre livre ?");
+                builder.setMessage("Voulez-vous scanner un autre livre ?");
                 builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         ean = null;
@@ -171,7 +171,7 @@ public class Accueil extends AppCompatActivity
             else if(!(prefix.equals("977") || prefix.equals("978") || prefix.equals("979")))
             {
                 builder.setTitle("Ce n'est pas un livre !");
-                builder.setMessage("Voulez vous scanner un autre livre ?");
+                builder.setMessage("Voulez-vous scanner un autre livre ?");
                 builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         ean = null;
@@ -214,7 +214,7 @@ public class Accueil extends AppCompatActivity
                 if((trouvaille != null && trouvaille.size() == 0) || trouvaille == null)
                 {
                     builder.setTitle("Vous n'avez pas ce livre !");
-                    builder.setMessage("Voulez vous l'ajouter à votre bibliothèque ?");
+                    builder.setMessage("Voulez-vous l'ajouter à votre bibliothèque ?");
                     builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             Intent ajout = new Intent(getApplicationContext(), Ajouter.class);
@@ -232,7 +232,7 @@ public class Accueil extends AppCompatActivity
                 {
                     final Livre livre = trouvaille.first();
                     builder.setTitle("Vous avez déjà ce livre ! ("+trouvaille.get(0).getTitre()+")");
-                    builder.setMessage("Que voulez vous faire ?");
+                    builder.setMessage("Que voulez-vous faire ?");
                     builder.setPositiveButton("Supprimer", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             try

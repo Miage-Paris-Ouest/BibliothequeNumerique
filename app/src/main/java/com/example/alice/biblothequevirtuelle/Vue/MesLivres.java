@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.CheckBox;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -35,7 +33,7 @@ public class MesLivres extends AppCompatActivity {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            Toast.makeText(getApplicationContext(), "clic liste", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "Clic liste", Toast.LENGTH_SHORT).show();
 
             TextView tvId = (TextView) view.findViewById(R.id.tvIdHidden);
             String idLivre = tvId.getText().toString();

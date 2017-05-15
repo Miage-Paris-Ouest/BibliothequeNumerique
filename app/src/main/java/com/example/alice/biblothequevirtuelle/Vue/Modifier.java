@@ -143,7 +143,7 @@ public class Modifier extends AppCompatActivity {
         if(!verif.matches()) {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(Modifier.this);
-            builder.setTitle("Attention ! Vous n'avez pas entrez d'ISBN ou ce dernier n'est pas correct");
+            builder.setTitle("Attention ! Vous n'avez pas entrez d'ISBN, ou ce dernier n'est pas correct");
             builder.setMessage("La recherche par scanner ne pourra être faite. Voulez-vous continuer ?");
 
             builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
