@@ -40,7 +40,7 @@ public class Authentification extends AppCompatActivity {
             finish();
         }
 
-        setContentView(R.layout.fragment_connexion_layout);
+        setContentView(R.layout.connexion_layout);
 
         etAdresseMail = (EditText) findViewById(R.id.etAdresseMail);
         etMdpConnexion = (EditText) findViewById(R.id.etMdpConnexion);
@@ -76,12 +76,12 @@ public class Authentification extends AppCompatActivity {
                 String password = etMdpConnexion.getText().toString();
 
                 if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(getApplicationContext(), "Enter email address !", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Entrer une adresse mail !", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (TextUtils.isEmpty(password)) {
-                    Toast.makeText(getApplicationContext(), "Enter password !", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Entrer un mot de passe !", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -93,7 +93,7 @@ public class Authentification extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 progressBar.setVisibility(View.GONE);
                                 if (!task.isSuccessful()) {
-                                    Toast.makeText(Authentification.this, "Authentication failed." + task.getException(),
+                                    Toast.makeText(Authentification.this, " Erreur dans l'authentification" + task.getException(),
                                             Toast.LENGTH_SHORT).show();
                                 }
                                 else {
