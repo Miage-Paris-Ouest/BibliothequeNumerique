@@ -24,21 +24,21 @@
             android:name="DOMAINE_PACKAGE_NAME"
             android:value="com.example.alice" />
 
-        <activity android:name=".Firebase.Authentification">
+        <activity android:name=".Firebase.Authentification"/>
+        <activity android:name=".Firebase.CreationCompte" android:configChanges="orientation|screenSize"/>
+        <activity android:name=".Vue.Accueil" android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Vue.Ajouter" />
-        <activity android:name=".Vue.Recherche" />
-        <activity android:name=".Vue.MesLivres"/>
-        <activity android:name=".Firebase.CreationCompte"/>
-        <activity android:name=".Vue.Accueil"/>
-        <activity android:name=".Firebase.ReinitMotDePasse">
+        <activity android:name=".Vue.Ajouter" android:configChanges="orientation|screenSize"/>
+        <activity android:name=".Vue.Rechercher" android:configChanges="orientation|screenSize"/>
+        <activity android:name=".Vue.Modifier" android:configChanges="orientation|screenSize"/>
+        <activity android:name=".Vue.MesLivres" android:configChanges="orientation|screenSize"/>
+        <activity android:name=".Vue.WishList" android:configChanges="orientation|screenSize"/>
+        <activity android:name=".Firebase.ReinitMotDePasse" android:configChanges="orientation|screenSize"/>
 
-        </activity>
     </application>
-
 </manifest>

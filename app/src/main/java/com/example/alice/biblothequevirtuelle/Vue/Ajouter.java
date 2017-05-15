@@ -185,11 +185,11 @@ public class Ajouter extends AppCompatActivity {
         Pattern regexp = Pattern.compile("^[0-9]*");
         Matcher verif = regexp.matcher(isbn);
 
-        if(!verif.matches()) {
+        if(!verif.matches() && !isbn.equals("")) {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(Ajouter.this);
-            builder.setTitle("Attention ! Vous n'avez pas entré d'ISBN, ou ce dernier n'est pas correct");
-            builder.setMessage("La recherche par scanner ne pourra être faite. Voulez-vous continuer ?");
+            builder.setTitle("Attention !");
+            builder.setMessage("Vous n'avez pas entrez d'ISBN ou ce dernier n'est pas correct. La recherche par scanner ne pourra être faite. Voulez-vous continuer ?");
 
             final int finalStatut = statut;
             builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
@@ -211,7 +211,6 @@ public class Ajouter extends AppCompatActivity {
 
     private void ajouterLivre(final String titre, final String auteur, final String editeur, final int type, final String isbn, final String categ, final String date, final String langue, final String resume, final int statut, final boolean pret, final boolean whishlist) {
         try {
-
             realm.executeTransaction(new Realm.Transaction() {
                                          @Override
                                          public void execute(Realm realm) {
@@ -240,13 +239,10 @@ public class Ajouter extends AppCompatActivity {
 
                                                  Utilisateur util = realm.where(Utilisateur.class).equalTo("firebaseID", utilFirebaseID).findFirst();
                                                  util.getWhishlist().add(rl);
-                                                 //utilisateur.getWhishlist().add(rl);
-                                                 //utilisateur.ajouterLivreWhishList(rl);
                                              }
                                              else {
                                                  Utilisateur util = realm.where(Utilisateur.class).equalTo("firebaseID", utilFirebaseID).findFirst();
                                                  util.getBibliotheque().add(rl);
-                                                 //utilisateur.ajouterLivreBibliotheque(rl);
                                              }
                                          }
                                      });
@@ -311,7 +307,7 @@ public class Ajouter extends AppCompatActivity {
             }
         }
         else
-            Toast.makeText(getApplicationContext(), "Nous n'avons pas d'information sur ce livre..", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Nous n'avons pas d'informations sur ce livre.", Toast.LENGTH_LONG).show();
 
         return null;
     }
@@ -334,7 +330,7 @@ public class Ajouter extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), "Une erreur s'est produite..", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Une erreur s'est produite.", Toast.LENGTH_SHORT).show();
                     }
                 }
         );

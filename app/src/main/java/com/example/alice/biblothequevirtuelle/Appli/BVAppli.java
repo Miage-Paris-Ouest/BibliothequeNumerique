@@ -1,23 +1,34 @@
 package com.example.alice.biblothequevirtuelle.Appli;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.widget.Toast;
 
-import com.example.alice.biblothequevirtuelle.Firebase.Authentification;
 import com.example.alice.biblothequevirtuelle.Realm.CollectionP;
+import com.example.alice.biblothequevirtuelle.Firebase.Authentification;
 import com.example.alice.biblothequevirtuelle.Realm.Livre;
 import com.example.alice.biblothequevirtuelle.Realm.Type;
 import com.example.alice.biblothequevirtuelle.Realm.Utilisateur;
+import com.example.alice.biblothequevirtuelle.Realm.CollectionP;
 import com.example.alice.biblothequevirtuelle.Vue.Accueil;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 import io.realm.annotations.RealmModule;
 import io.realm.exceptions.RealmException;
+
+import static android.content.ContentValues.TAG;
 
 
 /**
@@ -53,10 +64,11 @@ public class BVAppli extends Application {
 
         realm = Realm.getDefaultInstance();
         SharedPreferences sharedPreferences = getBaseContext().getSharedPreferences(PREFS, MODE_PRIVATE);
-        //objectif : sauvegarder une seule fois si les types
+        //objectif : sauvegarder une seule fois si les types et les statuts ont été chargé dans la BDD interne
         //Si la clef n'existe pas ou si elle existe mais que la valeur est fausse
         if ((!sharedPreferences.contains(INSTAL_OK)) || (sharedPreferences.contains(INSTAL_OK) && (!sharedPreferences.getBoolean(INSTAL_OK, false))))
         {
+
             try {
 
                 realm.executeTransaction(new Realm.Transaction() {
@@ -196,6 +208,8 @@ public class BVAppli extends Application {
 
     /*public void AjoutUtilisateurFirebaseARealm(final String id, final Context context)
     {
+
+        //get reference
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         ref.child("Utilisateurs").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

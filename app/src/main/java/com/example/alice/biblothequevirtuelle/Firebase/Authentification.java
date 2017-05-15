@@ -11,12 +11,15 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.alice.biblothequevirtuelle.Appli.BVAppli;
 import com.example.alice.biblothequevirtuelle.R;
 import com.example.alice.biblothequevirtuelle.Vue.Accueil;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+import io.realm.Realm;
 
 /**
  * Created by Audrey on 10/05/2017.
@@ -28,12 +31,14 @@ public class Authentification extends AppCompatActivity {
     private FirebaseAuth auth;
     private ProgressBar progressBar;
     private Button bSignUp, bResetPassword, bValiderInscription;
+    private Realm realm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         auth = FirebaseAuth.getInstance();
+        realm = Realm.getDefaultInstance();
 
         if (auth.getCurrentUser() != null) {
             startActivity(new Intent(Authentification.this, CreationCompte.class));
@@ -49,12 +54,9 @@ public class Authentification extends AppCompatActivity {
         bResetPassword = (Button) findViewById(R.id.bResetPassword);
         bValiderInscription = (Button) findViewById(R.id.bValiderInscription);
 
-        auth = FirebaseAuth.getInstance();
-
         bSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //startActivity(new Intent(Authentification.this, CreationCompte.class));
                 Intent intent = new Intent(Authentification.this, CreationCompte.class);
                 startActivity(intent);
             }
@@ -63,7 +65,6 @@ public class Authentification extends AppCompatActivity {
         bResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //startActivity(new Intent(Authentification.this, ReinitMotDePasse.class));
                 Intent intent = new Intent(Authentification.this, ReinitMotDePasse.class);
                 startActivity(intent);
             }
@@ -76,12 +77,12 @@ public class Authentification extends AppCompatActivity {
                 String password = etMdpConnexion.getText().toString();
 
                 if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(getApplicationContext(), "Entrer une adresse mail !", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Entrez votre adresse mail !", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (TextUtils.isEmpty(password)) {
-                    Toast.makeText(getApplicationContext(), "Entrer un mot de passe !", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Entrez votre mot de passe !", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -93,10 +94,13 @@ public class Authentification extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 progressBar.setVisibility(View.GONE);
                                 if (!task.isSuccessful()) {
-                                    Toast.makeText(Authentification.this, " Erreur dans l'authentification" + task.getException(),
+                                    System.out.println("Erreur authentification : "+task.getException());
+                                    Toast.makeText(Authentification.this, "Erreur d'authentification" + task.getException(),
                                             Toast.LENGTH_SHORT).show();
                                 }
                                 else {
+                                    BVAppli.setUtilisateurFromFirebase(task.getResult().getUser(), true);
+                                    BVAppli.setUtilisateurFirebaseID(task.getResult().getUser().getUid());
                                     startActivity(new Intent(Authentification.this, Accueil.class));
                                 }
 

@@ -140,11 +140,11 @@ public class Modifier extends AppCompatActivity {
         Pattern regexp = Pattern.compile("^[0-9]*");
         Matcher verif = regexp.matcher(isbn);
 
-        if(!verif.matches()) {
+        if(!verif.matches() && !isbn.equals("")) {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(Modifier.this);
-            builder.setTitle("Attention ! Vous n'avez pas entrez d'ISBN, ou ce dernier n'est pas correct");
-            builder.setMessage("La recherche par scanner ne pourra être faite. Voulez-vous continuer ?");
+            builder.setTitle("Attention !");
+            builder.setMessage(" Vous n'avez pas entrez d'ISBN ou ce dernier n'est pas correct. La recherche par scanner ne pourra être faite. Voulez-vous continuer ?");
 
             builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
