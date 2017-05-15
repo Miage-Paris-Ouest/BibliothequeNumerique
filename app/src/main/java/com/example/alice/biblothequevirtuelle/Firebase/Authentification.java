@@ -94,7 +94,7 @@ public class Authentification extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 progressBar.setVisibility(View.GONE);
                                 if (!task.isSuccessful()) {
-                                    System.out.println("Erreur authentification : "+task.getException());
+                                    System.out.println("Erreur d'authentification : "+task.getException());
                                     Toast.makeText(Authentification.this, "Erreur d'authentification" + task.getException(),
                                             Toast.LENGTH_SHORT).show();
                                 }

@@ -189,7 +189,7 @@ public class Ajouter extends AppCompatActivity {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(Ajouter.this);
             builder.setTitle("Attention !");
-            builder.setMessage("Vous n'avez pas entrez d'ISBN ou ce dernier n'est pas correct. La recherche par scanner ne pourra être faite. Voulez-vous continuer ?");
+            builder.setMessage("Vous n'avez pas entré d'ISBN, ou ce dernier n'est pas correct. La recherche par scanner ne pourra être faite. Voulez-vous continuer ?");
 
             final int finalStatut = statut;
             builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
@@ -307,7 +307,7 @@ public class Ajouter extends AppCompatActivity {
             }
         }
         else
-            Toast.makeText(getApplicationContext(), "Nous n'avons pas d'informations sur ce livre.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Nous n'avons pas d'information sur ce livre..", Toast.LENGTH_LONG).show();
 
         return null;
     }
@@ -330,7 +330,7 @@ public class Ajouter extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), "Une erreur s'est produite.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Une erreur s'est produite..", Toast.LENGTH_SHORT).show();
                     }
                 }
         );
