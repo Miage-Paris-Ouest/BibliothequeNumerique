@@ -19,9 +19,6 @@ import java.util.HashMap;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-/*
-TODO Ajouter la recherche et le filtrage
- */
 public class MesLivres extends AppCompatActivity {
 
     ArrayList<HashMap<String, String>> donnees = new ArrayList<>();

@@ -21,10 +21,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import io.realm.Realm;
 
-/**
- * Created by Audrey on 10/05/2017.
- */
-
 public class Authentification extends AppCompatActivity {
 
     private EditText etAdresseMail, etMdpConnexion;

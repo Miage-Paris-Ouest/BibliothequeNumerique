@@ -19,10 +19,6 @@ import java.util.HashMap;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-/**
- * Created by alice on 11/05/2017.
- */
-
 public class WishList extends AppCompatActivity
 {
     ArrayList<HashMap<String, String>> donnees = new ArrayList<>();
@@ -35,7 +31,7 @@ public class WishList extends AppCompatActivity
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-            Toast.makeText(getApplicationContext(), "clic", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "clic", Toast.LENGTH_SHORT).show();
 
             TextView tvId = (TextView) view.findViewById(R.id.tvIdHidden);
             String idLivre = tvId.getText().toString();

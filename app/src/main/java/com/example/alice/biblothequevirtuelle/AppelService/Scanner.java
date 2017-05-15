@@ -4,10 +4,6 @@ import android.app.Activity;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 
-/**
- * Created by alice on 23/03/2017.
- */
-
 public class Scanner {
 
     private Activity activity;

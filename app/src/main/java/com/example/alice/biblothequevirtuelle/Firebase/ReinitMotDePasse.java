@@ -16,10 +16,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
-/**
- * Created by Audrey on 10/05/2017.
- */
-
 public class ReinitMotDePasse extends AppCompatActivity {
 
     private EditText etAdresseMail;

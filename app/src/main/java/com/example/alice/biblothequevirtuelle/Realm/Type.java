@@ -4,10 +4,6 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
 
-/**
- * Created by alice on 21/03/2017.
- */
-
 @RealmClass
 public class Type extends RealmObject {
 
