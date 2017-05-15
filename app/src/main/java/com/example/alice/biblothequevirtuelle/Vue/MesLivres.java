@@ -25,6 +25,7 @@ public class MesLivres extends AppCompatActivity {
     SimpleAdapter adapter;
     ListView listLivres;
     Realm realm;
+    RealmResults<Livre> realmResults;
 
     private class listeLivreClickHandler implements AdapterView.OnItemClickListener {
 
@@ -61,7 +62,7 @@ public class MesLivres extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        RealmResults<Livre> realmResults = realm.where(Livre.class).equalTo("whishlist", false).findAll();
+        realmResults = realm.where(Livre.class).equalTo("whishlist", false).findAll();
         donnees.clear();
         if (realmResults.isEmpty()) {
             Toast.makeText(this.getBaseContext(), "Votre bibliothèque est vide ! ", Toast.LENGTH_LONG).show();
@@ -84,5 +85,30 @@ public class MesLivres extends AppCompatActivity {
         donnees.add(item);
     }
 
+    public void onClickTriTitre(View view) {
+        donnees.clear();
+        if (realmResults.isEmpty()) {
+            Toast.makeText(this.getBaseContext(), "Votre bibliothèque est vide ! ", Toast.LENGTH_LONG).show();
+        } else {
+            realmResults=realmResults.sort("titre");
+            for (Livre lv : realmResults) {
+                addItem(lv.getEan(), lv.getTitre(), lv.getAuteur(), String.valueOf(lv.getId()));
+            }
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+    public void onClickTriAuteur(View view) {
+        donnees.clear();
+        if (realmResults.isEmpty()) {
+            Toast.makeText(this.getBaseContext(), "Votre bibliothèque est vide ! ", Toast.LENGTH_LONG).show();
+        } else {
+            realmResults=realmResults.sort("auteur");
+            for (Livre lv : realmResults) {
+                addItem(lv.getEan(), lv.getTitre(), lv.getAuteur(), String.valueOf(lv.getId()));
+            }
+        }
+        adapter.notifyDataSetChanged();
+    }
 
 }

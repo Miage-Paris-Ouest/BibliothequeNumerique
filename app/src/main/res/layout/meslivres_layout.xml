@@ -21,14 +21,34 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
 
+    <Button
+        android:id="@+id/btnTriTitre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickTriTitre"
+        android:text="Trier par titre"
+        android:layout_below="@+id/tvMeslivres"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="25dp" />
+
+    <Button
+        android:id="@+id/btnTriAuteur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickTriAuteur"
+        android:text="Trier par auteur"
+        android:layout_below="@+id/tvMeslivres"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="23dp" />
+
     <ListView
         android:id="@+id/lvMeslivres"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvMeslivres"
         app:layout_constraintRight_toRightOf="parent"
         tools:layout_editor_absoluteY="24dp"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/btnTriTitre" />
 
 </RelativeLayout>
