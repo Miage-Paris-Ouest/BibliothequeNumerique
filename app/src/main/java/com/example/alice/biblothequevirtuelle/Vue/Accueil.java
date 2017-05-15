@@ -88,7 +88,6 @@ public class Accueil extends AppCompatActivity
                 auth.signOut();
                 Intent intent = new Intent(Accueil.this, Authentification.class);
                 startActivity(intent);
-
                 }
             });
     }

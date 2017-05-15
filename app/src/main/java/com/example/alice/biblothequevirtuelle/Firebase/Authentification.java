@@ -106,4 +106,9 @@ public class Authentification extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        //do nothing
+    }
 }
