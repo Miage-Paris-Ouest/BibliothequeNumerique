@@ -185,7 +185,13 @@ public class Ajouter extends AppCompatActivity {
         Pattern regexp = Pattern.compile("^[0-9]*");
         Matcher verif = regexp.matcher(isbn);
 
-        if(!verif.matches() && !isbn.equals("")) {
+        boolean test = isbn.isEmpty();
+        boolean test2 = isbn.equals("");
+
+        System.out.println(test);
+        System.out.println(test2);
+
+        if(!verif.matches() && !isbn.equals("") && !isbn.isEmpty()) {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(Ajouter.this);
             builder.setTitle("Attention !");

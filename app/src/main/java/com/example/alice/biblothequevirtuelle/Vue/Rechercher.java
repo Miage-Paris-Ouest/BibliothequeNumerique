@@ -37,6 +37,10 @@ import io.realm.Realm;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
+/**
+ * Created by Kiki on 28/03/2017.
+ */
+
 public class Rechercher extends AppCompatActivity {
     ArrayList<HashMap<String, String>> donnees = new ArrayList<>();
     SimpleAdapter adapter;
@@ -107,8 +111,13 @@ public class Rechercher extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        donnees.clear();
+    }
 
-   public void addItem(String id, String isbn, String titre, String auteur, String editeur, String dateEdi, String resume, String langue) {
+    public void addItem(String id, String isbn, String titre, String auteur, String editeur, String dateEdi, String resume, String langue) {
         HashMap<String,String> item = new HashMap<String,String>();
         item.put("id", id);
         item.put("isbn", isbn);
@@ -141,7 +150,7 @@ public class Rechercher extends AppCompatActivity {
             else {
                 try {
 
-                    RealmQuery<Livre> rr = realm.where(Livre.class);
+                    RealmQuery<Livre> rr = realm.where(Livre.class).equalTo("whishlist", false);
                     if (!isbn.equals("")) {
                         rr = rr.contains("ean", isbn, Case.INSENSITIVE);
                     }
@@ -197,10 +206,12 @@ public class Rechercher extends AppCompatActivity {
             }
 
             String url = sb.toString();
+            url = url.replaceAll("\\s", "%20");
+            url = url.replaceAll("\'", "%27");
             if(!url.equals("https://www.googleapis.com/books/v1/volumes?q=")) {
                 final ProgressBar pb = (ProgressBar) findViewById(R.id.pbRecherche);
                 pb.setVisibility(View.VISIBLE);
-                StringRequest stringRequest = new StringRequest(Request.Method.GET, sb.toString(),
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
@@ -219,7 +230,7 @@ public class Rechercher extends AppCompatActivity {
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 pb.setVisibility(View.GONE);
-                                Toast.makeText(getApplicationContext(), "Une erreur s'est produite..", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Une erreur s'est produite.", Toast.LENGTH_SHORT).show();
                             }
                         }
                 );
@@ -237,7 +248,7 @@ public class Rechercher extends AppCompatActivity {
             JSONArray tabLivreJson = reponseJson.getJSONArray("items");
             if(tabLivreJson.length() > 10)
             {
-                Toast.makeText(getApplicationContext(), "Il y a plus d'une dizaine de correspondances, précisez votre recherche!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Il y a plus d'une dizaine de correspondance, précisez votre recherche.", Toast.LENGTH_LONG).show();
             }
             else {
                 for (int i = 0; i < tabLivreJson.length(); i++) {
@@ -277,15 +288,16 @@ public class Rechercher extends AppCompatActivity {
                     }
 
                     addItem(null, ean, titre, auteur, editeur, dateEdi, resume, langue);
+                    adapter.notifyDataSetChanged();
                 }
             }
         }
         else
         {
             AlertDialog.Builder builder = new AlertDialog.Builder(Rechercher.this);
-            
+
             builder.setTitle("Aucun résultat");
-            builder.setMessage("Voulez-vous l'ajouter à la main ?");
+            builder.setMessage("Voulez vous l'ajouter à la main ?");
             builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     Intent intent = new Intent(getApplicationContext(), Ajouter.class);

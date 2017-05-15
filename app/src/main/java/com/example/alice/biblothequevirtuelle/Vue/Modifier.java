@@ -137,11 +137,14 @@ public class Modifier extends AppCompatActivity {
 
         final int finalStatut = statut;
 
-        Pattern regexp = Pattern.compile("^[0-9]*");
+        Pattern regexp = Pattern.compile("^[0-9]*$");
         Matcher verif = regexp.matcher(isbn);
 
-        if(!verif.matches() && !isbn.equals("")) {
-
+        if(verif.matches()) {
+            modifierLivre(isbn, titre, auteur, editeur, date, langue, resume, categ, type, statut, pret, whishlist);
+        }
+        else
+        {
             AlertDialog.Builder builder = new AlertDialog.Builder(Modifier.this);
             builder.setTitle("Attention !");
             builder.setMessage(" Vous n'avez pas entré d'ISBN, ou ce dernier n'est pas correct. La recherche par scanner ne pourra être faite. Voulez-vous continuer ?");
@@ -156,10 +159,6 @@ public class Modifier extends AppCompatActivity {
                 }
             });
             builder.show();
-        }
-        else
-        {
-            modifierLivre(isbn, titre, auteur, editeur, date, langue, resume, categ, type, statut, pret, whishlist);
         }
     }
 
