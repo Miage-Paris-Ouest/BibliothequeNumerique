@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
  * Created by Audrey on 10/05/2017.
  */
 
-public class ResetPasswordActivity extends AppCompatActivity {
+public class ReinitMotDePasse extends AppCompatActivity {
 
     private EditText etAdresseMail;
     private Button bReset, bBack;
@@ -42,7 +42,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
         bBack.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent intent = new Intent(ResetPasswordActivity.this, Authentification.class);
+                Intent intent = new Intent(ReinitMotDePasse.this, Authentification.class);
                 startActivity(intent);
             }
         });
@@ -53,7 +53,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
                 String email = etAdresseMail.getText().toString().trim();
                 if(TextUtils.isEmpty(email)){
-                    Toast.makeText(getApplication(), "Enter your registered email id", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplication(), "Veuillez saisir votre mail ! ", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -63,10 +63,10 @@ public class ResetPasswordActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if(task.isSuccessful()) {
-                                    Toast.makeText(ResetPasswordActivity.this, "We have sent you instructions to reset your password !", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ReinitMotDePasse.this, "Vous allez recevoir un mail pour réinitialiser votre mail !", Toast.LENGTH_SHORT).show();
                                 }
                                 else{
-                                    Toast.makeText(ResetPasswordActivity.this, "Failed to send reset email !", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ReinitMotDePasse.this, "Erreur, le mail n'a pas pu être envoyé", Toast.LENGTH_SHORT).show();
                                 }
 
                                 progressBar.setVisibility(View.GONE);
