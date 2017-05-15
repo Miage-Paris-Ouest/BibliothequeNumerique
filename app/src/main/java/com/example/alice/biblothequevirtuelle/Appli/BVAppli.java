@@ -102,7 +102,7 @@ public class BVAppli extends Application {
             }
         }
         else
-            Toast.makeText(getApplicationContext(), "données déjà dl", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Données déjà téléchargées", Toast.LENGTH_LONG).show();
 
         realm.executeTransaction(new Realm.Transaction() {
             @Override
